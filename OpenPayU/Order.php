@@ -112,7 +112,7 @@ class OpenPayU_Order extends OpenPayU {
 		$result->setStatus($status);
 		$result->setError($status['StatusCode']);
 		$result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
-		$result->setRequest($order);
+		$result->setRequest($req);
 		$result->setResponse($response);
 
 		try {
