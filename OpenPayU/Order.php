@@ -103,7 +103,7 @@ class OpenPayU_Order extends OpenPayU {
 			OpenPayU::addOutputConsole('OrderRetrieveResponse message', htmlentities($response));
 		}
 
-		$status = OpenPayU::verifyOrderCreateResponse($response);
+		$status = OpenPayU::verifyOrderRetrieveResponseStatus($response);
 		if ($debug) {
 			OpenPayU::addOutputConsole('OrderRetrieveResponse status', serialize($status));
 		}
