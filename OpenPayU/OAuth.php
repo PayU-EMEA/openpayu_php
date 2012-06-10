@@ -9,15 +9,7 @@
 	http://www.payu.com
 	http://openpayu.com
 	http://twitter.com/openpayu
-
 	
-	
-	CHANGE_LOG:
-	2012-02-14 ver. 0.1.7
-		- file created
-		- all access to attributes of *Result classt is by public accessor
-		- replaced notation of $debug = 1  to $debug = TRUE
-		
 */
 
 class OpenPayU_OAuth extends OpenPayUOAuth
@@ -47,9 +39,13 @@ class OpenPayU_OAuth extends OpenPayUOAuth
 			OpenPayU::setOpenPayuEndPoint($url);
 			$json = OpenPayuOAuth::getAccessTokenByCode($code, OpenPayU_Configuration::getClientId(), OpenPayU_Configuration::getClientSecret(), $returnUri);
 
-			$result->setAccessToken($json->{'access_token'});
-			$result->setPayuUserEmail($json->{'payu_user_email'});
-			$result->setPayuUserId($json->{'payu_user_id'});
+			$result->setAccessToken($json->{'access_token'});			
+			if(isSet($json->{'payu_user_email'})) {
+            	$result->setPayuUserEmail($json->{'payu_user_email'});
+            } 
+			if(isSet($json->{'payu_user_id'})) {
+            	$result->setPayuUserId($json->{'payu_user_id'});
+            }					
 			$result->setExpiresIn($json->{'expires_in'});
 			$result->setRefreshToken($json->{'refresh_token'});
 			$result->setSuccess(1);
@@ -84,9 +80,13 @@ class OpenPayU_OAuth extends OpenPayUOAuth
 			$json = OpenPayUOAuth::getAccessTokenByClientCredentials(OpenPayU_Configuration::getClientId(), OpenPayU_Configuration::getClientSecret());
 
 			$result->setAccessToken($json->{'access_token'});
-			$result->setPayuUserEmail($json->{'payu_user_email'});
-			$result->setPayuUserId($json->{'payu_user_id'});
-			$result->setExpiresIn($json->{'expires_in'});
+			if(isSet($json->{'payu_user_email'})) {
+            	$result->setPayuUserEmail($json->{'payu_user_email'});
+            } 
+			if(isSet($json->{'payu_user_id'})) {
+            	$result->setPayuUserId($json->{'payu_user_id'});
+            }		
+            $result->setExpiresIn($json->{'expires_in'});
 			$result->setRefreshToken($json->{'refresh_token'});
 			$result->setSuccess(1);
 		} catch (Exception $ex) {
