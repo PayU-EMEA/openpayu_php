@@ -1,341 +1,330 @@
 <?php
 
 /*
-	ver. 0.1.7
 	OpenPayU Standard Library
-	
+
 	@copyright  Copyright (c) 2011-2012 PayU
 	@license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
 	http://www.payu.com
 	http://openpayu.com
 	http://twitter.com/openpayu
+*/
 
-	
-	
-	CHANGE_LOG:
-	2012-02-14 ver. 0.1.7
-		- file created
-		- all access to attributes of *Result classt is by public accessor
-		- replaced $debug = 1 notation to $debug = TRUE
-	
-*/	
+class OpenPayU_Order extends OpenPayU
+{
 
-class OpenPayU_Order extends OpenPayU {
-	
-	/**
-	 * Function sending Order to PayU Service 
-	 * @access public
-	 * @param array $order
-	 * @param boolean $debug
-	 * @return object $result
-	 */
-	public static function create($order, $debug = TRUE) {
+    /**
+     * Function sending Order to PayU Service
+     * @access public
+     * @param array $order
+     * @param bool $debug
+     * @return object $result
+     */
+    public static function create($order, $debug = TRUE)
+    {
 
-		// preparing payu service for order initialization
-		$OrderCreateRequestUrl = OpenPayU_Configuration::getServiceUrl() . 'co/openpayu/OrderCreateRequest';
-		if ($debug) {
-			OpenPayU::addOutputConsole('OpenPayU endpoint for OrderCreateRequest message', $OrderCreateRequestUrl);
-		}
-		OpenPayU::setOpenPayuEndPoint($OrderCreateRequestUrl);
+        // preparing payu service for order initialization
+        $OrderCreateRequestUrl = OpenPayU_Configuration::getServiceUrl() . 'co/openpayu/OrderCreateRequest';
 
-		// convert array to openpayu document
-		$xml = OpenPayU::buildOrderCreateRequest($order);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderCreateRequest message', htmlentities($xml));
-		}
-		$merchantPosId = OpenPayU_Configuration::getMerchantPosId();
-		$signatureKey = OpenPayU_Configuration::getSignatureKey();
+        if ($debug)
+            OpenPayU::addOutputConsole('OpenPayU endpoint for OrderCreateRequest message', $OrderCreateRequestUrl);
 
-		// send openpayu document with order initialization structure to PayU service
-		$response = OpenPayU::sendOpenPayuDocumentAuth($xml, $merchantPosId, $signatureKey);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderCreateRequest message', htmlentities($response));
-		}
+        OpenPayU::setOpenPayuEndPoint($OrderCreateRequestUrl);
 
-		// verify response from PayU service
-		$status = OpenPayU::verifyOrderCreateResponse($response);
+        // convert array to openpayu document
+        $xml = OpenPayU::buildOrderCreateRequest($order);
 
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderCreateResponse status', serialize($status));
-		}
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderCreateRequest message', htmlentities($xml));
 
-		$result = new OpenPayU_Result();
-		$result->setStatus($status);
-		$result->setError($status['StatusCode']);
-		$result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
-		$result->setRequest($order);
-		$result->setResponse(OpenPayU::parseOpenPayUDocument($response));
+        $merchantPosId = OpenPayU_Configuration::getMerchantPosId();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
 
-		return $result;
-	}
+        // send openpayu document with order initialization structure to PayU service
+        $response = OpenPayU::sendOpenPayuDocumentAuth($xml, $merchantPosId, $signatureKey);
 
-	/**
-	 * Function retrieving Order data from PayU Service 
-	 * @access public
-	 * @param string $sessionId
-	 * @param boolean $debug
-	 * @return object $result
-	 */
-	public static function retrieve($sessionId, $debug = TRUE) {
-		$req = array (
-			'ReqId' => md5(rand()),
-			'MerchantPosId' => OpenPayU_Configuration::getMerchantPosId(),
-			'SessionId' => $sessionId
-		);
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderCreateRequest message', htmlentities($response));
 
-		$OrderRetrieveRequestUrl = OpenPayU_Configuration::getServiceUrl() . 'co/openpayu/OrderRetrieveRequest';
-		if ($debug) {
-			OpenPayU::addOutputConsole('OpenPayU endpoint for OrderRetrieveRequest message', $OrderRetrieveRequestUrl);
-		}
+        // verify response from PayU service
+        $status = OpenPayU::verifyOrderCreateResponse($response);
 
-		$oauthResult = OpenPayu_OAuth::accessTokenByClientCredentials();
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderCreateResponse status', serialize($status));
 
-		OpenPayU::setOpenPayuEndPoint($OrderRetrieveRequestUrl . '?oauth_token=' . $oauthResult->getAccessToken());
-		$xml = OpenPayU::buildOrderRetrieveRequest($req);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderRetrieveRequest message', htmlentities($xml));
-		}
+        $result = new OpenPayU_Result();
+        $result->setStatus($status);
+        $result->setError($status['StatusCode']);
+        $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
+        $result->setRequest($order);
+        $result->setResponse(OpenPayU::parseOpenPayUDocument($response));
 
-		$merchantPosId = OpenPayU_Configuration::getMerchantPosId();
-		$signatureKey = OpenPayU_Configuration::getSignatureKey();
-		$response = OpenPayU::sendOpenPayuDocumentAuth($xml, $merchantPosId, $signatureKey);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderRetrieveResponse message', htmlentities($response));
-		}
+        return $result;
+    }
 
-		$status = OpenPayU::verifyOrderRetrieveResponseStatus($response);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderRetrieveResponse status', serialize($status));
-		}
+    /**
+     * Function retrieving Order data from PayU Service
+     * @access public
+     * @param string $sessionId
+     * @param bool $debug
+     * @return object $result
+     */
+    public static function retrieve($sessionId, $debug = TRUE)
+    {
+        $req = array(
+            'ReqId' => md5(rand()),
+            'MerchantPosId' => OpenPayU_Configuration::getMerchantPosId(),
+            'SessionId' => $sessionId
+        );
 
-		$result = new OpenPayU_Result();
-		$result->setStatus($status);
-		$result->setError($status['StatusCode']);
-		$result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
-		$result->setRequest($req);
-		$result->setResponse($response);
+        $OrderRetrieveRequestUrl = OpenPayU_Configuration::getServiceUrl() . 'co/openpayu/OrderRetrieveRequest';
 
-		try {
-			$assoc = OpenPayU::parseOpenPayUDocument($response);
-			$result->setResponse($assoc);
-		} catch(Exception $ex) {
-			if ($debug) {
-				OpenPayU::addOutputConsole('OrderRetrieveResponse parse result exception', $ex->getMessage());
-			}
-		}
+        if ($debug)
+            OpenPayU::addOutputConsole('OpenPayU endpoint for OrderRetrieveRequest message', $OrderRetrieveRequestUrl);
 
-		return $result;
-	}
+        $oauthResult = OpenPayu_OAuth::accessTokenByClientCredentials();
 
-	/**
-	 * Function consume message 
-	 * @access public
-	 * @param string $xml
-	 * @param boolean $response Show Response Xml
-	 * @param boolean $debug
-	 * @return object $result
-	 */
-	public static function consumeMessage($xml, $response = TRUE, $debug = TRUE) {
-		$xml = stripslashes(urldecode($xml));
-		$rq = OpenPayU::parseOpenPayUDocument($xml);
+        OpenPayU::setOpenPayuEndPoint($OrderRetrieveRequestUrl . '?oauth_token=' . $oauthResult->getAccessToken());
+        $xml = OpenPayU::buildOrderRetrieveRequest($req);
 
-		$msg = $rq['OpenPayU']['OrderDomainRequest'];
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderRetrieveRequest message', htmlentities($xml));
 
-		switch (key($msg)) {
-			case 'OrderNotifyRequest':
-				return OpenPayU_Order::consumeNotification($xml, $response, $debug);
-			break;
-			case 'ShippingCostRetrieveRequest':
-				return OpenPayU_Order::consumeShippingCostRetrieveRequest($xml, $debug);
-			break;
-			default:
-				return key($msg);
-			break;
-		}
-	}
+        $merchantPosId = OpenPayU_Configuration::getMerchantPosId();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
+        $response = OpenPayU::sendOpenPayuDocumentAuth($xml, $merchantPosId, $signatureKey);
 
-	/**
-	 * Function consume notification message 
-	 * @access private
-	 * @param string $xml
-	 * @param boolean $response Show Response Xml
-	 * @param boolean $debug
-	 * @return object $result
-	 */
-	private static function consumeNotification($xml, $response = TRUE, $debug = TRUE) {
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderNotifyRequest message', $xml);
-		}
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderRetrieveResponse message', htmlentities($response));
 
-		$xml = stripslashes(urldecode($xml));
-		$rq = OpenPayU::parseOpenPayUDocument($xml);
-		$reqId = $rq['OpenPayU']['OrderDomainRequest']['OrderNotifyRequest']['ReqId'];
-		$sessionId = $rq['OpenPayU']['OrderDomainRequest']['OrderNotifyRequest']['SessionId'];
-			
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderNotifyRequest data, reqId', $reqId . ', sessionId: ' . $sessionId);
-		}
+        $status = OpenPayU::verifyOrderRetrieveResponseStatus($response);
 
-		// response to payu service
-		$rsp = OpenPayU::buildOrderNotifyResponse($reqId);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderNotifyResponse message', $rsp);
-		}
-		
-		// show response
-		if($response == TRUE)
-		{
-			header("Content-Type:text/xml");
-			echo $rsp;
-		}
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderRetrieveResponse status', serialize($status));
 
-		// create OpenPayU Result object
-		$result = new OpenPayU_Result();
-		$result->setSessionId($sessionId);
-		$result->setSuccess(TRUE);
-		$result->setRequest($rq);
-		$result->setResponse($rsp);
-		$result->setMessage('OrderNotifyRequest');		
-		
-		// if everything is alright return full data sent from payu service to client
-		return $result;
-	}
+        $result = new OpenPayU_Result();
+        $result->setStatus($status);
+        $result->setError($status['StatusCode']);
+        $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
+        $result->setRequest($req);
+        $result->setResponse($response);
 
-	/**
-	 * Function consume shipping cost calculation request message
-	 * @access private
-	 * @param string $xml
-	 * @param boolean $debug
-	 * @return object $result
-	 */
-	private static function consumeShippingCostRetrieveRequest($xml, $debug = TRUE) {
-		if ($debug) {
-			OpenPayU::addOutputConsole('consumeShippingCostRetrieveRequest message', $xml);
-		}
+        try {
+            $assoc = OpenPayU::parseOpenPayUDocument($response);
+            $result->setResponse($assoc);
+        } catch (Exception $ex) {
+            if ($debug)
+                OpenPayU::addOutputConsole('OrderRetrieveResponse parse result exception', $ex->getMessage());
+        }
 
-		$rq = OpenPayU::parseOpenPayUDocument($xml);
+        return $result;
+    }
 
-		$result = new OpenPayU_Result();
-		$result->setCountryCode($rq['OpenPayU']['OrderDomainRequest']['ShippingCostRetrieveRequest']['CountryCode']);
-		$result->setSessionId($rq['OpenPayU']['OrderDomainRequest']['ShippingCostRetrieveRequest']['SessionId']);
-		$result->setReqId($rq['OpenPayU']['OrderDomainRequest']['ShippingCostRetrieveRequest']['ReqId']);
-		$result->setMessage('ShippingCostRetrieveRequest');
+    /**
+     * Function consume message
+     * @access public
+     * @param string $xml
+     * @param boolean $response Show Response Xml
+     * @param bool $debug
+     * @return object $result
+     */
+    public static function consumeMessage($xml, $response = TRUE, $debug = TRUE)
+    {
+        $xml = stripslashes(urldecode($xml));
+        $rq = OpenPayU::parseOpenPayUDocument($xml);
 
-		if ($debug) {
-			OpenPayU::addOutputConsole('consumeShippingCostRetrieveRequest reqId', $result->getReqId() . ', countryCode: ' . $result->getCountryCode());
-		}
+        $msg = $rq['OpenPayU']['OrderDomainRequest'];
 
-		return $result;
-	}
+        switch (key($msg)) {
+            case 'OrderNotifyRequest':
+                return OpenPayU_Order::consumeNotification($xml, $response, $debug);
+            break;
+            case 'ShippingCostRetrieveRequest':
+                return OpenPayU_Order::consumeShippingCostRetrieveRequest($xml, $debug);
+            break;
+            default:
+                return key($msg);
+            break;
+        }
+    }
 
-	/**
-	 * Function use to cancel
-	 * @access public
-	 * @param string $sessionId
-	 * @param boolean $debug
-	 * @return object $result
-	 */
-	public static function cancel($sessionId, $debug = TRUE) {
+    /**
+     * Function consume notification message
+     * @access private
+     * @param string $xml
+     * @param boolean $response Show Response Xml
+     * @param bool $debug
+     * @return OpenPayU_Result $result
+     */
+    private static function consumeNotification($xml, $response = TRUE, $debug = TRUE)
+    {
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderNotifyRequest message', $xml);
 
-		$rq = array (
-			'ReqId' => md5(rand()),
-			'MerchantPosId' => OpenPayU_Configuration::getMerchantPosId(),
-			'SessionId' => $sessionId
-		);
+        $xml = stripslashes(urldecode($xml));
+        $rq = OpenPayU::parseOpenPayUDocument($xml);
+        $reqId = $rq['OpenPayU']['OrderDomainRequest']['OrderNotifyRequest']['ReqId'];
+        $sessionId = $rq['OpenPayU']['OrderDomainRequest']['OrderNotifyRequest']['SessionId'];
 
-		$result = new OpenPayU_Result();
-		$result->setRequest($rq);
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderNotifyRequest data, reqId', $reqId . ', sessionId: ' . $sessionId);
 
-		$url = OpenPayU_Configuration::getServiceUrl() . 'co/openpayu/OrderCancelRequest';
-		if ($debug) {
-			OpenPayU::addOutputConsole('OpenPayU endpoint for OrderCancelRequest message',  $url);
-		}
 
-		$oauthResult = OpenPayu_OAuth::accessTokenByClientCredentials();
-		OpenPayU::setOpenPayuEndPoint($url . '?oauth_token=' . $oauthResult->getAccessToken());
+        // response to payu service
+        $rsp = OpenPayU::buildOrderNotifyResponse($reqId);
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderNotifyResponse message', $rsp);
 
-		$xml = OpenPayU::buildOrderCancelRequest($rq);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderCancelRequest message',  htmlentities($xml));
-		}
+        // show response
+        if ($response == TRUE) {
+            header("Content-Type:text/xml");
+            echo $rsp;
+        }
 
-		$merchantPosId = OpenPayU_Configuration::getMerchantPosId();
-		$signatureKey = OpenPayU_Configuration::getSignatureKey();
-		$response = OpenPayU::sendOpenPayuDocumentAuth($xml, $merchantPosId, $signatureKey);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderCancelResponse message',  htmlentities($response));
-		}
+        // create OpenPayU Result object
+        $result = new OpenPayU_Result();
+        $result->setSessionId($sessionId);
+        $result->setSuccess(TRUE);
+        $result->setRequest($rq);
+        $result->setResponse($rsp);
+        $result->setMessage('OrderNotifyRequest');
 
-		// verify response from PayU service
-		$status = OpenPayU::verifyOrderCancelResponseStatus($response);
+        // if everything is alright return full data sent from payu service to client
+        return $result;
+    }
 
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderCancelResponse status', serialize($status));
-		}
+    /**
+     * Function consume shipping cost calculation request message
+     * @access private
+     * @param string $xml
+     * @param bool $debug
+     * @return OpenPayU_Result $result
+     */
+    private static function consumeShippingCostRetrieveRequest($xml, $debug = TRUE)
+    {
+        if ($debug)
+            OpenPayU::addOutputConsole('consumeShippingCostRetrieveRequest message', $xml);
 
-		$result->setStatus($status);
-		$result->setError($status['StatusCode']);
-		$result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
-		$result->setResponse(OpenPayU::parseOpenPayUDocument($response));
+        $rq = OpenPayU::parseOpenPayUDocument($xml);
 
-		return $result;
-	}
+        $result = new OpenPayU_Result();
+        $result->setCountryCode($rq['OpenPayU']['OrderDomainRequest']['ShippingCostRetrieveRequest']['CountryCode']);
+        $result->setSessionId($rq['OpenPayU']['OrderDomainRequest']['ShippingCostRetrieveRequest']['SessionId']);
+        $result->setReqId($rq['OpenPayU']['OrderDomainRequest']['ShippingCostRetrieveRequest']['ReqId']);
+        $result->setMessage('ShippingCostRetrieveRequest');
 
-	/**
-	 * Function use to update status
-	 * @access public
-	 * @param string $sessionId
-	 * @param string $status
-	 * @param boolean $debug
-	 * @return object $result
-	 */
-	public static function updateStatus($sessionId, $status, $debug = TRUE) {
+        if ($debug)
+            OpenPayU::addOutputConsole('consumeShippingCostRetrieveRequest reqId', $result->getReqId() . ', countryCode: ' . $result->getCountryCode());
 
-		$rq = array (
-			'ReqId' => md5(rand()),
-			'MerchantPosId' => OpenPayU_Configuration::getMerchantPosId(),
-			'SessionId' => $sessionId,
-			'OrderStatus' => $status,
-			'Timestamp' => date('c')
-		);
+        return $result;
+    }
 
-		$result = new OpenPayU_Result();
-		$result->setRequest($rq);
+    /**
+     * Function use to cancel
+     * @access public
+     * @param string $sessionId
+     * @param bool $debug
+     * @return OpenPayU_Result $result
+     */
+    public static function cancel($sessionId, $debug = TRUE)
+    {
 
-		$url = OpenPayU_Configuration::getServiceUrl() . 'co/openpayu/OrderStatusUpdateRequest';
-		if ($debug) {
-			OpenPayU::addOutputConsole('OpenPayU endpoint for OrderStatusUpdateRequest message', $url);
-		}
+        $rq = array(
+            'ReqId' => md5(rand()),
+            'MerchantPosId' => OpenPayU_Configuration::getMerchantPosId(),
+            'SessionId' => $sessionId
+        );
 
-		$oauthResult = OpenPayu_OAuth::accessTokenByClientCredentials();
-		OpenPayU::setOpenPayuEndPoint($url . '?oauth_token=' . $oauthResult->getAccessToken());
+        $result = new OpenPayU_Result();
+        $result->setRequest($rq);
 
-		$xml = OpenPayU::buildOrderStatusUpdateRequest($rq);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderStatusUpdateRequest message', htmlentities($xml));
-		}
+        $url = OpenPayU_Configuration::getServiceUrl() . 'co/openpayu/OrderCancelRequest';
 
-		$merchantPosId = OpenPayU_Configuration::getMerchantPosId();
-		$signatureKey = OpenPayU_Configuration::getSignatureKey();
-		$response = OpenPayU::sendOpenPayuDocumentAuth($xml, $merchantPosId, $signatureKey);
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderStatusUpdateResponse message', htmlentities($response));
-		}
+        if ($debug)
+            OpenPayU::addOutputConsole('OpenPayU endpoint for OrderCancelRequest message', $url);
 
-		// verify response from PayU service
-		$status = OpenPayU::verifyOrderStatusUpdateResponseStatus($response);
+        $oauthResult = OpenPayu_OAuth::accessTokenByClientCredentials();
+        OpenPayU::setOpenPayuEndPoint($url . '?oauth_token=' . $oauthResult->getAccessToken());
 
-		if ($debug) {
-			OpenPayU::addOutputConsole('OrderStatusUpdateResponse status', serialize($status));
-		}
+        $xml = OpenPayU::buildOrderCancelRequest($rq);
 
-		$result->setStatus($status);
-		$result->setError($status['StatusCode']);
-		$result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
-		$result->setResponse(OpenPayU::parseOpenPayUDocument($response));
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderCancelRequest message', htmlentities($xml));
 
-		return $result;
-	}
+        $merchantPosId = OpenPayU_Configuration::getMerchantPosId();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
+        $response = OpenPayU::sendOpenPayuDocumentAuth($xml, $merchantPosId, $signatureKey);
+
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderCancelResponse message', htmlentities($response));
+
+        // verify response from PayU service
+        $status = OpenPayU::verifyOrderCancelResponseStatus($response);
+
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderCancelResponse status', serialize($status));
+
+        $result->setStatus($status);
+        $result->setError($status['StatusCode']);
+        $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
+        $result->setResponse(OpenPayU::parseOpenPayUDocument($response));
+
+        return $result;
+    }
+
+    /**
+     * Function use to update status
+     * @access public
+     * @param string $sessionId
+     * @param string $status
+     * @param bool $debug
+     * @return OpenPayU_Result $result
+     */
+    public static function updateStatus($sessionId, $status, $debug = TRUE)
+    {
+
+        $rq = array(
+            'ReqId' => md5(rand()),
+            'MerchantPosId' => OpenPayU_Configuration::getMerchantPosId(),
+            'SessionId' => $sessionId,
+            'OrderStatus' => $status,
+            'Timestamp' => date('c')
+        );
+
+        $result = new OpenPayU_Result();
+        $result->setRequest($rq);
+
+        $url = OpenPayU_Configuration::getServiceUrl() . 'co/openpayu/OrderStatusUpdateRequest';
+
+        if ($debug)
+            OpenPayU::addOutputConsole('OpenPayU endpoint for OrderStatusUpdateRequest message', $url);
+
+        $oauthResult = OpenPayu_OAuth::accessTokenByClientCredentials();
+        OpenPayU::setOpenPayuEndPoint($url . '?oauth_token=' . $oauthResult->getAccessToken());
+
+        $xml = OpenPayU::buildOrderStatusUpdateRequest($rq);
+
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderStatusUpdateRequest message', htmlentities($xml));
+
+        $merchantPosId = OpenPayU_Configuration::getMerchantPosId();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
+        $response = OpenPayU::sendOpenPayuDocumentAuth($xml, $merchantPosId, $signatureKey);
+
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderStatusUpdateResponse message', htmlentities($response));
+
+        // verify response from PayU service
+        $status = OpenPayU::verifyOrderStatusUpdateResponseStatus($response);
+
+        if ($debug)
+            OpenPayU::addOutputConsole('OrderStatusUpdateResponse status', serialize($status));
+
+        $result->setStatus($status);
+        $result->setError($status['StatusCode']);
+        $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
+        $result->setResponse(OpenPayU::parseOpenPayUDocument($response));
+
+        return $result;
+    }
 }
-
-?>
