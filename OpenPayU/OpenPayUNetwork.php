@@ -108,7 +108,7 @@ class OpenPayUNetwork
             ';algorithm=' . $algorithm .
             ';content=DOCUMENT';
 
-        if (OpenPayUNetwork::isCurlInstalled())
+        if (!OpenPayUNetwork::isCurlInstalled())
             throw new Exception('curl is not available');
 
         return OpenPayU::sendDataAuth(OpenPayUNetwork::$openPayuEndPointUrl, 'DOCUMENT=' . $xml, $authData);
