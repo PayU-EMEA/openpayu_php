@@ -1,7 +1,6 @@
 <?php
 
 /*
-	ver. 0.1.9
 	OpenPayU Standard Library
 
 	@copyright  Copyright (c) 2011-2012 PayU

@@ -86,7 +86,9 @@ class OpenPayU extends OpenPayUBase
     {
 
         $arr = OpenPayU::parseOpenPayUDocument(stripslashes($data));
-        $status_code = $arr['OpenPayU']['OrderDomainResponse'][$message]['Status'];
+
+        if (isset($arr['OpenPayU']['OrderDomainResponse'][$message]['Status']))
+            $status_code = $arr['OpenPayU']['OrderDomainResponse'][$message]['Status'];
 
         if ($status_code == null)
             $status_code = $arr['OpenPayU']['HeaderResponse']['Status'];
@@ -124,9 +126,10 @@ class OpenPayU extends OpenPayUBase
      */
     public static function verifyOrderCreateResponse($data)
     {
-
         $arr = OpenPayU::parseOpenPayUDocument(stripslashes($data));
-        $status_code = $arr['OpenPayU']['OrderDomainResponse']['OrderCreateResponse']['Status'];
+
+        if (isset($arr['OpenPayU']['OrderDomainResponse']['OrderCreateResponse']['Status']))
+            $status_code = $arr['OpenPayU']['OrderDomainResponse']['OrderCreateResponse']['Status'];
 
         if ($status_code == null)
             $status_code = $arr['OpenPayU']['HeaderResponse']['Status'];
@@ -142,9 +145,10 @@ class OpenPayU extends OpenPayUBase
      */
     public static function verifyOrderRetrieveResponseStatus($data)
     {
-
         $arr = OpenPayU::parseOpenPayUDocument(stripslashes($data));
-        $status_code = $arr['OpenPayU']['OrderDomainResponse']['OrderRetrieveResponse']['Status'];
+
+        if (isset($arr['OpenPayU']['OrderDomainResponse']['OrderRetrieveResponse']['Status']))
+            $status_code = $arr['OpenPayU']['OrderDomainResponse']['OrderRetrieveResponse']['Status'];
 
         if ($status_code == null)
             $status_code = $arr['OpenPayU']['HeaderResponse']['Status'];

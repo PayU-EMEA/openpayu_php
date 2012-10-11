@@ -184,7 +184,7 @@ class OpenPayUBase extends OpenPayUNetwork
         // message level - open
         $xml->startElement($startElement);
 
-        OpenPayUBase::arr2xml($xml, $data);
+        self::arr2xml($xml, $data);
 
         // message level - close
         $xml->endElement();
@@ -244,7 +244,7 @@ class OpenPayUBase extends OpenPayUNetwork
         $xml = new XMLReader();
         $xml->XML($xmldata);
 
-        $assoc = OpenPayUBase::read($xml);
+        $assoc = self::read($xml);
 
         return $assoc;
     }

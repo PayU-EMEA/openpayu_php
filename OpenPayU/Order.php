@@ -55,6 +55,10 @@ class OpenPayU_Order extends OpenPayU
         $result = new OpenPayU_Result();
         $result->setStatus($status);
         $result->setError($status['StatusCode']);
+
+        if(isset($status['StatusDesc']))
+            $result->setMessage($status['StatusDesc']);
+
         $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
         $result->setRequest($order);
         $result->setResponse(OpenPayU::parseOpenPayUDocument($response));
@@ -67,7 +71,7 @@ class OpenPayU_Order extends OpenPayU
      * @access public
      * @param string $sessionId
      * @param bool $debug
-     * @return object $result
+     * @return OpenPayU_Result $result
      */
     public static function retrieve($sessionId, $debug = TRUE)
     {
@@ -105,6 +109,10 @@ class OpenPayU_Order extends OpenPayU
         $result = new OpenPayU_Result();
         $result->setStatus($status);
         $result->setError($status['StatusCode']);
+
+        if(isset($status['StatusDesc']))
+            $result->setMessage($status['StatusDesc']);
+
         $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
         $result->setRequest($req);
         $result->setResponse($response);
@@ -137,10 +145,10 @@ class OpenPayU_Order extends OpenPayU
 
         switch (key($msg)) {
             case 'OrderNotifyRequest':
-                return OpenPayU_Order::consumeNotification($xml, $response, $debug);
+                return self::consumeNotification($xml, $response, $debug);
             break;
             case 'ShippingCostRetrieveRequest':
-                return OpenPayU_Order::consumeShippingCostRetrieveRequest($xml, $debug);
+                return self::consumeShippingCostRetrieveRequest($xml, $debug);
             break;
             default:
                 return key($msg);
@@ -266,6 +274,10 @@ class OpenPayU_Order extends OpenPayU
 
         $result->setStatus($status);
         $result->setError($status['StatusCode']);
+
+        if(isset($status['StatusDesc']))
+            $result->setMessage($status['StatusDesc']);
+
         $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
         $result->setResponse(OpenPayU::parseOpenPayUDocument($response));
 
@@ -322,6 +334,10 @@ class OpenPayU_Order extends OpenPayU
 
         $result->setStatus($status);
         $result->setError($status['StatusCode']);
+
+        if(isset($status['StatusDesc']))
+            $result->setMessage($status['StatusDesc']);
+
         $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
         $result->setResponse(OpenPayU::parseOpenPayUDocument($response));
 

@@ -26,11 +26,13 @@ class OpenPayuOAuth extends OpenPayUBase
     {
         $params = 'code=' . $code . '&client_id=' . $oauth_client_name . '&client_secret=' . $oauth_client_secret . '&grant_type=authorization_code&redirect_uri=' . $page_redirect;
 
-        $response = OpenPayU::sendData(OpenPayUNetwork::$openPayuEndPointUrl, $params);
+        $response = OpenPayU::sendData(OpenPayUNetwork::getOpenPayuEndPoint(), $params);
 
         $resp_json = json_decode($response);
         OpenPayU::addOutputConsole('oauth response', $response);
-        $access_token = $resp_json->{"access_token"};
+
+        if(isset($resp_json->{"access_token"}))
+            $access_token = $resp_json->{"access_token"};
 
         if (empty($access_token))
             throw new Exception('access_token is empty, error: ' . $response);
@@ -51,11 +53,13 @@ class OpenPayuOAuth extends OpenPayUBase
     {
         $params = 'code=' . $code . '&client_id=' . $oauth_client_name . '&client_secret=' . $oauth_client_secret . '&grant_type=authorization_code&redirect_uri=' . $page_redirect;
 
-        $response = OpenPayU::sendData(OpenPayUNetwork::$openPayuEndPointUrl, $params);
+        $response = OpenPayU::sendData(OpenPayUNetwork::getOpenPayuEndPoint(), $params);
 
         $resp_json = json_decode($response);
         OpenPayU::addOutputConsole('oauth response', $response);
-        $access_token = $resp_json->{"access_token"};
+
+        if(isset($resp_json->{"access_token"}))
+            $access_token = $resp_json->{"access_token"};
 
         if (empty($access_token))
             throw new Exception('access_token is empty, error: ' . $response);
@@ -74,12 +78,13 @@ class OpenPayuOAuth extends OpenPayUBase
     {
         $params = 'client_id=' . $oauth_client_name . '&client_secret=' . $oauth_client_secret . '&grant_type=client_credentials';
 
-        $response = OpenPayU::sendData(OpenPayUNetwork::$openPayuEndPointUrl, $params);
+        $response = OpenPayU::sendData(OpenPayUNetwork::getOpenPayuEndPoint(), $params);
 
         $resp_json = json_decode($response);
         OpenPayU::addOutputConsole('oauth response', $response);
 
-        $access_token = $resp_json->{'access_token'};
+        if(isset($resp_json->{"access_token"}))
+            $access_token = $resp_json->{'access_token'};
 
         if (empty($access_token))
             throw new Exception('access_token is empty, error: ' . $response);
@@ -98,12 +103,13 @@ class OpenPayuOAuth extends OpenPayUBase
     {
         $params = 'client_id=' . $oauth_client_name . '&client_secret=' . $oauth_client_secret . '&grant_type=client_credentials';
 
-        $response = OpenPayU::sendData(OpenPayUNetwork::$openPayuEndPointUrl, $params);
+        $response = OpenPayU::sendData(OpenPayUNetwork::getOpenPayuEndPoint(), $params);
 
         $resp_json = json_decode($response);
         OpenPayU::addOutputConsole('oauth response', $response);
 
-        $access_token = $resp_json->{'access_token'};
+        if(isset($resp_json->{"access_token"}))
+            $access_token = $resp_json->{'access_token'};
 
         if (empty($access_token))
             throw new Exception('access_token is empty, error: ' . $response);

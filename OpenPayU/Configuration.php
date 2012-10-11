@@ -12,7 +12,6 @@
 
 class OpenPayU_Configuration
 {
-
     public static $env = 'sandbox';
     public static $merchantPosId = '';
     public static $posAuthKey = '';
@@ -52,7 +51,7 @@ class OpenPayU_Configuration
             self::$summaryUrl = self::$serviceUrl . 'co/summary';
             self::$authUrl = self::$serviceUrl . 'oauth/user/authorize';
         } else {
-            throw new Exception('Invalid value:'.$value.' for environment. Proper values are: "sandbox" or "secure".');
+            throw new Exception('Invalid value:' . $value . ' for environment. Proper values are: "sandbox" or "secure".');
         }
     }
 
@@ -98,7 +97,7 @@ class OpenPayU_Configuration
      */
     public static function setMerchantPosId($value)
     {
-        self::$merchantPosId = $value;
+        self::$merchantPosId = trim($value);
     }
 
     /**
@@ -116,7 +115,7 @@ class OpenPayU_Configuration
      */
     public static function setPosAuthKey($value)
     {
-        self::$posAuthKey = $value;
+        self::$posAuthKey = trim($value);
     }
 
     /**
@@ -134,7 +133,7 @@ class OpenPayU_Configuration
      */
     public static function setClientId($value)
     {
-        self::$clientId = $value;
+        self::$clientId = trim($value);
     }
 
     /**
@@ -152,7 +151,7 @@ class OpenPayU_Configuration
      */
     public static function setClientSecret($value)
     {
-        self::$clientSecret = $value;
+        self::$clientSecret = trim($value);
     }
 
     /**
@@ -170,7 +169,7 @@ class OpenPayU_Configuration
      */
     public static function setSignatureKey($value)
     {
-        self::$signatureKey = $value;
+        self::$signatureKey = trim($value);
     }
 
     /**

@@ -22,7 +22,7 @@ class OpenPayUNetwork
      */
     public static function setOpenPayuEndPoint($ep)
     {
-        OpenPayUNetwork::$openPayuEndPointUrl = $ep;
+        self::$openPayuEndPointUrl = $ep;
     }
 
     /**
@@ -46,10 +46,10 @@ class OpenPayUNetwork
      */
     public static function getOpenPayuEndPoint()
     {
-        if (empty(OpenPayUNetwork::$openPayuEndPointUrl))
+        if (empty(self::$openPayuEndPointUrl))
             throw new Exception('OpenPayUNetwork::$openPayuEndPointUrl is empty');
 
-        return OpenPayUNetwork::$openPayuEndPointUrl;
+        return self::$openPayuEndPointUrl;
     }
 
     /**
@@ -62,14 +62,14 @@ class OpenPayUNetwork
     public static function sendOpenPayuDocument($doc)
     {
 
-        if (empty(OpenPayUNetwork::$openPayuEndPointUrl))
+        if (empty(self::$openPayuEndPointUrl))
             throw new Exception('OpenPayUNetwork::$openPayuEndPointUrl is empty');
 
-        if (!OpenPayUNetwork::isCurlInstalled())
+        if (!self::isCurlInstalled())
             throw new Exception('cURL is not available');
 
         $xml = urlencode($doc);
-        return  OpenPayU::sendData(OpenPayUNetwork::$openPayuEndPointUrl, 'DOCUMENT=' . $xml);
+        return OpenPayU::sendData(self::$openPayuEndPointUrl, 'DOCUMENT=' . $xml);
     }
 
     /**
@@ -84,7 +84,7 @@ class OpenPayUNetwork
      */
     public static function sendOpenPayuDocumentAuth($doc, $merchantPosId, $signatureKey, $algorithm = 'MD5')
     {
-        if (empty(OpenPayUNetwork::$openPayuEndPointUrl))
+        if (empty(self::$openPayuEndPointUrl))
             throw new Exception('OpenPayUNetwork::$openPayuEndPointUrl is empty');
 
         if (empty($signatureKey))
@@ -108,10 +108,10 @@ class OpenPayUNetwork
             ';algorithm=' . $algorithm .
             ';content=DOCUMENT';
 
-        if (!OpenPayUNetwork::isCurlInstalled())
+        if (!self::isCurlInstalled())
             throw new Exception('curl is not available');
 
-        return OpenPayU::sendDataAuth(OpenPayUNetwork::$openPayuEndPointUrl, 'DOCUMENT=' . $xml, $authData);
+        return OpenPayU::sendDataAuth(self::$openPayuEndPointUrl, 'DOCUMENT=' . $xml, $authData);
     }
 
     /**
