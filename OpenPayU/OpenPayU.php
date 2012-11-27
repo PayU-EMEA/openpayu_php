@@ -10,6 +10,9 @@
 	http://twitter.com/openpayu
 */
 
+if (!defined('OPENPAYU_LIBRARY'))
+    exit;
+
 class OpenPayU extends OpenPayUBase
 {
 
@@ -131,7 +134,7 @@ class OpenPayU extends OpenPayUBase
         if (isset($arr['OpenPayU']['OrderDomainResponse']['OrderCreateResponse']['Status']))
             $status_code = $arr['OpenPayU']['OrderDomainResponse']['OrderCreateResponse']['Status'];
 
-        if ($status_code == null)
+        if (!isset($status_code))
             $status_code = $arr['OpenPayU']['HeaderResponse']['Status'];
 
         return $status_code;

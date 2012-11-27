@@ -1,7 +1,7 @@
 <?php
 
 /*
-	ver. 0.1.9.1
+	ver. 1.9.2
 	OpenPayU Standard Library
 
 	@copyright  Copyright (c) 2011-2012 PayU
@@ -13,9 +13,10 @@
 
 include_once('openpayu_domain.php');
 
+define('OPENPAYU_LIBRARY', true);
 /*
 these files are obsolete and will be removed in future.
-valid only for SDK 0.0.x 
+valid only for SDK 0.x
 */
 include_once('OpenPayU/OpenPayUNetwork.php');
 include_once('OpenPayU/OpenPayUBase.php');
@@ -23,7 +24,7 @@ include_once('OpenPayU/OpenPayU.php');
 include_once('OpenPayU/OpenPayUOAuth.php');
 
 /* 
-these files are 0.1.x compatible 
+these files are 1.x compatible
 */
 include_once('OpenPayU/Result.php');
 include_once('OpenPayU/ResultOAuth.php');

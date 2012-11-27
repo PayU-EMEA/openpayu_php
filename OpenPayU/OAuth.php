@@ -10,6 +10,9 @@
 	http://twitter.com/openpayu
 */
 
+if (!defined('OPENPAYU_LIBRARY'))
+    exit;
+
 class OpenPayU_OAuth extends OpenPayUOAuth
 {
     /**

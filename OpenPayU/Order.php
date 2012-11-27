@@ -10,6 +10,9 @@
 	http://twitter.com/openpayu
 */
 
+if (!defined('OPENPAYU_LIBRARY'))
+    exit;
+
 class OpenPayU_Order extends OpenPayU
 {
 
@@ -56,7 +59,7 @@ class OpenPayU_Order extends OpenPayU
         $result->setStatus($status);
         $result->setError($status['StatusCode']);
 
-        if(isset($status['StatusDesc']))
+        if (isset($status['StatusDesc']))
             $result->setMessage($status['StatusDesc']);
 
         $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
@@ -110,7 +113,7 @@ class OpenPayU_Order extends OpenPayU
         $result->setStatus($status);
         $result->setError($status['StatusCode']);
 
-        if(isset($status['StatusDesc']))
+        if (isset($status['StatusDesc']))
             $result->setMessage($status['StatusDesc']);
 
         $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
@@ -146,13 +149,13 @@ class OpenPayU_Order extends OpenPayU
         switch (key($msg)) {
             case 'OrderNotifyRequest':
                 return self::consumeNotification($xml, $response, $debug);
-            break;
+                break;
             case 'ShippingCostRetrieveRequest':
                 return self::consumeShippingCostRetrieveRequest($xml, $debug);
-            break;
+                break;
             default:
                 return key($msg);
-            break;
+                break;
         }
     }
 
@@ -275,7 +278,7 @@ class OpenPayU_Order extends OpenPayU
         $result->setStatus($status);
         $result->setError($status['StatusCode']);
 
-        if(isset($status['StatusDesc']))
+        if (isset($status['StatusDesc']))
             $result->setMessage($status['StatusDesc']);
 
         $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);
@@ -335,7 +338,7 @@ class OpenPayU_Order extends OpenPayU
         $result->setStatus($status);
         $result->setError($status['StatusCode']);
 
-        if(isset($status['StatusDesc']))
+        if (isset($status['StatusDesc']))
             $result->setMessage($status['StatusDesc']);
 
         $result->setSuccess($status['StatusCode'] == 'OPENPAYU_SUCCESS' ? TRUE : FALSE);

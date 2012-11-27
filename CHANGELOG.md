@@ -1,3 +1,7 @@
+## 1.9.2
+
+* Added protection against full path disclosure
+
 ## 0.1.9.1
 
 * Added messages of results
