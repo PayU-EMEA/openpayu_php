@@ -42,14 +42,16 @@ class OpenPayU_OAuth extends OpenPayUOAuth
             $json = OpenPayuOAuth::getAccessTokenByCode($code, OpenPayU_Configuration::getClientId(), OpenPayU_Configuration::getClientSecret(), $returnUri);
 
             $result->setAccessToken($json->{'access_token'});
-            if (isSet($json->{'payu_user_email'})) {
+            if (isset($json->{'payu_user_email'})) {
                 $result->setPayuUserEmail($json->{'payu_user_email'});
             }
-            if (isSet($json->{'payu_user_id'})) {
+            if (isset($json->{'payu_user_id'})) {
                 $result->setPayuUserId($json->{'payu_user_id'});
             }
             $result->setExpiresIn($json->{'expires_in'});
-            $result->setRefreshToken($json->{'refresh_token'});
+            if (isset($json->{'refresh_token'})) {
+                $result->setRefreshToken($json->{'refresh_token'});
+            }
             $result->setSuccess(1);
         } catch (Exception $ex) {
             $result->setSuccess(0);
@@ -82,14 +84,16 @@ class OpenPayU_OAuth extends OpenPayUOAuth
             $json = OpenPayUOAuth::getAccessTokenByClientCredentials(OpenPayU_Configuration::getClientId(), OpenPayU_Configuration::getClientSecret());
 
             $result->setAccessToken($json->{'access_token'});
-            if (isSet($json->{'payu_user_email'})) {
+            if (isset($json->{'payu_user_email'})) {
                 $result->setPayuUserEmail($json->{'payu_user_email'});
             }
-            if (isSet($json->{'payu_user_id'})) {
+            if (isset($json->{'payu_user_id'})) {
                 $result->setPayuUserId($json->{'payu_user_id'});
             }
             $result->setExpiresIn($json->{'expires_in'});
-            $result->setRefreshToken($json->{'refresh_token'});
+            if (isset($json->{'refresh_token'})) {
+                $result->setRefreshToken($json->{'refresh_token'});
+            }
             $result->setSuccess(1);
         } catch (Exception $ex) {
             $result->setSuccess(0);

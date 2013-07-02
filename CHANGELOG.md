@@ -1,3 +1,7 @@
+## 1.9.3
+
+* Fixed OAuth notice
+
 ## 1.9.2
 
 * Added protection against full path disclosure
