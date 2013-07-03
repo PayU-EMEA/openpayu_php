@@ -1,3 +1,7 @@
+## 1.9.4
+
+* Added parameter to HTTP header
+
 ## 1.9.3
 
 * Fixed OAuth notice

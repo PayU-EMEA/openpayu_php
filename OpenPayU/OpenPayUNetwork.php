@@ -134,7 +134,7 @@ class OpenPayUNetwork
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('OpenPayu-Signature:' . $authData));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('OpenPayu-Signature:' . $authData, 'X-OpenPayU-Signature:' . $authData));
 
         $response = curl_exec($ch);
 
