@@ -47,7 +47,7 @@ class OpenPayU_Order extends OpenPayU
         $response = OpenPayU::sendOpenPayuDocumentAuth($xml, $merchantPosId, $signatureKey);
 
         if ($debug)
-            OpenPayU::addOutputConsole('OrderCreateRequest message', htmlentities($response));
+            OpenPayU::addOutputConsole('OrderCreateResponse message', htmlentities($response));
 
         // verify response from PayU service
         $status = OpenPayU::verifyOrderCreateResponse($response);
