@@ -1,8 +1,10 @@
+## 1.9.4
+
+* Added parameter to HTTP header
+
 ## 1.9.3
 
-* Added order.cancel and order.statusUpdate functions
-* Added hostedOrderForm function
-* Unification according to ruby_sdk. Improve comments.
+* Fixed OAuth notice
 
 ## 1.9.2
 
