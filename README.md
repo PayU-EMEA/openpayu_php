@@ -35,9 +35,9 @@ Add this line to your application's:
 
 ```php
     OpenPayU_Configuration::setEnvironment('secure'); // secure, sandbox
-    OpenPayU_Configuration::setMerchantPosId('45654'); // Identifier of point of sale (POS)
+    OpenPayU_Configuration::setMerchantPosId('14527'); // Identifier of point of sale (POS)
     OpenPayU_Configuration::setPosAuthKey('s1gfjX5'); // POS auth key
-    OpenPayU_Configuration::setClientId('145227'); // ????
+    OpenPayU_Configuration::setClientId('145227'); //  Identifier of point of sale (POS)
     OpenPayU_Configuration::setClientSecret('65fe8d2f5324bc37ddb9ad7ba2f681fa'); //first MD5 key
     OpenPayU_Configuration::setSignatureKey('981823a26b1f62fb3542412e878fb42d'); //second MD5 key
     OpenPayU_Configuration::setApiVersion(2); // 1, 2
