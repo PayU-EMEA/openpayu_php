@@ -51,7 +51,7 @@ Add this line to your application's:
     $order['ContinueUrl'] = 'http://localhost/';
     $order['NotifyUrl'] = 'http://localhost/';
     $order['CustomerIp'] = '127.0.0.1';
-    $order['MerchantPosId'] = '45654';
+    $order['MerchantPosId'] = '145227';
     $order['Description'] = 'New order';
     $order['CurrencyCode'] = 'PLN';
     $order['TotalAmount'] = 1000;
