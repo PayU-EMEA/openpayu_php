@@ -44,59 +44,6 @@ Add this line to your application's:
 
 ##Usage
 
-###Creating Transparent order
-  
-  To create an order you must provide a Array with order:
-```php
-    $order['ContinueUrl'] = 'http://localhost/';
-    $order['NotifyUrl'] = 'http://localhost/';
-    $order['CustomerIp'] = '127.0.0.1';
-    $order['MerchantPosId'] = '145227';
-    $order['Description'] = 'New order';
-    $order['CurrencyCode'] = 'PLN';
-    $order['TotalAmount'] = 1000;
-    $order['ExtOrderId'] = '1342';
-    $order['ValidityTime'] = 48000;
-
-    $order['Products']['Product'][0]['Name'] = 'Product1';
-    $order['Products']['Product'][0]['UnitPrice'] = 1000;
-    $order['Products']['Product'][0]['Quantity'] = 1;
-
-    $order['PaymentMethods']['PaymentMethod'][0]['Type'] = 'PBL';
-
-    $order['Buyer']['Email'] = 'dd@ddd.pl';
-    $order['Buyer']['Phone'] = '123123123';
-    $order['Buyer']['FirstName'] = 'Jan';
-    $order['Buyer']['LastName'] = 'Kowalski';
-    $order['Buyer']['Language'] = 'pl_PL';
-    $order['Buyer']['NIN'] = '123456';
-
-    $order['PayMethods']['PayMethod'] = array('Type' => 'CARD_TOKEN', 'Value' => $card_token);
-```
-  When you have ready order Hash you can create new order:
-
-```php
-$order_result = OpenPayU_Order::create($order);
-```
-
-  If request succeed to create it will return "COMPLETE" as a status_code.
-  There might be also a redirect to page with confirmation.
-  There are three redirect types:
-
-  * WARNING_CONTINUE_REDIRECT
-  * WARNING_CONTINUE_CVV
-  * WARNING_CONTINUE_3DS
-
-```php
-$return = array('status' => $order_result->Status);
-
-if (!isset($order_result->Response->RedirectUri)) {
-    $return['RedirectUri'] = $order['ContinueUrl'];
-} else {
-    $return['RedirectUri'] = $order_result->Response->RedirectUri;
-}
-```
-
 ###Creating Hosted order
 
   If you pass the same Hash of order as above to hostedOrderForm you will
