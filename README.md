@@ -122,10 +122,10 @@ echo $orderFormData
         $body = file_get_contents('php://input');
         $data = stripslashes(trim($body));
 
-        $reponse = OpenPayU_Order::consumeNotification($data)
+        $response = OpenPayU_Order::consumeNotification($data);
         $response->Response->Status //NEW PENDING CANCELLED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
 
-        $rsp = OpenPayU::buildOrderNotifyResponse($reponse->Response->Order->OrderId);
+        $rsp = OpenPayU::buildOrderNotifyResponse($response->Response->Order->OrderId);
 
         //you should response to PayU with special structure (OrderNotifyResponse)
         header("Content-Type: application/json");
