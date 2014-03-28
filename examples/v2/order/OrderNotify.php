@@ -10,11 +10,10 @@
  * http://twitter.com/openpayu
  *
  */
-
 require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
+require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
 OpenPayU_Configuration::setApiVersion(2);
-require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $body = file_get_contents('php://input');

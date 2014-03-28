@@ -1,14 +1,14 @@
 <?php
-
 /*
 	OpenPayU Standard Library
-	
+
 	@copyright  Copyright (c) 2011-2013 PayU
 	@license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
 	http://www.payu.com
 	http://openpayu.com
 	http://twitter.com/openpayu
 */
+namespace OpenPayuSdk\OpenPayu;
 
 class OpenPayU_Configuration
 {
@@ -40,7 +40,7 @@ class OpenPayU_Configuration
     public static function setApiVersion($version)
     {
         if(empty($version))
-            throw new OpenPayU_Exception_Configuration('Invalid API version');
+            throw new \OpenPayU_Exception_Configuration('Invalid API version');
 
         self::$apiVersion = intval($version);
     }
@@ -61,7 +61,7 @@ class OpenPayU_Configuration
     public static function setHashAlgorithm($value)
     {
         if(!in_array($value, self::$_availableHashAlgorithm))
-            throw new OpenPayU_Exception_Configuration($value . ' - is not available');
+            throw new \OpenPayU_Exception_Configuration($value . ' - is not available');
 
         self::$hashAlgorithm = $value;
     }
@@ -90,7 +90,7 @@ class OpenPayU_Configuration
         $service = 'standard/';
 
         if(!in_array($value, self::$_availableEnvironment))
-            throw new OpenPayU_Exception_Configuration($value . ' - is not valid environment');
+            throw new \OpenPayU_Exception_Configuration($value . ' - is not valid environment');
 
         if (self::getApiVersion() >= 2) {
             $country = 'api/';
@@ -251,7 +251,7 @@ class OpenPayU_Configuration
     public static function setDataFormat($format)
     {
         if (!in_array($format, self::$_availableDataFormat))
-            throw new OpenPayU_Exception_Configuration("\"$format\" - is not valid data format");
+            throw new \OpenPayU_Exception_Configuration("\"$format\" - is not valid data format");
 
         self::$dataFormat = $format;
     }

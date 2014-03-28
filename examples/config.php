@@ -13,6 +13,9 @@
  *
  */
 
+namespace OpenPayuSdk\Examples;
+use OpenPayuSdk\OpenPayu\OpenPayU_Configuration;
+
 OpenPayU_Configuration::setEnvironment('custom','https://secure.payu.te2');
 OpenPayU_Configuration::setMerchantPosId('38699');
 OpenPayU_Configuration::setPosAuthKey('sdgxjX5'); //??

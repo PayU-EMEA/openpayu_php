@@ -1,4 +1,6 @@
 <?php
+namespace OpenPayuSdk\OpenPayu\V2;
+use OpenPayuSdk\OpenPayu\OpenPayU;
 
 /**
  * OpenPayU Order module

@@ -1,5 +1,4 @@
 <?php
-
 /*
  * ver. 1.9.2
  * OpenPayU Standard Library
@@ -10,6 +9,7 @@
  * http://openpayu.com
  * http://twitter.com/openpayu
 */
+namespace OpenPayuSdk\openpayu;
 
 include_once('openpayu_domain.php');
 
@@ -24,7 +24,7 @@ include_once('OpenPayU/OpenPayUBase.php');
 include_once('OpenPayU/OpenPayU.php');
 include_once('OpenPayU/OpenPayUOAuth.php');
 
-/* 
+/*
 these files are 1.x compatible
 */
 include_once('OpenPayU/Result.php');

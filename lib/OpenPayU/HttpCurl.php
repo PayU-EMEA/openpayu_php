@@ -8,6 +8,8 @@
  * http://openpayu.com
  * http://twitter.com/openpayu
  */
+namespace OpenPayuSdk\OpenPayu;
+
 class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
 {
     /**
@@ -28,14 +30,14 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
     public static function doRequest($requestType, $pathUrl, $data, $posId, $signatureKey)
     {
         if (empty($pathUrl))
-            throw new OpenPayU_Exception_Configuration('The end point is empty');
+            throw new \OpenPayU_Exception_Configuration('The end point is empty');
 
         if (empty($posId)) {
-            throw new OpenPayU_Exception_Configuration('PosId is empty');
+            throw new \OpenPayU_Exception_Configuration('PosId is empty');
         }
 
         if (empty($signatureKey)) {
-            throw new OpenPayU_Exception_Configuration('SignatureKey is empty');
+            throw new \OpenPayU_Exception_Configuration('SignatureKey is empty');
         }
 
         $userNameAndPassword = $posId.":".$signatureKey;
@@ -80,7 +82,7 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if($response === false)
-            throw new OpenPayU_Exception_Network(curl_error($ch));
+            throw new \OpenPayU_Exception_Network(curl_error($ch));
 
 //        $incomingSignature = self::getSignature(self::$headers);
 
@@ -89,7 +91,7 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
             $sign = OpenPayU_Util::parseSignature($incomingSignature);
 
             if(false === OpenPayU_Util::verifySignature($response, $sign->signature, OpenPayU_Configuration::getSignatureKey(), $sign->algorithm))
-                throw new OpenPayU_Exception_Authorization('Invalid signature - ' . $sign->signature);
+                throw new \OpenPayU_Exception_Authorization('Invalid signature - ' . $sign->signature);
         }
 
         curl_close($ch);

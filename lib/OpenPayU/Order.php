@@ -1,5 +1,4 @@
 <?php
-
 /*
 	OpenPayU Standard Library
 
@@ -9,6 +8,8 @@
 	http://openpayu.com
 	http://twitter.com/openpayu
 */
+
+namespace OpenPayuSdk\OpenPayu;
 
 if (!defined('OPENPAYU_LIBRARY'))
     exit;

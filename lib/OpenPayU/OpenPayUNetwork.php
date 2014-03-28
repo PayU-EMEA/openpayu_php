@@ -1,5 +1,4 @@
 <?php
-
 /*
 	OpenPayU Standard Library
 
@@ -9,6 +8,7 @@
 	http://openpayu.com
 	http://twitter.com/openpayu
 */
+namespace OpenPayuSdk\OpenPayu;
 
 class OpenPayUNetwork
 {
@@ -58,7 +58,7 @@ class OpenPayUNetwork
     public static function OpenPayU_Exception_Configuration()
     {
         if (empty(self::$openPayuEndPointUrl))
-            throw new OpenPayU_Exception_Configuration('OpenPayUNetwork::$openPayuEndPointUrl is empty');
+            throw new \OpenPayU_Exception_Configuration('OpenPayUNetwork::$openPayuEndPointUrl is empty');
 
         return self::$openPayuEndPointUrl;
     }
@@ -75,10 +75,10 @@ class OpenPayUNetwork
     {
 
         if (empty(self::$openPayuEndPointUrl))
-            throw new OpenPayU_Exception_Configuration('OpenPayUNetwork::$openPayuEndPointUrl is empty');
+            throw new \OpenPayU_Exception_Configuration('OpenPayUNetwork::$openPayuEndPointUrl is empty');
 
         if (!self::isCurlInstalled())
-            throw new OpenPayU_Exception_Configuration('cURL is not available');
+            throw new \OpenPayU_Exception_Configuration('cURL is not available');
 
         $xml = urlencode($doc);
         return OpenPayU::sendData(self::$openPayuEndPointUrl, 'DOCUMENT=' . $xml);
@@ -98,13 +98,13 @@ class OpenPayUNetwork
     public static function sendOpenPayuDocumentAuth($doc, $merchantPosId, $signatureKey, $algorithm = 'MD5')
     {
         if (empty(self::$openPayuEndPointUrl))
-            throw new OpenPayU_Exception_Configuration('OpenPayUNetwork::$openPayuEndPointUrl is empty');
+            throw new \OpenPayU_Exception_Configuration('OpenPayUNetwork::$openPayuEndPointUrl is empty');
 
         if (empty($signatureKey))
-            throw new OpenPayU_Exception_Configuration('Merchant Signature Key should not be null or empty.');
+            throw new \OpenPayU_Exception_Configuration('Merchant Signature Key should not be null or empty.');
 
         if (empty($merchantPosId))
-            throw new OpenPayU_Exception_Configuration('MerchantPosId should not be null or empty.');
+            throw new \OpenPayU_Exception_Configuration('MerchantPosId should not be null or empty.');
 
         $tosigndata = $doc . $signatureKey;
         $xml = urlencode($doc);
@@ -122,7 +122,7 @@ class OpenPayUNetwork
             ';content=DOCUMENT';
 
         if (!self::isCurlInstalled())
-            throw new OpenPayU_Exception_Configuration('curl is not available');
+            throw new \OpenPayU_Exception_Configuration('curl is not available');
 
         return OpenPayU::sendDataAuth(self::$openPayuEndPointUrl, 'DOCUMENT=' . $xml, $authData);
     }

@@ -1,4 +1,5 @@
 <?php
+namespace OpenPayuSdk\openpayu;
 
 /*
 	OpenPayU Standard Library
@@ -8,7 +9,7 @@
 	http://www.payu.com
 	http://openpayu.com
 	http://twitter.com/openpayu
-		
+
 */
 
 class OpenPayUDomain

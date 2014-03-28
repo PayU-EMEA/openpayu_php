@@ -10,6 +10,7 @@
  * http://twitter.com/openpayu
  *
  */
+namespace OpenPayuSdk\OpenPayu\V2;
 
 if (!defined('OPENPAYU_LIBRARY'))
     exit;

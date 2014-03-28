@@ -11,8 +11,9 @@
  *
  */
 
+namespace OpenPayuSdk\OpenPayu;
 
-class OpenPayU_Exception extends Exception
+class OpenPayU_Exception extends \Exception
 {
 
 }

@@ -4,6 +4,8 @@
  *
  * @copyright  Copyright (c) 2013 PayU
  */
+namespace OpenPayuSdk\OpenPayu;
+
 class OpenPayU_Http
 {
     /**
@@ -93,32 +95,33 @@ class OpenPayU_Http
     {
         switch ($statusCode) {
             default:
-                throw new OpenPayU_Exception_Network('Unexpected HTTP code response', $statusCode);
+                throw new \OpenPayU_Exception_Network('Unexpected HTTP code response', $statusCode);
                 break;
 
             case 400:
-                throw new OpenPayU_Exception(trim($message->Status->StatusCode . (isset($message->Status->StatusDesc) ?
+                throw new \OpenPayU_Exception(trim($message->Status->StatusCode . (isset
+                    ($message->Status->StatusDesc) ?
                     ' - ' . $message->Status->StatusDesc : '')), $statusCode);
                 break;
             case 403:
-                throw new OpenPayU_Exception_Authorization(trim($message->Status->StatusCode), $statusCode);
+                throw new \OpenPayU_Exception_Authorization(trim($message->Status->StatusCode), $statusCode);
                 break;
 
             case 404:
-                throw new OpenPayU_Exception_Network('The end point of the url not found');
+                throw new \OpenPayU_Exception_Network('The end point of the url not found');
                 break;
 
             case 408:
-                throw new OpenPayU_Exception_ServerError('Request timeout', $statusCode);
+                throw new \OpenPayU_Exception_ServerError('Request timeout', $statusCode);
                 break;
 
             case 500:
-                throw new OpenPayU_Exception_ServerError('Server Error: [' . (isset($message->Status->StatusDesc) ?
+                throw new \OpenPayU_Exception_ServerError('Server Error: [' . (isset($message->Status->StatusDesc) ?
                     $message->Status->StatusDesc : '') . ']', $statusCode);
                 break;
 
             case 503:
-                throw new OpenPayU_Exception_ServerMaintenance('Service unavailable', $statusCode);
+                throw new \OpenPayU_Exception_ServerMaintenance('Service unavailable', $statusCode);
                 break;
         }
     }
