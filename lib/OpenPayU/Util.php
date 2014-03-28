@@ -112,7 +112,7 @@ class OpenPayU_Util
         if (!empty($rootElement))
             $data = array($rootElement => $data);
 
-        return json_encode(array('OpenPayU' => $data));
+        return json_encode($data);
     }
 
     /**

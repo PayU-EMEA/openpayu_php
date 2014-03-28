@@ -38,7 +38,7 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
             throw new OpenPayU_Exception_Configuration('SignatureKey is empty');
         }
 
-        $userNameAndPassword = $posId+":"+$signatureKey;
+        $userNameAndPassword = $posId.":".$signatureKey;
 
         $header = array();
 
@@ -49,10 +49,11 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
                 default:
                 case 'xml':
                     $header[] = 'Content-Type:application/xml';
-                    $header[] = 'Content-Type:application/xml';
+                    $header[] = 'Accept:application/xml';
                     break;
                 case 'json':
                     $header[] = 'Content-Type:application/json';
+                    $header[] = 'Accept:application/json';
                     break;
             }
         }
@@ -81,7 +82,7 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
         if($response === false)
             throw new OpenPayU_Exception_Network(curl_error($ch));
 
-        $incomingSignature = self::getSignature(self::$headers);
+//        $incomingSignature = self::getSignature(self::$headers);
 
         if(!empty($incomingSignature))
         {

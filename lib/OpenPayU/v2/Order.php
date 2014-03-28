@@ -1,7 +1,7 @@
 <?php
 
 /**
- * OpenPayU Transparent Order module
+ * OpenPayU Order module
  *
  * @copyright  Copyright (c) 2013 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
@@ -22,6 +22,7 @@ if (!defined('OPENPAYU_LIBRARY')) {
 class OpenPayU_Order extends OpenPayU
 {
     const ORDER_SERVICE = 'orders/';
+    const SUCCESS = 'SUCCESS';
 
     /**
      * Creates new Order
@@ -34,12 +35,12 @@ class OpenPayU_Order extends OpenPayU
      */
     public static function create($order)
     {
-        $pathUrl = OpenPayU_Configuration::getServiceUrl() . ORDER_SERVICE;
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE;
 
         if (OpenPayU_Configuration::getDataFormat() == 'xml') {
-            $data = OpenPayU_Util::buildXmlFromArray($order, 'OrderCreateRequest', '1.0', 'UTF-8');
+            $data = OpenPayU_Util::buildXmlFromArray($order, 'OrderCreateRequest', '2.0', 'UTF-8');
         } elseif (OpenPayU_Configuration::getDataFormat() == 'json') {
-            $data = OpenPayU_Util::buildJsonFromArray($order, 'OrderCreateRequest');
+            $data = OpenPayU_Util::buildJsonFromArray($order);
         }
         if (empty($data)) {
             throw new OpenPayU_Exception('Empty message OrderCreateRequest');
@@ -65,8 +66,7 @@ class OpenPayU_Order extends OpenPayU
             throw new OpenPayU_Exception('Empty value of orderId');
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl(
-            ) . self::ORDER_SERVICE . $orderId;
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId;
 
         $result = self::verifyResponse(OpenPayU_Http::get($pathUrl, $pathUrl), 'OrderRetrieveResponse');
 
@@ -183,15 +183,14 @@ class OpenPayU_Order extends OpenPayU
             $message = OpenPayU_Util::convertJsonToArray($response['response'], true);
         }
 
-        if (isset($message['OpenPayU'][$messageName])) {
-            $status = isset($message['OpenPayU'][$messageName]['Status']) ? $message['OpenPayU'][$messageName]['Status'] : null;
-            $data['Status'] = $status;
-            unset($message['OpenPayU'][$messageName]['Status']);
-            $data['Response'] = $message['OpenPayU'][$messageName];
-        } elseif (isset($message['OpenPayU'])) {
-            $status = isset($message['OpenPayU']['Status']) ? $message['OpenPayU']['Status'] : null;
-            $data['Status'] = $status;
-            unset($message['OpenPayU']['Status']);
+        if (isset($message[$messageName])) {
+            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;;
+            unset($message[$messageName]['Status']);
+            $data['response'] = $message[$messageName];
+        } elseif (isset($message)) {
+            $data['response'] = $message;
+            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;;
+            unset($message['status']);
         }
 
         $result = self::build($data);
