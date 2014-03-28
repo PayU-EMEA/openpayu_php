@@ -1,0 +1,14 @@
+{"notifyUrl": "http:\/\/localhost\/", "customerIp": "::1", "merchantPosId": "38699", "description": "New order SDK", "currencyCode": "PLN", "totalAmount": 1000, "buyer": {
+    "email": "test@exmaple.com",
+    "phone": "000000000",
+    "firstName": "John",
+    "lastName": "Kowalski"
+}, "products": {
+    "products": [
+        {
+            "Name": "Product first",
+            "UnitPrice": 1000,
+            "Quantity": 1
+        }
+    ]
+}}

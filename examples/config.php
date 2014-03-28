@@ -1,4 +1,6 @@
 <?php
+//namespace OpenPayuSdk\Examples\V2;
+
 /**
  * OpenPayU
  *
@@ -11,22 +13,18 @@
  *
  */
 
-OpenPayU_Configuration::setEnvironment('custom','http://10.205.49.116');
-OpenPayU_Configuration::setMerchantPosId('45654');
-OpenPayU_Configuration::setPosAuthKey('sdgxjX5');
-OpenPayU_Configuration::setClientId('45654');
-OpenPayU_Configuration::setClientSecret('65fe8d2f60e2bc37ddb9ad7ba2f681fa');
-OpenPayU_Configuration::setSignatureKey('981852826b1f62fb24e1771e878fb42d');
-//OpenPayU_Configuration::$serviceUrl = "http://10.205.49.116/api/v2/";
-OpenPayU_Configuration::setApiVersion(2);
-OpenPayU_Configuration::setDataFormat('xml');
+OpenPayU_Configuration::setEnvironment('custom','https://secure.payu.te2');
+OpenPayU_Configuration::setMerchantPosId('38699');
+OpenPayU_Configuration::setPosAuthKey('sdgxjX5'); //??
+OpenPayU_Configuration::setClientId('38699'); //??
+OpenPayU_Configuration::setClientSecret('43a85986d580ba39de9f48d58c858354'); //??
+OpenPayU_Configuration::setSignatureKey('43a85986d580ba39de9f48d58c858354');
+OpenPayU_Configuration::setApiVersion(2); //??
+OpenPayU_Configuration::setDataFormat('json');
 OpenPayU_Configuration::setHashAlgorithm('MD5');
-
-
 
 $country = 'api/';
 $service = 'v2/';
-
 
 /* path for example files*/
 $dir = explode(basename(dirname(__FILE__)) . '/', $_SERVER['SCRIPT_NAME']);

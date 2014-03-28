@@ -23,6 +23,18 @@ class OpenPayU_Http
         return $response;
     }
 
+    public static function postWithSignature($pathUrl, $data)
+    {
+        //$signature = OpenPayU_Util::generateSignData($data, OpenPayU_Configuration::getHashAlgorithm(), OpenPayU_Configuration::getMerchantPosId(), OpenPayU_Configuration::getSignatureKey());
+
+        $posId = OpenPayU_Configuration::getMerchantPosId();
+        $sigantureKey = OpenPayU_Configuration::getSignatureKey();
+
+        $response = OpenPayU_HttpCurl::doRequest('POST', $pathUrl, $data, $posId, $sigantureKey);
+
+        return $response;
+    }
+
     /**
      * @param $pathUrl
      * @param $data
