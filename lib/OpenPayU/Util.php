@@ -232,7 +232,12 @@ class OpenPayU_Util
         }
 
         if (self::isAssocArray($array)){
-            $object = new stdClass();
+            $object = new OpenPayU_Result();
+        }
+        else{
+            $object = array();
+        }
+
         }
         else{
             $object = array();
@@ -247,6 +252,9 @@ class OpenPayU_Util
                     }
                     else{
                         $object->$name = self::parseArrayToObject($value);
+                    }
+                    else{
+                        $object->set($name,self::parseArrayToObject($value));
                     }
                 }
             }

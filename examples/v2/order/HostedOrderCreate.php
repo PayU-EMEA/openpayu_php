@@ -35,6 +35,10 @@
     $order['products']['products'][0]['unitPrice'] = 1000;
     $order['products']['products'][0]['quantity'] = 1;
 
+    $order['shippingMethods']['shippingMethods']['0']['price'] = 1000;
+    $order['shippingMethods']['shippingMethods']['0']['country'] = 'PL';
+    $order['shippingMethods']['shippingMethods']['0']['name'] = 'Courier Express';
+
     $rsp = OpenPayU_Order::create($order);
 ?>
 <!doctype html>

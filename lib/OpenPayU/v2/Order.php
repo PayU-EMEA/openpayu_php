@@ -193,7 +193,7 @@ class OpenPayU_Order extends OpenPayU
             unset($message['status']);
         }
 
-        $result = self::build($data);
+         $result = self::build($data);
 
         if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302) {
             return $result;

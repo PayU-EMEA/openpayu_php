@@ -106,7 +106,7 @@ class OpenPayU extends OpenPayUBase
      * Function returns OrderCancelResponse Status Document
      * @access public
      * @param string $data
-     * @return mixed
+     * @return OpenPayU_Result
      */
     public static function verifyOrderCancelResponseStatus($data)
     {
