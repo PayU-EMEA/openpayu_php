@@ -4,7 +4,6 @@
  *
  * @copyright  Copyright (c) 2012 PayU
  */
-namespace OpenPayuSdk\OpenPayu;
 
 class OpenPayU_Util
 {
@@ -21,10 +20,10 @@ class OpenPayU_Util
     public static function generateSignData($data, $algorithm = 'SHA', $merchantPosId = '', $signatureKey = '')
     {
         if (empty($signatureKey))
-            throw new \OpenPayU_Exception_Configuration('Merchant Signature Key should not be null or empty.');
+            throw new OpenPayU_Exception_Configuration('Merchant Signature Key should not be null or empty.');
 
         if (empty($merchantPosId))
-            throw new \OpenPayU_Exception_Configuration('MerchantPosId should not be null or empty.');
+            throw new OpenPayU_Exception_Configuration('MerchantPosId should not be null or empty.');
 
         $signature = '';
 

@@ -10,8 +10,6 @@
  * http://twitter.com/openpayu
  *
  */
-namespace OpenPayuSdk\OpenPayu\V2;
-use OpenPayuSdk\OpenPayu\OpenPayU;
 
 class OpenPayU_Refund extends OpenPayU
 {

@@ -1,4 +1,5 @@
 <?php
+
 /*
 	OpenPayU Standard Library
 
@@ -8,7 +9,6 @@
 	http://openpayu.com
 	http://twitter.com/openpayu
 */
-namespace OpenPayuSdk\OpenPayu;
 
 class OpenPayU_ResultOAuth
 {
