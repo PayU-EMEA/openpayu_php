@@ -40,8 +40,15 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 $order = OpenPayU_Order::retrieve(stripslashes($_POST['orderId']));
 
                 echo '<pre>';
-                var_dump($order->Status->StatusCode);
-                var_dump($order->Response->Orders->Order);
+                var_dump($order->getStatus()->statusCode);
+                var_dump($order->getResponse());
+                var_dump($order->getCountryCode());
+                var_dump($order->getError());
+                var_dump($order->getRequest());
+                var_dump($order->getSessionId());
+                var_dump($order->getSuccess());
+
+                var_dump($order);
                 echo '</pre>';
             } catch (OpenPayU_Exception $e) {
                 echo '<pre>';

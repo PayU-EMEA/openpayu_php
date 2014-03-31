@@ -231,12 +231,23 @@ class OpenPayU_Util
             return $array;
         }
 
-        $object = new stdClass();
+        if (self::isAssocArray($array)){
+            $object = new stdClass();
+        }
+        else{
+            $object = array();
+        }
+
         if (is_array($array) && count($array) > 0) {
             foreach ($array as $name => $value) {
                 $name = trim($name);
-                if (!empty($name)) {
-                    $object->$name = self::parseArrayToObject($value);
+                if (isset($name)){
+                    if (is_numeric($name)){
+                        $object[] = self::parseArrayToObject($value);
+                    }
+                    else{
+                        $object->$name = self::parseArrayToObject($value);
+                    }
                 }
             }
             return $object;

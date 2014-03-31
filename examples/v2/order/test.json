@@ -1,14 +1,136 @@
-{"notifyUrl": "http:\/\/localhost\/", "customerIp": "::1", "merchantPosId": "38699", "description": "New order SDK", "currencyCode": "PLN", "totalAmount": 1000, "buyer": {
-    "email": "test@exmaple.com",
-    "phone": "000000000",
-    "firstName": "John",
-    "lastName": "Kowalski"
-}, "products": {
-    "products": [
-        {
-            "Name": "Product first",
-            "UnitPrice": 1000,
-            "Quantity": 1
+{
+    "continueUrl": "",
+    "refReqId": "",
+    "reqId": "",
+    "version": "",
+    "properties": {
+        "properties": [
+            {
+                "value": "",
+                "name": ""
+            }
+        ]
+    },
+    "products": {
+        "products": [
+            {
+                "weight": "",
+                "categoryName": "",
+                "categoryId": "",
+                "extraInfo": "",
+                "subMerchantId": "",
+                "quantity": 0,
+                "discount": 0,
+                "unitPrice": 0,
+                "code": "",
+                "version": "",
+                "size": "",
+                "name": ""
+            }
+        ]
+    },
+    "buyer": {
+        "invoice": {
+            "countryCode": "",
+            "city": "",
+            "postalCode": "",
+            "postalBox": "",
+            "street": "",
+            "addressId": "",
+            "state": "",
+            "name": "",
+            "eInvoiceRequested": "",
+            "tIN": "",
+            "recipientPhone": "",
+            "recipientEmail": "",
+            "recipientName": ""
+        },
+        "billing": {
+            "countryCode": "",
+            "city": "",
+            "postalCode": "",
+            "postalBox": "",
+            "street": "",
+            "addressId": "",
+            "state": "",
+            "name": "",
+            "recipientPhone": "",
+            "recipientEmail": "",
+            "recipientName": ""
+        },
+        "delivery": {
+            "countryCode": "",
+            "city": "",
+            "postalCode": "",
+            "postalBox": "",
+            "street": "",
+            "addressId": "",
+            "state": "",
+            "name": "",
+            "recipientPhone": "",
+            "recipientEmail": "",
+            "recipientName": ""
+        },
+        "extCustomerId": "",
+        "nIN": "",
+        "lastName": "",
+        "firstName": "",
+        "phone": "",
+        "customerId": "",
+        "email": "",
+        "language": ""
+    },
+    "fee": {
+        "amount": 0,
+        "description": "",
+        "type": ""
+    },
+    "totalAmount": 0,
+    "validityTime": 0,
+    "customerIp": "",
+    "orderUrl": "",
+    "notifyUrl": "",
+    "merchantPosId": "",
+    "payMethods": {
+        "payMethod": {
+            "extPayMethodId": "",
+            "type": "",
+            "value": "",
+            "amount": 0,
+            "card": {
+                "cardholder": "",
+                "cVV": "",
+                "expirationYear": 0,
+                "expirationMonth": 0,
+                "number": ""
+            },
+            "currencyCode": ""
         }
-    ]
-}}
+    },
+    "extOrderId": "",
+    "settings": {
+        "eInvoiceRequested": false,
+        "eInvoiceProvided": false,
+        "invoiceDisabled": false,
+        "agreement": false
+    },
+    "currencyCode": "",
+    "description": "",
+    "shippingMethodsUrl": "",
+    "shippingMethods": {
+        "shippingMethods": [
+            {
+                "price": 0,
+                "country": "",
+                "name": ""
+            }
+        ]
+    },
+    "completeUrl": "",
+    "cancelUrl": "",
+    "shippingMethod": {
+        "price": 0,
+        "country": "",
+        "name": ""
+    }
+}

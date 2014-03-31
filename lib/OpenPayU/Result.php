@@ -28,7 +28,7 @@ class OpenPayU_Result
      */
     public function getStatus()
     {
-        return $this->status;
+        return $this->response->status;
     }
 
     /**
