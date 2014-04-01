@@ -16,7 +16,7 @@ The following PHP extensions are required:
 
 ## Documentation
 
-Full implementation guide [[English](http://www.payu.com/en/openpayu/guide.pdf)] [[Polish](http://www.payu.com/pl/openpayu/guide.pdf)].
+Full implementation guide [[Polish](http://developers.payu.com/)].
 
 Quick guide [[English](http://www.payu.com/en/openpayu/QuickGuide.pdf)] [[Polish](http://www.payu.com/pl/openpayu/QuickGuide.pdf)].
 
@@ -35,40 +35,39 @@ Add this line to your application's:
 
 ```php
     OpenPayU_Configuration::setEnvironment('secure'); // production
-    OpenPayU_Configuration::setMerchantPosId('145227'); // POS
+    OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID
     OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //second MD5 key
 ```
 
 ##Usage
 
-###Creating Hosted order
+###Creating "Hosted Order"
 
-   To create an order you must provide a Array with order data:
+   To create an order using HTML form you must provide an Array with order data:
 
    in your controller
 ```php
-    $order['ContinueUrl'] = 'http://localhost/';
-    $order['NotifyUrl'] = 'http://localhost/';
-    $order['CustomerIp'] = '127.0.0.1';
-    $order['MerchantPosId'] = '45654';
-    $order['Description'] = 'New order';
-    $order['CurrencyCode'] = 'PLN';
-    $order['TotalAmount'] = 1000;
-    $order['ExtOrderId'] = '1342';
-    $order['ValidityTime'] = 48000;
+    $order['continueUrl'] = 'http://localhost/';
+    $order['notifyUrl'] = 'http://localhost/';
+    $order['customerIp'] = '127.0.0.1';
+    $order['merchantPosId'] = '45654';
+    $order['description'] = 'New order';
+    $order['currencyCode'] = 'PLN';
+    $order['totalAmount'] = 1000;
+    $order['extOrderId'] = '1342';
+    $order['validityTime'] = 48000;
 
-    $order['Products']['Product'][0]['Name'] = 'Product1';
-    $order['Products']['Product'][0]['UnitPrice'] = 1000;
-    $order['Products']['Product'][0]['Quantity'] = 1;
+    $order['products']['product'][0]['name'] = 'Product1';
+    $order['products']['product'][0]['unitPrice'] = 1000;
+    $order['products']['product'][0]['quantity'] = 1;
 
-    $order['PaymentMethods']['PaymentMethod'][0]['Type'] = 'PBL';
+    $order['paymentMethods']['paymentMethod'][0]['type'] = 'PBL';
 
-    $order['Buyer']['Email'] = 'dd@ddd.pl';
-    $order['Buyer']['Phone'] = '123123123';
-    $order['Buyer']['FirstName'] = 'Jan';
-    $order['Buyer']['LastName'] = 'Kowalski';
-    $order['Buyer']['Language'] = 'pl_PL';
-    $order['Buyer']['NIN'] = '123456';
+    $order['buyer']['email'] = 'dd@ddd.pl';
+    $order['buyer']['phone'] = '123123123';
+    $order['buyer']['firstName'] = 'Jan';
+    $order['buyer']['lastName'] = 'Kowalski';
+    $order['buyer']['language'] = 'pl_PL';
 
     $orderFormData = OpenPayU_Order::hostedOrderForm($order);
 ```
@@ -81,6 +80,39 @@ Add this line to your application's:
   or just
 ```php
 echo $orderFormData
+```
+
+###Creating "Transparent Order" ( BETA version )
+
+   To create an order using REST API in back-end you must provide an Array with order data:
+
+   in your controller
+```php
+    $order['continueUrl'] = 'http://localhost/';
+    $order['notifyUrl'] = 'http://localhost/';
+    $order['customerIp'] = '127.0.0.1';
+    $order['merchantPosId'] = '45654';
+    $order['description'] = 'New order';
+    $order['currencyCode'] = 'PLN';
+    $order['totalAmount'] = 1000;
+    $order['extOrderId'] = '1342';
+    $order['validityTime'] = 48000;
+
+    $order['products']['product'][0]['name'] = 'Product1';
+    $order['products']['product'][0]['unitPrice'] = 1000;
+    $order['products']['product'][0]['quantity'] = 1;
+
+    $order['paymentMethods']['paymentMethod'][0]['type'] = 'PBL';
+
+    $order['buyer']['email'] = 'dd@ddd.pl';
+    $order['buyer']['phone'] = '123123123';
+    $order['buyer']['firstName'] = 'Jan';
+    $order['buyer']['lastName'] = 'Kowalski';
+    $order['buyer']['language'] = 'pl_PL';
+
+    $response = OpenPayU_Order::create($order);
+
+    header('Location:'.$response->getResponse()->redirectUri); //You must redirect your client to PayU payment summary page.
 ```
 
 ###Retrieving order from OpenPayU
@@ -103,8 +135,8 @@ echo $orderFormData
 
 ```php
     $status_update = array(
-        "OrderId" => 'Z963D5JQR2230925GUEST000P01',
-        "OrderStatus" => 'COMPLETED'
+        "orderId" => 'Z963D5JQR2230925GUEST000P01',
+        "orderStatus" => 'COMPLETED'
     );
 
     $response = OpenPayU_Order::status_update($status_update);
