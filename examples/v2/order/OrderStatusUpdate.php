@@ -12,10 +12,7 @@
  */
 
 require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-
-OpenPayU_Configuration::setApiVersion(2);
 require_once realpath(dirname(__FILE__)) . '/../../config.php';
-
 
 ?>
 <!doctype html>
@@ -39,8 +36,8 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
             try {
 
                 $status_update = array(
-                    "OrderId" => stripslashes($_POST['orderId']),
-                    "OrderStatus" => stripslashes($_POST['orderStatus'])
+                    "orderId" => stripslashes($_POST['orderId']),
+                    "orderStatus" => stripslashes($_POST['orderStatus'])
                 );
 
                 $response = OpenPayU_Order::statusUpdate($status_update);

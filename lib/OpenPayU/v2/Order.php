@@ -112,11 +112,11 @@ class OpenPayU_Order extends OpenPayU
         }
 
         if (OpenPayU_Configuration::getDataFormat() == 'xml') {
-            $data = OpenPayU_Util::buildXmlFromArray($orderStatusUpdate, 'OrderStatusUpdateRequest', '1.0', 'UTF-8');
+            $data = OpenPayU_Util::buildXmlFromArray($orderStatusUpdate, 'OrderStatusUpdateRequest', '2.0', 'UTF-8');
         } elseif (OpenPayU_Configuration::getDataFormat() == 'json') {
-            $data = OpenPayU_Util::buildJsonFromArray($orderStatusUpdate, 'OrderStatusUpdateRequest');
+            $data = OpenPayU_Util::buildJsonFromArray($orderStatusUpdate);
         }
-        $orderId = $orderStatusUpdate['OrderId'];
+        $orderId = $orderStatusUpdate['orderId'];
 
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId . '/status';
 
