@@ -43,6 +43,8 @@ Add this line to your application's:
 
 ###Creating "Hosted Order"
 
+   File with working example: [examples/v2/order/HostedOrderForm.php](examples/v2/order/HostedOrderForm.php)
+
    To create an order using HTML form you must provide an Array with order data:
 
    in your controller
@@ -84,6 +86,8 @@ echo $orderFormData
 
 ###Creating "Transparent Order" ( BETA version )
 
+   File with working example: [examples/v2/order/TransparentOrderCreate.php](examples/v2/order/TransparentOrderCreate.php)
+
    To create an order using REST API in back-end you must provide an Array with order data:
 
    in your controller
@@ -116,14 +120,20 @@ echo $orderFormData
 ```
 
 ###Retrieving order from OpenPayU
-  You can retrieve order by its PayU order_id
+
+   File with working example: [examples/v2/order/OrderRetrieve.php](examples/v2/order/OrderRetrieve.php)
+
+   You can retrieve order by its PayU order_id
 
 ```php
     $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01');
 ```
 
 ###Cancelling order
-  You can cancel order by its PayU order_id
+
+   File with working example: [examples/v2/order/OrderCancel.php](examples/v2/order/OrderCancel.php)
+
+   You can cancel order by its PayU order_id
 
 ```php
     $response = OpenPayU_Order::cancel('Z963D5JQR2230925GUEST000P01');
@@ -131,7 +141,9 @@ echo $orderFormData
 
 ###Updating order status
 
-  You can update order status to accept order when Autoreceive in POS is turned off
+   File with working example: [examples/v2/order/OrderStatusUpdate.php](examples/v2/order/OrderStatusUpdate.php)
+
+   You can update order status to accept order when Autoreceive in POS is turned off
 
 ```php
     $status_update = array(
@@ -144,7 +156,9 @@ echo $orderFormData
 
 ###Handling notifications from PayU
 
-  PayU sends requests to your application when order status changes
+   File with working example: [examples/v2/order/OrderNotify.php](examples/v2/order/OrderNotify.php)
+
+   PayU sends requests to your application when order status changes
 
 ```php
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -164,7 +178,9 @@ echo $orderFormData
 
 ###Refund money
 
-  You can create refund to refund money on buyer account
+   File with working example: [examples/v2/refund/RefundCreate.php](examples/v2/refund/RefundCreate.php)
+
+   You can create refund to refund money on buyer account
 
 ```php
     $refund = OpenPayU_Refund::create(
