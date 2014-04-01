@@ -10,9 +10,10 @@
  * http://twitter.com/openpayu
  *
  */
-OpenPayU_Configuration::setEnvironment('custom','https://secure.payu.te2');
-OpenPayU_Configuration::setMerchantPosId('38699');
-OpenPayU_Configuration::setSignatureKey('43a85986d580ba39de9f48d58c858354');
+//OpenPayU_Configuration::setEnvironment('custom','https://secure.payu.te2');
+OpenPayU_Configuration::setEnvironment('secure');
+OpenPayU_Configuration::setMerchantPosId('145227');
+OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50');
 
 /* path for example files*/
 $dir = explode(basename(dirname(__FILE__)) . '/', $_SERVER['SCRIPT_NAME']);

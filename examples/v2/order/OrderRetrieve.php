@@ -12,8 +12,6 @@
  */
 
 require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-
-OpenPayU_Configuration::setApiVersion(2);
 require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
 
@@ -37,32 +35,35 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
         <?php
         if (isset($_POST['orderId'])) {
             try {
-                $order = OpenPayU_Order::retrieve(stripslashes($_POST['orderId']));
+                $response = OpenPayU_Order::retrieve(stripslashes($_POST['orderId']));
+                $order = $response->getResponse()->orders->orders[0];
 
                 echo '<pre>';
-                var_dump($order->getStatus()->statusCode);
-                var_dump($order->getResponse());
-                var_dump($order->getCountryCode());
-                var_dump($order->getError());
-                var_dump($order->getRequest());
-                var_dump($order->getSessionId());
-                var_dump($order->getSuccess());
-
                 var_dump($order);
                 echo '</pre>';
+
+                echo '<table class="table table-hover table-bordered">';
+                echo '<thead>';
+                echo '<tr><th colspan="2">Important data from response</th></tr>';
+                echo '</thead>';
+                echo '<tbody>';
+                echo '<tr><td>Order status</td><td>'.$order->status.'</td></tr>';
+                echo '<tr><td>Order id</td><td>'.$order->orderId.'</td></tr>';
+                echo '<tr><td>Redirect Uri</td><td><a href="'.$order->notifyUrl.'">'.$order->notifyUrl.'</a></td></tr>';
+                echo '</tbody>';
+                echo '</table>';
             } catch (OpenPayU_Exception $e) {
                 echo '<pre>';
                 var_dump((string)$e);
                 echo '</pre>';
             }
-        } else {
-            ?>
+        }?>
             <form action="" method="post" class="form-horizontal">
                 <div class="control-group">
                     <label class="control-label" for="order">Order Id</label>
 
                     <div class="controls">
-                        <input class="span3" name="orderId" id="order" type="text" value=""/>
+                        <input class="span3" name="orderId" id="order" type="text" value="<?=@$_POST['orderId']?>"/>
                     </div>
                 </div>
                 <div class="control-group">
@@ -73,10 +74,6 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                     </div>
                 </div>
             </form>
-        <?php
-        }
-        ?>
     </div>
 </div>
 </html>
-

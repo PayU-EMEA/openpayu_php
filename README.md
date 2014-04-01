@@ -36,10 +36,7 @@ Add this line to your application's:
 ```php
     OpenPayU_Configuration::setEnvironment('secure'); // production
     OpenPayU_Configuration::setMerchantPosId('145227'); // POS
-    OpenPayU_Configuration::setClientSecret('12f071174cb7eb79d4aac5bc2f07563f'); //first MD5 key
     OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //second MD5 key
-    OpenPayU_Configuration::setApiVersion(2);
-    OpenPayU_Configuration::setDataFormat('json'); // json, xml
 ```
 
 ##Usage

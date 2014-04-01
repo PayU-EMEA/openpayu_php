@@ -35,20 +35,9 @@
     $order['buyer']['phone'] = '000000000';
     $order['buyer']['firstName'] = 'John';
     $order['buyer']['lastName'] = 'Kowalski';
-
-    $order['buyer']['delivery']['recipientName'] = $order['buyer']['firstName'].' '.$order['buyer']['lastName'];
-    $order['buyer']['delivery']['street'] = 'Exmpale str. 19';
-    $order['buyer']['delivery']['postalCode'] = '22-123';
-    $order['buyer']['delivery']['city'] = 'London';
-    $order['buyer']['delivery']['countryCode'] = 'PL';
-
     $order['products']['products'][0]['name'] = 'Product first';
     $order['products']['products'][0]['unitPrice'] = 1000;
     $order['products']['products'][0]['quantity'] = 1;
-
-    $order['shippingMethods']['shippingMethods']['0']['price'] = 1000;
-    $order['shippingMethods']['shippingMethods']['0']['country'] = 'PL';
-    $order['shippingMethods']['shippingMethods']['0']['name'] = 'Courier Express';
 
     $response = OpenPayU_Order::create($order);
 ?>
@@ -59,17 +48,6 @@
     <title>Transparent Order Create - OpenPayU v2</title>
     <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../layout/css/style.css">
-    <style type="text/css">
-        #payu-payment-form button[type=submit]{
-            border: 0px;
-            height: 35px;
-            width: 140px;
-            background: url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png');
-            background-repeat: no-repeat;
-            cursor: pointer;
-        }
-    </style>
-</head>
 </head>
 
 <body>
