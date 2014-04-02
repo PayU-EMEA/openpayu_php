@@ -1,7 +1,6 @@
-[![Build Status](https://magnum.travis-ci.com/PayU/openpayu_php_sdk.png?token=JKaQyiwkWT1iqL9Lipsp&branch=master)](https://magnum.travis-ci.com/PayU/openpayu_php_sdk)
 [![Code Climate](https://codeclimate.com/repos/524eb044f3ea00329815dff1/badges/885c2d52f25c02295344/gpa.png)](https://codeclimate.com/repos/524eb044f3ea00329815dff1/feed)
 
-# OpenPayU PHP Library 2.0
+# Official OpenPayU PHP Library 2.0
 
 The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2
 
