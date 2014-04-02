@@ -1,7 +1,7 @@
 [![Build Status](https://magnum.travis-ci.com/PayU/openpayu_php_sdk.png?token=JKaQyiwkWT1iqL9Lipsp&branch=master)](https://magnum.travis-ci.com/PayU/openpayu_php_sdk)
 [![Code Climate](https://codeclimate.com/repos/524eb044f3ea00329815dff1/badges/885c2d52f25c02295344/gpa.png)](https://codeclimate.com/repos/524eb044f3ea00329815dff1/feed)
 
-# OpenPayU PHP Library 2.x
+# OpenPayU PHP Library 2.0
 
 The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2
 
@@ -109,18 +109,19 @@ echo $orderFormData
     $order['continueUrl'] = 'http://localhost/';
     $order['notifyUrl'] = 'http://localhost/';
     $order['customerIp'] = '127.0.0.1';
-    $order['merchantPosId'] = '45654';
+    $order['merchantPosId'] = '145227';
     $order['description'] = 'New order';
     $order['currencyCode'] = 'PLN';
-    $order['totalAmount'] = 1000;
+    $order['totalAmount'] = 3200;
     $order['extOrderId'] = '1342';
-    $order['validityTime'] = 48000;
 
     $order['products']['product'][0]['name'] = 'Product1';
     $order['products']['product'][0]['unitPrice'] = 1000;
     $order['products']['product'][0]['quantity'] = 1;
 
-    $order['paymentMethods']['paymentMethod'][0]['type'] = 'PBL';
+    $order['products']['product'][1]['name'] = 'Product1';
+    $order['products']['product'][1]['unitPrice'] = 2200;
+    $order['products']['product'][1]['quantity'] = 1;
 
     $order['buyer']['email'] = 'dd@ddd.pl';
     $order['buyer']['phone'] = '123123123';
