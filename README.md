@@ -1,9 +1,9 @@
 [![Build Status](https://magnum.travis-ci.com/PayU/openpayu_php_sdk.png?token=JKaQyiwkWT1iqL9Lipsp&branch=master)](https://magnum.travis-ci.com/PayU/openpayu_php_sdk)
 [![Code Climate](https://codeclimate.com/repos/524eb044f3ea00329815dff1/badges/885c2d52f25c02295344/gpa.png)](https://codeclimate.com/repos/524eb044f3ea00329815dff1/feed)
 
-# OpenPayU PHP Library 1.x and 2.x
+# OpenPayU PHP Library 2.x
 
-The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 1 and ver. 2
+The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2
 
 ## Dependencies
 
@@ -16,10 +16,18 @@ The following PHP extensions are required:
 
 ## Documentation
 
-Full implementation guide [[English](http://www.payu.com/en/openpayu/guide.pdf)] [[Polish](http://www.payu.com/pl/openpayu/guide.pdf)].
+Full implementation guide [[Polish](http://developers.payu.com/)].
 
 Quick guide [[English](http://www.payu.com/en/openpayu/QuickGuide.pdf)] [[Polish](http://www.payu.com/pl/openpayu/QuickGuide.pdf)].
 
+Lots of methods need a parameter which value is a ORDER_ID. ORDER_ID is an identifier that is set by PayU
+Payment system, and it's used to invoke remote methods.
+
+There are two ways to get ORDER_ID.
+
+- In the first case when you receive notification message from PayU Payment System as a result of payment.
+- In the second case, when you get a response from method OpenPayU_Order::create. In both cases you will find
+ORDER_ID using this statement: $response->getResponse()->orderId.
 
 ## Installation
 
@@ -34,44 +42,48 @@ Add this line to your application's:
   To configure OpenPayU environment you must provide a set of mandatory data:
 
 ```php
-    OpenPayU_Configuration::setEnvironment('secure'); // production
-    OpenPayU_Configuration::setMerchantPosId('145227'); // POS
-    OpenPayU_Configuration::setClientSecret('12f071174cb7eb79d4aac5bc2f07563f'); //first MD5 key
-    OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //second MD5 key
-    OpenPayU_Configuration::setApiVersion(2);
-    OpenPayU_Configuration::setDataFormat('json'); // json, xml
+    OpenPayU_Configuration::setEnvironment('secure');
+    OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID (Checkout)
+    OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //Second MD5 key. You will find it in admin panel.
 ```
 
 ##Usage
 
-###Creating Hosted order
+Quick tip
 
-   To create an order you must provide a Array with order data:
+In many methods you will need to use PAYU ORDER ID
+
+
+###Creating "Hosted Order"
+
+   File with working example: [examples/v2/order/HostedOrderForm.php](examples/v2/order/HostedOrderForm.php)
+
+   To create an order using HTML form you must provide an Array with order data:
 
    in your controller
 ```php
-    $order['ContinueUrl'] = 'http://localhost/';
-    $order['NotifyUrl'] = 'http://localhost/';
-    $order['CustomerIp'] = '127.0.0.1';
-    $order['MerchantPosId'] = '45654';
-    $order['Description'] = 'New order';
-    $order['CurrencyCode'] = 'PLN';
-    $order['TotalAmount'] = 1000;
-    $order['ExtOrderId'] = '1342';
-    $order['ValidityTime'] = 48000;
+    $order['continueUrl'] = 'http://localhost/';
+    $order['notifyUrl'] = 'http://localhost/';
+    $order['customerIp'] = '127.0.0.1';
+    $order['merchantPosId'] = '145227';
+    $order['description'] = 'New order';
+    $order['currencyCode'] = 'PLN';
+    $order['totalAmount'] = 3200;
+    $order['extOrderId'] = '1342';
 
-    $order['Products']['Product'][0]['Name'] = 'Product1';
-    $order['Products']['Product'][0]['UnitPrice'] = 1000;
-    $order['Products']['Product'][0]['Quantity'] = 1;
+    $order['products']['product'][0]['name'] = 'Product1';
+    $order['products']['product'][0]['unitPrice'] = 1000;
+    $order['products']['product'][0]['quantity'] = 1;
 
-    $order['PaymentMethods']['PaymentMethod'][0]['Type'] = 'PBL';
+    $order['products']['product'][1]['name'] = 'Product1';
+    $order['products']['product'][1]['unitPrice'] = 2200;
+    $order['products']['product'][1]['quantity'] = 1;
 
-    $order['Buyer']['Email'] = 'dd@ddd.pl';
-    $order['Buyer']['Phone'] = '123123123';
-    $order['Buyer']['FirstName'] = 'Jan';
-    $order['Buyer']['LastName'] = 'Kowalski';
-    $order['Buyer']['Language'] = 'pl_PL';
-    $order['Buyer']['NIN'] = '123456';
+    $order['buyer']['email'] = 'dd@ddd.pl';
+    $order['buyer']['phone'] = '123123123';
+    $order['buyer']['firstName'] = 'Jan';
+    $order['buyer']['lastName'] = 'Kowalski';
+    $order['buyer']['language'] = 'pl_PL';
 
     $orderFormData = OpenPayU_Order::hostedOrderForm($order);
 ```
@@ -86,28 +98,71 @@ Add this line to your application's:
 echo $orderFormData
 ```
 
+###Creating "Transparent Order" ( BETA version )
+
+   File with working example: [examples/v2/order/TransparentOrderCreate.php](examples/v2/order/TransparentOrderCreate.php)
+
+   To create an order using REST API in back-end you must provide an Array with order data:
+
+   in your controller
+```php
+    $order['continueUrl'] = 'http://localhost/';
+    $order['notifyUrl'] = 'http://localhost/';
+    $order['customerIp'] = '127.0.0.1';
+    $order['merchantPosId'] = '45654';
+    $order['description'] = 'New order';
+    $order['currencyCode'] = 'PLN';
+    $order['totalAmount'] = 1000;
+    $order['extOrderId'] = '1342';
+    $order['validityTime'] = 48000;
+
+    $order['products']['product'][0]['name'] = 'Product1';
+    $order['products']['product'][0]['unitPrice'] = 1000;
+    $order['products']['product'][0]['quantity'] = 1;
+
+    $order['paymentMethods']['paymentMethod'][0]['type'] = 'PBL';
+
+    $order['buyer']['email'] = 'dd@ddd.pl';
+    $order['buyer']['phone'] = '123123123';
+    $order['buyer']['firstName'] = 'Jan';
+    $order['buyer']['lastName'] = 'Kowalski';
+    $order['buyer']['language'] = 'pl_PL';
+
+    $response = OpenPayU_Order::create($order);
+
+    header('Location:'.$response->getResponse()->redirectUri); //You must redirect your client to PayU payment summary page.
+```
+
 ###Retrieving order from OpenPayU
-  You can retrieve order by its PayU order_id
+
+   File with working example: [examples/v2/order/OrderRetrieve.php](examples/v2/order/OrderRetrieve.php)
+
+   You can retrieve order by its PayU order_id
 
 ```php
-    $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01');
+    $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01'); //as parameter use ORDER_ID
 ```
 
 ###Cancelling order
-  You can cancel order by its PayU order_id
+
+   File with working example: [examples/v2/order/OrderCancel.php](examples/v2/order/OrderCancel.php)
+
+   You can cancel order by its PayU order_id
 
 ```php
-    $response = OpenPayU_Order::cancel('Z963D5JQR2230925GUEST000P01');
+    $response = OpenPayU_Order::cancel('Z963D5JQR2230925GUEST000P01'); //as parameter use ORDER_ID
 ```
 
 ###Updating order status
 
-  You can update order status to accept order when Autoreceive in POS is turned off
+   File with working example: [examples/v2/order/OrderStatusUpdate.php](examples/v2/order/OrderStatusUpdate.php)
+
+   You can update order status to accept order.
 
 ```php
     $status_update = array(
-        "OrderId" => 'Z963D5JQR2230925GUEST000P01',
-        "OrderStatus" => 'COMPLETED'
+        "orderId" => 'Z963D5JQR2230925GUEST000P01', //as value use ORDER_ID
+        "orderStatus" => 'COMPLETED'
     );
 
     $response = OpenPayU_Order::status_update($status_update);
@@ -115,7 +170,9 @@ echo $orderFormData
 
 ###Handling notifications from PayU
 
-  PayU sends requests to your application when order status changes
+   File with working example: [examples/v2/order/OrderNotify.php](examples/v2/order/OrderNotify.php)
+
+   PayU sends requests to your application when order status changes
 
 ```php
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -135,11 +192,13 @@ echo $orderFormData
 
 ###Refund money
 
-  You can create refund to refund money on buyer account
+   File with working example: [examples/v2/refund/RefundCreate.php](examples/v2/refund/RefundCreate.php)
+
+   You can create refund to refund money on buyer account
 
 ```php
     $refund = OpenPayU_Refund::create(
-        'Z963D5JQR2230925GUEST000P01', //Order Id - required
+        'Z963D5JQR2230925GUEST000P01', //as a value use ORDER_ID
         'Money refund', //Description - required
         '100' //Amount - If not provided, returns whole transaction, optional
     );

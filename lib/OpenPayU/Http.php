@@ -76,6 +76,8 @@ class OpenPayU_Http
         $sigantureKey = OpenPayU_Configuration::getSignatureKey();
 
         $response = OpenPayU_HttpCurl::doRequest('DELETE', $pathUrl, $data, $posId, $sigantureKey);
+        
+        return $response;
     }
 
     /**

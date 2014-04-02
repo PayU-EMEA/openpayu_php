@@ -3,11 +3,12 @@
     "type": "library",
     "license": "LGPL-3.0",
     "description": "OpenPayU PHP Library",
+    "version": "2.0",
     "minimum-stability": "stable",
     "authors": [
         {
             "name": "OpenPayU",
-            "homepage": "http://www.payu.com"
+            "homepage": "http://develeopers.payu.com"
         }
     ],
     "require": {
@@ -15,7 +16,8 @@
         "ext-curl": "*",
         "ext-hash": "*",
         "ext-xmlreader": "*",
-        "ext-xmlwriter": "*"
+        "ext-xmlwriter": "*",
+        "phpunit/phpunit": "3.7.*"
     },
     "support": {
         "issues": "https://github.com/PayU/openpayu_php_sdk/issues"

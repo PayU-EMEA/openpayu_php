@@ -1,4 +1,8 @@
 <?php
+/**
+ * BEFORE USING THIS EXAMPLE, PLEASE ENSURE THAT YOU HAVE AN AGREEMENT SIGNED FOR THIS PAYMENT METHOD
+ */
+
 
 /**
  * OpenPayU
@@ -13,8 +17,6 @@
  */
 
 require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-
-OpenPayU_Configuration::setApiVersion(2);
 require_once realpath(dirname(__FILE__)) . '/../../config.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!empty($_POST['data']['token'])) {

@@ -231,12 +231,23 @@ class OpenPayU_Util
             return $array;
         }
 
-        $object = new stdClass();
+        if (self::isAssocArray($array)){
+            $object = new stdClass();
+        }
+        else{
+            $object = array();
+        }
+
         if (is_array($array) && count($array) > 0) {
             foreach ($array as $name => $value) {
                 $name = trim($name);
-                if (!empty($name)) {
-                    $object->$name = self::parseArrayToObject($value);
+                if (isset($name)){
+                    if (is_numeric($name)){
+                        $object[] = self::parseArrayToObject($value);
+                    }
+                    else{
+                        $object->$name = self::parseArrayToObject($value);
+                    }
                 }
             }
             return $object;
@@ -250,7 +261,17 @@ class OpenPayU_Util
      */
     public static function getRequestHeaders()
     {
-        return apache_request_headers();
+        if(!function_exists('apache_request_headers')) {
+                $headers = array();
+                foreach($_SERVER as $key => $value) {
+                    if(substr($key, 0, 5) == 'HTTP_') {
+                        $headers[str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))))] = $value;
+                    }
+                }
+                return $headers;
+        }else{
+            return apache_request_headers();
+        }
     }
 
     /**

@@ -1,8 +1,7 @@
 <?php
-
 /*
 	OpenPayU Standard Library
-	
+
 	@copyright  Copyright (c) 2011-2013 PayU
 	@license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
 	http://www.payu.com
@@ -12,8 +11,8 @@
 
 class OpenPayU_Configuration
 {
-    private static $_availableEnvironment = array('custom', 'secure', 'sandbox');
-    public static $env = 'sandbox';
+    private static $_availableEnvironment = array('custom', 'secure');
+    public static $env = 'secure';
     public static $merchantPosId = '';
     public static $posAuthKey = '';
     public static $clientId = '';
@@ -30,7 +29,7 @@ class OpenPayU_Configuration
     private static $hashAlgorithm = 'SHA-1';
 
     private static $_availableDataFormat = array('xml', 'json');
-    private static $dataFormat = 'xml';
+    private static $dataFormat = 'json';
 
     /**
      * @access public
@@ -267,5 +266,4 @@ class OpenPayU_Configuration
 
         return self::$dataFormat;
     }
-
 }

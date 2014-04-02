@@ -1,3 +1,10 @@
+## 2.0
+
+* Removed support for OpenPayU 1.0
+* Added support for OpenPayuU REST API
+* Fixed bugs
+* Added unit tests
+
 ## 1.9.3
 
 * Added order.cancel and order.statusUpdate functions

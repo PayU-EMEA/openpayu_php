@@ -11,8 +11,6 @@
  *
  */
 require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-
-OpenPayU_Configuration::setApiVersion(2);
 require_once realpath(dirname(__FILE__)) . '/../../config.php';
 ?>
 <!DOCTYPE html>

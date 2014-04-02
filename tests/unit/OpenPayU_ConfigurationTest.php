@@ -108,7 +108,6 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testServiceUrl()
     {
-        OpenPayU_Configuration::setApiVersion(2);
         OpenPayU_Configuration::setEnvironment('secure');
         $this->assertEquals('https://secure.payu.com/api/v2/', OpenPayU_Configuration::getServiceUrl());
     }
