@@ -45,7 +45,7 @@
     <html lang="en-US">
     <head>
         <meta charset="UTF-8">
-        <title>Order Cancel - OpenPayU v2</title>
+        <title>Generated Order Form - OpenPayU v2</title>
         <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
         <link rel="stylesheet" href="../../layout/css/style.css">
         <style type="text/css">
@@ -64,7 +64,7 @@
     <body>
     <div class="container">
         <div class="page-header">
-            <h1>Hosted Order Form - OpenPayU v2</h1>
+            <h1>Generated Order Form - OpenPayU v2</h1>
         </div>
         <div id="message"></div>
         <div id="unregisteredCardData">

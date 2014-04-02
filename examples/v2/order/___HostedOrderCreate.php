@@ -12,28 +12,32 @@
  */
 
     require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-
-    OpenPayU_Configuration::setApiVersion(2);
     require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
     $order = array();
 
-    //$order['ContinueUrl'] = 'http://localhost/';
-    $order['notifyUrl'] = 'http://localhost/'; //ok
-    $order['customerIp'] = $_SERVER['REMOTE_ADDR']; //ok
-    $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId(); //ok
-    $order['description'] = 'New order SDK'; //ok
-    $order['currencyCode'] = 'PLN'; //ok
-    $order['totalAmount'] = 1000; //ok
+    $order['continueUrl'] = 'http://localhost/';
+    $order['notifyUrl'] = 'http://localhost/';
+    $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
+    $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
+    $order['description'] = 'New order';
+    $order['currencyCode'] = 'PLN';
+    $order['totalAmount'] = 3200;
+    $order['extOrderId'] = '1342';
 
-    $order['buyer']['email'] = 'test@exmaple.com';
-    $order['buyer']['phone'] = '000000000';
-    $order['buyer']['firstName'] = 'John';
+    $order['products']['product'][0]['name'] = 'Product1';
+    $order['products']['product'][0]['unitPrice'] = 1000;
+    $order['products']['product'][0]['quantity'] = 1;
+
+    $order['products']['product'][1]['name'] = 'Product1';
+    $order['products']['product'][1]['unitPrice'] = 2200;
+    $order['products']['product'][1]['quantity'] = 1;
+
+    $order['buyer']['email'] = 'dd@ddd.pl';
+    $order['buyer']['phone'] = '123123123';
+    $order['buyer']['firstName'] = 'Jan';
     $order['buyer']['lastName'] = 'Kowalski';
-
-    $order['products']['products'][0]['name'] = 'Product first';
-    $order['products']['products'][0]['unitPrice'] = 1000;
-    $order['products']['products'][0]['quantity'] = 1;
+    $order['buyer']['language'] = 'pl_PL';
 
     $rsp = OpenPayU_Order::create($order);
 ?>
@@ -41,7 +45,7 @@
 <html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Order Cancel - OpenPayU v2</title>
+    <title>Hosted Order Create - OpenPayU v2</title>
     <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../layout/css/style.css">
     <style type="text/css">
