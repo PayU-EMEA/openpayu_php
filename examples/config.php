@@ -12,7 +12,6 @@
  * http://twitter.com/openpayu
  *
  */
-//OpenPayU_Configuration::setEnvironment('custom','https://secure.payu.te2');
 OpenPayU_Configuration::setEnvironment('secure');
 OpenPayU_Configuration::setMerchantPosId('145227');
 OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50');

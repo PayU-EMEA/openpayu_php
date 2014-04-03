@@ -19,25 +19,24 @@
     $order['ContinueUrl'] = 'http://localhost/';
     $order['NotifyUrl'] = 'http://localhost/';
     $order['CustomerIp'] = '127.0.0.1';
-    $order['MerchantPosId'] = '45654';
+    $order['MerchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
     $order['Description'] = 'New order';
     $order['CurrencyCode'] = 'PLN';
-    $order['TotalAmount'] = 1000;
-    $order['ExtOrderId'] = 'ABCD0002';
-    $order['ValidityTime'] = 48000;
+    $order['TotalAmount'] = 3200;
+    $order['ExtOrderId'] = '1342';
 
     $order['Products']['Product'][0]['Name'] = 'Product1';
     $order['Products']['Product'][0]['UnitPrice'] = 1000;
     $order['Products']['Product'][0]['Quantity'] = 1;
 
-    $order['PaymentMethods']['PaymentMethod'][0]['Type'] = 'PBL';
+    $order['Products']['Product'][1]['Name'] = 'Product2';
+    $order['Products']['Product'][1]['UnitPrice'] = 2200;
+    $order['Products']['Product'][1]['Quantity'] = 1;
 
     $order['Buyer']['Email'] = 'dd@ddd.pl';
     $order['Buyer']['Phone'] = '123123123';
-    $order['Buyer']['FirstName'] = 'John';
+    $order['Buyer']['FirstName'] = 'Jan';
     $order['Buyer']['LastName'] = 'Kowalski';
-    $order['Buyer']['Language'] = 'pl_PL';
-    $order['Buyer']['NIN'] = '123456';
 
     $rsp = OpenPayU_Order::hostedOrderForm($order);
 ?>
