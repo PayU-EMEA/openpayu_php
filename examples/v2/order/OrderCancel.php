@@ -10,11 +10,8 @@
  * http://twitter.com/openpayu
  *
  */
-
 require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
 require_once realpath(dirname(__FILE__)) . '/../../config.php';
-
-
 ?>
 <!doctype html>
 <html lang="en-US">

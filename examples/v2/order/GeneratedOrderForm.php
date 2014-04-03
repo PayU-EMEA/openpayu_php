@@ -16,8 +16,8 @@
 
     $order = array();
 
-    $order['ContinueUrl'] = 'http://localhost/';
-    $order['NotifyUrl'] = 'http://localhost/';
+    $order['ContinueUrl'] = 'http://localhost/examples/v2/order/ContinueUrl.php';
+    $order['NotifyUrl'] = 'http://localhost/examples/v2/order/OrderNotify.php';
     $order['CustomerIp'] = '127.0.0.1';
     $order['MerchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
     $order['Description'] = 'New order';

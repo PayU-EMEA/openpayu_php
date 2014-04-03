@@ -61,28 +61,27 @@ In many methods you will need to use PAYU ORDER ID
 
    in your controller
 ```php
-    $order['continueUrl'] = 'http://localhost/';
-    $order['notifyUrl'] = 'http://localhost/';
-    $order['customerIp'] = '127.0.0.1';
-    $order['merchantPosId'] = '145227';
-    $order['description'] = 'New order';
-    $order['currencyCode'] = 'PLN';
-    $order['totalAmount'] = 3200;
-    $order['extOrderId'] = '1342';
+    $order['ContinueUrl'] = 'http://localhost/';
+    $order['NotifyUrl'] = 'http://localhost/';
+    $order['CustomerIp'] = '127.0.0.1';
+    $order['MerchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
+    $order['Description'] = 'New order';
+    $order['CurrencyCode'] = 'PLN';
+    $order['TotalAmount'] = 3200;
+    $order['ExtOrderId'] = '1342';
 
-    $order['products']['product'][0]['name'] = 'Product1';
-    $order['products']['product'][0]['unitPrice'] = 1000;
-    $order['products']['product'][0]['quantity'] = 1;
+    $order['Products']['Product'][0]['Name'] = 'Product1';
+    $order['Products']['Product'][0]['UnitPrice'] = 1000;
+    $order['Products']['Product'][0]['Quantity'] = 1;
 
-    $order['products']['product'][1]['name'] = 'Product1';
-    $order['products']['product'][1]['unitPrice'] = 2200;
-    $order['products']['product'][1]['quantity'] = 1;
+    $order['Products']['Product'][1]['Name'] = 'Product2';
+    $order['Products']['Product'][1]['UnitPrice'] = 2200;
+    $order['Products']['Product'][1]['Quantity'] = 1;
 
-    $order['buyer']['email'] = 'dd@ddd.pl';
-    $order['buyer']['phone'] = '123123123';
-    $order['buyer']['firstName'] = 'Jan';
-    $order['buyer']['lastName'] = 'Kowalski';
-    $order['buyer']['language'] = 'pl_PL';
+    $order['Buyer']['Email'] = 'dd@ddd.pl';
+    $order['Buyer']['Phone'] = '123123123';
+    $order['Buyer']['FirstName'] = 'Jan';
+    $order['Buyer']['LastName'] = 'Kowalski';
 
     $orderFormData = OpenPayU_Order::hostedOrderForm($order);
 ```
@@ -107,26 +106,25 @@ echo $orderFormData
 ```php
     $order['continueUrl'] = 'http://localhost/';
     $order['notifyUrl'] = 'http://localhost/';
-    $order['customerIp'] = '127.0.0.1';
-    $order['merchantPosId'] = '145227';
+    $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
+    $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
     $order['description'] = 'New order';
     $order['currencyCode'] = 'PLN';
     $order['totalAmount'] = 3200;
     $order['extOrderId'] = '1342';
 
-    $order['products']['product'][0]['name'] = 'Product1';
-    $order['products']['product'][0]['unitPrice'] = 1000;
-    $order['products']['product'][0]['quantity'] = 1;
+    $order['products']['products'][0]['name'] = 'Product1';
+    $order['products']['products'][0]['unitPrice'] = 1000;
+    $order['products']['products'][0]['quantity'] = 1;
 
-    $order['products']['product'][1]['name'] = 'Product1';
-    $order['products']['product'][1]['unitPrice'] = 2200;
-    $order['products']['product'][1]['quantity'] = 1;
+    $order['products']['products'][1]['name'] = 'Product2';
+    $order['products']['products'][1]['unitPrice'] = 2200;
+    $order['products']['products'][1]['quantity'] = 1;
 
     $order['buyer']['email'] = 'dd@ddd.pl';
     $order['buyer']['phone'] = '123123123';
     $order['buyer']['firstName'] = 'Jan';
     $order['buyer']['lastName'] = 'Kowalski';
-    $order['buyer']['language'] = 'pl_PL';
 
     $response = OpenPayU_Order::create($order);
 
