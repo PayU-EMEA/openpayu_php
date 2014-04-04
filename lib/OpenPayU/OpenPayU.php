@@ -71,11 +71,10 @@ class OpenPayU extends OpenPayUBase
 
         $data = array(
             'ResId' => $reqId,
-            'Status' => array('StatusCode' =>
-                OpenPayU_Configuration::getApiVersion() < 2 ? 'OPENPAYU_SUCCESS' : 'SUCCESS')
+            'Status' => array('StatusCode' => 'SUCCESS')
         );
 
-        $xml = OpenPayU_Util::buildXmlFromArray($data, 'OrderNotifyResponse');
+        $xml = OpenPayU_Util::buildJsonFromArray($data, 'OrderNotifyResponse');
         return $xml;
     }
 
@@ -190,12 +189,65 @@ class OpenPayU extends OpenPayUBase
         return $xml;
     }
 
-
     protected static function build($data)
     {
         $instance = new OpenPayU_Result();
         $instance->init($data);
 
         return $instance;
+    }
+
+    /**
+     * @throws OpenPayU_Exception_Authorization
+     */
+    public static function verifyBasicAuthCredentials()
+    {
+        if (isset($_SERVER['PHP_AUTH_USER'])) {
+            $user = $_SERVER['PHP_AUTH_USER'];
+        } else {
+            OpenPayU_Exception_Authorization('Empty user name');
+        }
+
+        if (isset($_SERVER['PHP_AUTH_PW'])) {
+            $password = $_SERVER['PHP_AUTH_PW'];
+        } else {
+            OpenPayU_Exception_Authorization('Empty password');
+        }
+
+        if ($user !== OpenPayU_Configuration::getMerchantPosId() ||
+            $password !== OpenPayU_Configuration::getSignatureKey()
+        ) {
+            throw new OpenPayU_Exception_Authorization("invalid credentials");
+        }
+    }
+
+    /**
+     * @param $data
+     * @param $incomingSignature
+     * @throws OpenPayU_Exception_Authorization
+     */
+    public static function verifyDocumentSignature($data, $incomingSignature)
+    {
+        $sign = OpenPayU_Util::parseSignature($incomingSignature);
+
+        if (false === OpenPayU_Util::verifySignature(
+                $data,
+                $sign->signature,
+                OpenPayU_Configuration::getSignatureKey(),
+                $sign->algorithm
+            )
+        ) {
+            throw new OpenPayU_Exception_Authorization('Invalid signature - ' . $sign->signature);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isSecureConnection()
+    {
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
+            return true;
+        return false;
     }
 }

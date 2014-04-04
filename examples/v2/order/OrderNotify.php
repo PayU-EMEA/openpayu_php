@@ -23,13 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = OpenPayU_Order::consumeNotification($data);
         }
 
-        if ($result->Response->Order->OrderId) {
+        if ($result->getResponse()->order->orderId) {
 
             /* Check if OrderId exists in Merchant Service, update Order data by OrderRetrieveRequest */
-            $order = OpenPayU_Order::retrieve($result->Response->Order->OrderId);
+            $order = OpenPayU_Order::retrieve($result->getResponse()->order->orderId);
 
             /* If exists return OrderNotifyResponse */
-            $rsp = OpenPayU::buildOrderNotifyResponse($result->Response->Order->OrderId);
+            $rsp = OpenPayU::buildOrderNotifyResponse($result->getResponse()->order->orderId);
 
             if (!empty($rsp)) {
                 if (OpenPayU_Configuration::getDataFormat() == 'xml') {
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     echo $rsp;
                 } elseif (OpenPayU_Configuration::getDataFormat() == 'json') {
                     header("Content-Type: application/json");
-                    echo json_encode(OpenPayU_Util::parseXmlDocument(stripslashes($rsp)));
+                    echo $rsp;
                 }
             }
         }

@@ -88,8 +88,7 @@ class OpenPayU_Order extends OpenPayU
             throw new OpenPayU_Exception('Empty value of orderId');
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl(
-            ) . self::ORDER_SERVICE . $orderId;
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId;
 
         $result = self::verifyResponse(OpenPayU_Http::delete($pathUrl, $pathUrl), 'OrderCancelResponse');
         return $result;
@@ -134,6 +133,8 @@ class OpenPayU_Order extends OpenPayU
      */
     public static function consumeNotification($data)
     {
+        $sslConnection = self::isSecureConnection();;
+
         if (empty($data)) {
             throw new OpenPayU_Exception('Empty value of data');
         }
@@ -147,19 +148,12 @@ class OpenPayU_Order extends OpenPayU
                 OpenPayU_Configuration::setDataFormat('json');
             }
         }
-
         $incomingSignature = OpenPayU_HttpCurl::getSignature($headers);
 
-        $sign = OpenPayU_Util::parseSignature($incomingSignature);
-
-        if (false === OpenPayU_Util::verifySignature(
-                $data,
-                $sign->signature,
-                OpenPayU_Configuration::getSignatureKey(),
-                $sign->algorithm
-            )
-        ) {
-            throw new OpenPayU_Exception_Authorization('Invalid signature - ' . $sign->signature);
+        if ($sslConnection) {
+            self::verifyBasicAuthCredentials();
+        } else {
+            self::verifyDocumentSignature($data, $incomingSignature);
         }
 
         return OpenPayU_Order::verifyResponse(array('response' => $data, 'code' => 200), 'OrderNotifyRequest');
@@ -172,7 +166,8 @@ class OpenPayU_Order extends OpenPayU
      * @param string $messageName
      * @return null|OpenPayU_Result
      */
-    public static function verifyResponse($response, $messageName)
+    public
+    static function verifyResponse($response, $messageName)
     {
         $data = array();
         $httpStatus = $response['code'];
@@ -184,16 +179,16 @@ class OpenPayU_Order extends OpenPayU
         }
 
         if (isset($message[$messageName])) {
-            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;;
+            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;
             unset($message[$messageName]['Status']);
             $data['response'] = $message[$messageName];
         } elseif (isset($message)) {
             $data['response'] = $message;
-            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;;
+            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;
             unset($message['status']);
         }
 
-         $result = self::build($data);
+        $result = self::build($data);
 
         if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302) {
             return $result;
