@@ -178,7 +178,7 @@ echo $orderFormData
         $data = stripslashes(trim($body));
 
         $response = OpenPayU_Order::consumeNotification($data);
-        $response->Response->Status //NEW PENDING CANCELLED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
+        $response->Response->Status; //NEW PENDING CANCELLED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
 
         $rsp = OpenPayU::buildOrderNotifyResponse($response->Response->Order->OrderId);
 
