@@ -70,11 +70,11 @@ class OpenPayU extends OpenPayUBase
     {
 
         $data = array(
-            'ResId' => $reqId,
-            'Status' => array('StatusCode' => 'SUCCESS')
+            'resId' => $reqId,
+            'status' => array('statusCode' => 'SUCCESS')
         );
 
-        $xml = OpenPayU_Util::buildJsonFromArray($data, 'OrderNotifyResponse');
+        $xml = OpenPayU_Util::buildJsonFromArray($data);
         return $xml;
     }
 

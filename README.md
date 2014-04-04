@@ -48,11 +48,6 @@ Add this line to your application's:
 
 ##Usage
 
-Quick tip
-
-In many methods you will need to use PAYU ORDER ID
-
-
 ###Creating order using HTML form
 
    File with working example: [examples/v2/order/GeneratedOrderForm.php](examples/v2/order/GeneratedOrderForm.php)

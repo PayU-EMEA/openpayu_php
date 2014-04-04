@@ -287,6 +287,13 @@ class OpenPayU_Util
 
         foreach ($array as $key => $value) {
 
+            $key = ucfirst($key);
+
+            if ($key === $namespace && substr($key, 0,-1)){
+                substr($key, 0,-1);
+            }
+
+
             if ($namespace && $assoc) {
                 $key = $namespace . '.' . $key;
             } elseif ($namespace && !$assoc) {
@@ -311,4 +318,6 @@ class OpenPayU_Util
     {
         return array_keys($arr) !== range(0, count($arr) - 1);
     }
+
+    public
 }
