@@ -13,8 +13,8 @@
  *
  */
 OpenPayU_Configuration::setEnvironment('secure');
-OpenPayU_Configuration::setMerchantPosId('166336');
-OpenPayU_Configuration::setSignatureKey('9bd002150df084d7abdff0e426f9a00f');
+OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID (Checkout)
+OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //Second MD5 key. You will find it in admin panel.
 
 /* path for example files*/
 $dir = explode(basename(dirname(__FILE__)) . '/', $_SERVER['SCRIPT_NAME']);
