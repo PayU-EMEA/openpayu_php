@@ -53,9 +53,9 @@ Quick tip
 In many methods you will need to use PAYU ORDER ID
 
 
-###Creating "Hosted Order"
+###Creating order using HTML form
 
-   File with working example: [examples/v2/order/HostedOrderForm.php](examples/v2/order/HostedOrderForm.php)
+   File with working example: [examples/v2/order/GeneratedOrderForm.php](examples/v2/order/GeneratedOrderForm.php)
 
    To create an order using HTML form you must provide an Array with order data:
 
@@ -96,9 +96,9 @@ In many methods you will need to use PAYU ORDER ID
 echo $orderFormData
 ```
 
-###Creating "Transparent Order" ( BETA version )
+###Creating order using REST API
 
-   File with working example: [examples/v2/order/TransparentOrderCreate.php](examples/v2/order/TransparentOrderCreate.php)
+   File with working example: [examples/v2/order/OrderCreate.php](examples/v2/order/OrderCreate.php)
 
    To create an order using REST API in back-end you must provide an Array with order data:
 
