@@ -16,27 +16,27 @@
 
     $order = array();
 
-    $order['ContinueUrl'] = 'http://localhost/examples/v2/order/ContinueUrl.php';
-    $order['NotifyUrl'] = 'http://localhost/examples/v2/order/OrderNotify.php';
-    $order['CustomerIp'] = '127.0.0.1';
-    $order['MerchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
-    $order['Description'] = 'New order';
-    $order['CurrencyCode'] = 'PLN';
-    $order['TotalAmount'] = 3200;
-    $order['ExtOrderId'] = '1342';
+    $order['continueUrl'] = 'http://localhost/examples/v2/order/ContinueUrl.php';
+    $order['notifyUrl'] = 'http://localhost/examples/v2/order/OrderNotify.php';
+    $order['customerIp'] = '127.0.0.1';
+    $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
+    $order['description'] = 'New order';
+    $order['currencyCode'] = 'PLN';
+    $order['totalAmount'] = 3200;
+    $order['extOrderId'] = '1342';
 
-    $order['Products']['Product'][0]['Name'] = 'Product1';
-    $order['Products']['Product'][0]['UnitPrice'] = 1000;
-    $order['Products']['Product'][0]['Quantity'] = 1;
+    $order['products']['products'][0]['name'] = 'Product1';
+    $order['products']['products'][0]['unitPrice'] = 1000;
+    $order['products']['products'][0]['quantity'] = 1;
 
-    $order['Products']['Product'][1]['Name'] = 'Product2';
-    $order['Products']['Product'][1]['UnitPrice'] = 2200;
-    $order['Products']['Product'][1]['Quantity'] = 1;
+    $order['products']['products'][1]['name'] = 'Product2';
+    $order['products']['products'][1]['unitPrice'] = 2200;
+    $order['products']['products'][1]['quantity'] = 1;
 
-    $order['Buyer']['Email'] = 'dd@ddd.pl';
-    $order['Buyer']['Phone'] = '123123123';
-    $order['Buyer']['FirstName'] = 'Jan';
-    $order['Buyer']['LastName'] = 'Kowalski';
+    $order['buyer']['email'] = 'dd@ddd.pl';
+    $order['buyer']['phone'] = '123123123';
+    $order['buyer']['firstName'] = 'Jan';
+    $order['buyer']['lastName'] = 'Kowalski';
 
     $rsp = OpenPayU_Order::hostedOrderForm($order);
 ?>

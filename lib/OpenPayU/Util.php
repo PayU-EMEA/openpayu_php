@@ -287,12 +287,8 @@ class OpenPayU_Util
 
         foreach ($array as $key => $value) {
 
-            $key = ucfirst($key);
-
-            if ($key === $namespace && substr($key, 0,-1)){
-                substr($key, 0,-1);
-            }
-
+            //Temporary important changes only for order by form method
+            $key = self::changeFormFieldFormat($namespace, $key);
 
             if ($namespace && $assoc) {
                 $key = $namespace . '.' . $key;
@@ -319,5 +315,20 @@ class OpenPayU_Util
         return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
-    public
+    /**
+     * @param $namespace
+     * @param $key
+     * @return string
+     */
+    public static function changeFormFieldFormat($namespace, $key)
+    {
+        $key = ucfirst($key);
+
+        if ($key === $namespace && $key[strlen($key) - 1] == 's') {
+            return substr($key, 0, -1);
+        }
+        return $key;
+    }
+
+
 }
