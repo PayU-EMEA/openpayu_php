@@ -6,7 +6,7 @@
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  *
  * http://www.payu.com
- * http://openpayu.com
+ * http://developers.payu.com
  * http://twitter.com/openpayu
  *
  */

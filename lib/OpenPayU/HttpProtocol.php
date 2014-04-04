@@ -2,7 +2,7 @@
 /**
  * OpenPayU
  *
- * @copyright  Copyright (c) 2012 PayU
+ * @copyright  Copyright (c) 2014 PayU
  */
 interface OpenPayU_HttpProtocol
 {

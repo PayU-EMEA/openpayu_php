@@ -2,7 +2,7 @@
 /**
  * OpenPayU
  *
- * @copyright  Copyright (c) 2013 PayU
+ * @copyright  Copyright (c) 2014 PayU
  */
 class OpenPayU_Http
 {
@@ -76,7 +76,7 @@ class OpenPayU_Http
         $sigantureKey = OpenPayU_Configuration::getSignatureKey();
 
         $response = OpenPayU_HttpCurl::doRequest('DELETE', $pathUrl, $data, $posId, $sigantureKey);
-        
+
         return $response;
     }
 

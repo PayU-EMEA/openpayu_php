@@ -4,17 +4,17 @@
 /**
  * OpenPayU
  *
- * @copyright  Copyright (c) 2013 PayU
+ * @copyright  Copyright (c) 2014 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  *
  * http://www.payu.com
- * http://openpayu.com
+ * http://developers.payu.com
  * http://twitter.com/openpayu
  *
  */
 OpenPayU_Configuration::setEnvironment('secure');
-OpenPayU_Configuration::setMerchantPosId('145227');
-OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50');
+OpenPayU_Configuration::setMerchantPosId('166336');
+OpenPayU_Configuration::setSignatureKey('9bd002150df084d7abdff0e426f9a00f');
 
 /* path for example files*/
 $dir = explode(basename(dirname(__FILE__)) . '/', $_SERVER['SCRIPT_NAME']);

@@ -1,6 +1,6 @@
 <?php
 /*
- * 	Copyright (c) 2011-2012 PayU
+ * 	Copyright (c) 2011-2014 PayU
     http://www.payu.com
 */
 require_once realpath(dirname(__FILE__)) . '/../../lib/openpayu.php';

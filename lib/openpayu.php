@@ -4,10 +4,10 @@
  * ver. 1.9.2
  * OpenPayU Standard Library
 
- * @copyright  Copyright (c) 2011-2012 PayU
+ * @copyright  Copyright (c) 2011-2014 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
- * http://openpayu.com
+ * http://developers.payu.com
  * http://twitter.com/openpayu
 */
 
