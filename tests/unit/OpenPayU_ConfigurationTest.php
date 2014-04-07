@@ -18,8 +18,8 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testSetValidEnvironment()
     {
-        OpenPayU_Configuration::setEnvironment('sandbox');
-        $this->assertEquals('sandbox', OpenPayU_Configuration::getEnvironment());
+        OpenPayU_Configuration::setEnvironment('secure');
+        $this->assertEquals('secure', OpenPayU_Configuration::getEnvironment());
     }
 
     /**

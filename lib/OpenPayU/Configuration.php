@@ -81,7 +81,7 @@ class OpenPayU_Configuration
      * @param string $country
      * @throws OpenPayU_Exception_Configuration
      */
-    public static function setEnvironment($value = 'sandbox', $domain = 'payu.pl', $country = 'pl')
+    public static function setEnvironment($value = 'secure', $domain = 'payu.pl', $country = 'pl')
     {
         $value = strtolower($value);
         $domain = strtolower($domain) . '/';
@@ -96,7 +96,7 @@ class OpenPayU_Configuration
             $service = 'v2/';
         }
 
-        if ($value == 'sandbox' || $value == 'secure') {
+        if ($value == 'secure') {
             self::$env = $value;
 
             if(self::getApiVersion() >= 2)
