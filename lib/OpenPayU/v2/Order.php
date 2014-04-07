@@ -32,7 +32,8 @@ class OpenPayU_Order extends OpenPayU
         'formId' => 'payu-payment-form',
         'submitClass' => '',
         'submitId' => '',
-        'submitContent' => ''
+        'submitContent' => '',
+        'submitTarget' => '_blank'
     );
 
     /**
@@ -238,7 +239,7 @@ class OpenPayU_Order extends OpenPayU
         $htmlOutput = sprintf("<form method=\"POST\" action=\"%s\" id=\"%s\" class=\"%s\">\n", $orderFormUrl, $formParams['formId'], $formParams['formClass']);
         $htmlOutput .= $htmlFormFields;
         $htmlOutput .= sprintf('<input type="hidden" name="OpenPayu-Signature" value="%s" />', $signature);
-        $htmlOutput .= sprintf("<button type=\"submit\" formtarget=\"_blank\" id=\"%s\" class=\"%s\">%s</button>", $formParams['submitId'], $formParams['submitClass'], $formParams['submitContent']);
+        $htmlOutput .= sprintf("<button type=\"submit\" formtarget=\"%s\" id=\"%s\" class=\"%s\">%s</button>", $formParams['submitTarget'], $formParams['submitId'], $formParams['submitClass'], $formParams['submitContent']);
         $htmlOutput .= "</form>\n";
 
         return $htmlOutput;
