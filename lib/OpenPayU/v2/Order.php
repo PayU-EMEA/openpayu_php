@@ -23,6 +23,17 @@ class OpenPayU_Order extends OpenPayU
 {
     const ORDER_SERVICE = 'orders/';
     const SUCCESS = 'SUCCESS';
+    
+    /**
+     * @var array Default form parameters
+     */
+    protected static $defaultFormParams = array(
+        'formClass' => '',
+        'formId' => 'payu-payment-form',
+        'submitClass' => '',
+        'submitId' => '',
+        'submitContent' => ''
+    );
 
     /**
      * Creates new Order
@@ -166,8 +177,7 @@ class OpenPayU_Order extends OpenPayU
      * @param string $messageName
      * @return null|OpenPayU_Result
      */
-    public
-    static function verifyResponse($response, $messageName)
+    public static function verifyResponse($response, $messageName)
     {
         $data = array();
         $httpStatus = $response['code'];
@@ -204,11 +214,10 @@ class OpenPayU_Order extends OpenPayU
      *
      * @access public
      * @param $order An array containing full Order
-     * @param $submitButtonContent An optional string to be placed as submit button's content
-     * @param $submitButtonClass An optional string containing CSS classes to be applied to submit button
+     * @param $params An optional array with form elements' params
      * @return string Response html form
      */
-    public static function hostedOrderForm($order, $submitButtonContent = '', $submitButtonClass = '')
+    public static function hostedOrderForm($order, $params = array())
     {
         $orderFormUrl = OpenPayU_Configuration::getServiceUrl() . 'order';
 
@@ -223,11 +232,13 @@ class OpenPayU_Order extends OpenPayU
             OpenPayU_Configuration::getMerchantPosId(),
             OpenPayU_Configuration::getSignatureKey()
         );
+        
+        $formParams = array_merge(self::$defaultFormParams, $params);
 
-        $htmlOutput = sprintf("<form method=\"POST\" action=\"%s\" id=\"payu-payment-form\">\n", $orderFormUrl);
+        $htmlOutput = sprintf("<form method=\"POST\" action=\"%s\" id=\"%s\" class=\"%s\">\n", $orderFormUrl, $formParams['formId'], $formParams['formClass']);
         $htmlOutput .= $htmlFormFields;
         $htmlOutput .= sprintf('<input type="hidden" name="OpenPayu-Signature" value="%s" />', $signature);
-        $htmlOutput .= sprintf("<button type=\"submit\" formtarget=\"_blank\" class=\"%s\">%s</button>", $submitButtonClass, $submitButtonContent);
+        $htmlOutput .= sprintf("<button type=\"submit\" formtarget=\"_blank\" id=\"%s\" class=\"%s\">%s</button>", $formParams['submitId'], $formParams['submitClass'], $formParams['submitContent']);
         $htmlOutput .= "</form>\n";
 
         return $htmlOutput;
