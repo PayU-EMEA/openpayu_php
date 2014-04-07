@@ -203,10 +203,12 @@ class OpenPayU_Order extends OpenPayU
      * Generate a form body for hosted order
      *
      * @access public
-     * @param $order A array containing full Order
+     * @param $order An array containing full Order
+     * @param $submitButtonContent An optional string to be placed as submit button's content
+     * @param $submitButtonClass An optional string containing CSS classes to be applied to submit button
      * @return string Response html form
      */
-    public static function hostedOrderForm($order)
+    public static function hostedOrderForm($order, $submitButtonContent = '', $submitButtonClass = '')
     {
         $orderFormUrl = OpenPayU_Configuration::getServiceUrl() . 'order';
 
@@ -225,7 +227,7 @@ class OpenPayU_Order extends OpenPayU
         $htmlOutput = sprintf("<form method=\"POST\" action=\"%s\" id=\"payu-payment-form\">\n", $orderFormUrl);
         $htmlOutput .= $htmlFormFields;
         $htmlOutput .= sprintf('<input type="hidden" name="OpenPayu-Signature" value="%s" />', $signature);
-        $htmlOutput .= sprintf("<button type=\"submit\" formtarget=\"_blank\" />");
+        $htmlOutput .= sprintf("<button type=\"submit\" formtarget=\"_blank\" class=\"%s\">%s</button>", $submitButtonClass, $submitButtonContent);
         $htmlOutput .= "</form>\n";
 
         return $htmlOutput;
