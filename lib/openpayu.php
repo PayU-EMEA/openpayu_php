@@ -18,10 +18,8 @@
     include_once('OpenPayU/OpenPayUNetwork.php');
     include_once('OpenPayU/OpenPayUBase.php');
     include_once('OpenPayU/OpenPayU.php');
-    include_once('OpenPayU/OpenPayUOAuth.php');
 
     include_once('OpenPayU/Result.php');
-    include_once('OpenPayU/ResultOAuth.php');
     include_once('OpenPayU/Configuration.php');
 
 
@@ -31,6 +29,3 @@
     require_once('OpenPayU/Http.php');
     require_once('OpenPayU/HttpProtocol.php');
     require_once('OpenPayU/HttpCurl.php');
-    include_once('OpenPayU/OAuth.php');
-
-//    include(__DIR__ . "/" . $pClassName . ".php");
