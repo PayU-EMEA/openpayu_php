@@ -18,7 +18,11 @@
 
     $order['continueUrl'] = 'http://localhost/examples/v2/order/ContinueUrl.php';
     $order['notifyUrl'] = 'http://localhost/examples/v2/order/OrderNotify.php';
-    $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
+
+$order['orderUrl'] = 'http://localhost/orderurl';
+$order['completeUrl'] = 'http://localhost/complete';
+
+$order['customerIp'] = $_SERVER['REMOTE_ADDR'];
     $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
     $order['description'] = 'New order';
     $order['currencyCode'] = 'PLN';
@@ -37,6 +41,8 @@
     $order['buyer']['phone'] = '123123123';
     $order['buyer']['firstName'] = 'Jan';
     $order['buyer']['lastName'] = 'Kowalski';
+
+    $order['buyer']['language'] = 'DE';
 
     $response = OpenPayU_Order::create($order);
 ?>

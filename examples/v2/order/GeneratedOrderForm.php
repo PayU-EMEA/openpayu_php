@@ -25,7 +25,7 @@
     $order['totalAmount'] = 3200;
     $order['extOrderId'] = '1342';
 
-    $order['products']['products'][0]['name'] = 'Product1';
+    $order['products']['productxs'][0]['name'] = 'Product1';
     $order['products']['products'][0]['unitPrice'] = 1000;
     $order['products']['products'][0]['quantity'] = 1;
 
