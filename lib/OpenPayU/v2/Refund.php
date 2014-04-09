@@ -38,14 +38,7 @@ class OpenPayU_Refund extends OpenPayU
             $refund['Refund']['Amount'] = (int)$amount;
 
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . 'order/' . $orderId . '/refund' .
-            OpenPayU_Configuration::getDataFormat(true);
-
-        if(OpenPayU_Configuration::getDataFormat() == 'xml') {
-            $data = OpenPayU_Util::buildXmlFromArray($refund, 'RefundCreateRequest', '1.0', 'UTF-8');
-        }
-        elseif(OpenPayU_Configuration::getDataFormat() == 'json') {
-            $data = OpenPayU_Util::buildJsonFromArray($refund, 'RefundCreateRequest');
-        }
+        $data = OpenPayU_Util::buildJsonFromArray($refund, 'RefundCreateRequest');
 
         if (empty($data))
             throw new OpenPayU_Exception('Empty message RefundCreateResponse');
@@ -65,10 +58,7 @@ class OpenPayU_Refund extends OpenPayU
         $data = array();
         $httpStatus = $response['code'];
 
-        if (OpenPayU_Configuration::getDataFormat() == 'xml')
-            $message = OpenPayU_Util::parseXmlDocument($response['response']);
-        elseif (OpenPayU_Configuration::getDataFormat() == 'json')
-            $message = OpenPayU_Util::convertJsonToArray($response['response'], true);
+        $message = OpenPayU_Util::convertJsonToArray($response['response'], true);
 
         if (isset($message['OpenPayU'][$messageName])) {
             $status = $message['OpenPayU'][$messageName]['Status'];

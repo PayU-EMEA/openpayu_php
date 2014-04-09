@@ -243,19 +243,6 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
-     * @param string $format
-     * @throws OpenPayU_Exception_Configuration
-     */
-    public static function setDataFormat($format)
-    {
-        if (!in_array($format, self::$_availableDataFormat))
-            throw new OpenPayU_Exception_Configuration("\"$format\" - is not valid data format");
-
-        self::$dataFormat = $format;
-    }
-
-    /**
      * @return string
      */
     public static function getDataFormat($withDot = false)

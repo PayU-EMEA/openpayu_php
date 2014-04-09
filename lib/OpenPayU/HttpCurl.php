@@ -44,18 +44,8 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
 
         if(OpenPayU_Configuration::getApiVersion() >= 2)
         {
-            switch(OpenPayU_Configuration::getDataFormat())
-            {
-                default:
-                case 'xml':
-                    $header[] = 'Content-Type:application/xml';
-                    $header[] = 'Accept:application/xml';
-                    break;
-                case 'json':
-                    $header[] = 'Content-Type:application/json';
-                    $header[] = 'Accept:application/json';
-                    break;
-            }
+            $header[] = 'Content-Type:application/json';
+            $header[] = 'Accept:application/json';
         }
 
         $ch = curl_init();

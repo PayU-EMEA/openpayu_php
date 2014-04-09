@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $body = file_get_contents('php://input');
     $data = stripslashes(trim($body));
 
-    try{
+    try {
         if (!empty($data)) {
             $result = OpenPayU_Order::consumeNotification($data);
         }
@@ -32,18 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $rsp = OpenPayU::buildOrderNotifyResponse($result->getResponse()->order->orderId);
 
             if (!empty($rsp)) {
-                if (OpenPayU_Configuration::getDataFormat() == 'xml') {
-                    header("Content-Type: text/xml");
-                    echo $rsp;
-                } elseif (OpenPayU_Configuration::getDataFormat() == 'json') {
-                    header("Content-Type: application/json");
-                    echo $rsp;
-                }
+                header("Content-Type: application/json");
+                echo $rsp;
             }
         }
-    }
-    catch(OpenPayU_Exception $e)
-    {
+    } catch (OpenPayU_Exception $e) {
         echo $e->getMessage();
     }
 }

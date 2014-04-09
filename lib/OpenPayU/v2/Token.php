@@ -17,6 +17,7 @@ if (!defined('OPENPAYU_LIBRARY'))
 class OpenPayU_Token extends OpenPayU
 {
     /**
+     * @deprecated
      * @param array $data
      * @return OpenPayU_Result
      */

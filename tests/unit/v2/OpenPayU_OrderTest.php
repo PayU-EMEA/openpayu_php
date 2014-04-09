@@ -19,16 +19,11 @@ class OpenPayU_OrderTest extends PHPUnit_Framework_TestCase {
 
     protected function setUp()
     {
-
         OpenPayU_Configuration::setEnvironment('secure'); // production
-        OpenPayU_Configuration::setMerchantPosId('161656'); // POS
-        // OpenPayU_Configuration::setClientSecret('12f071174cb7eb79d4aac5bc2f07563f'); //first MD5 key
-        OpenPayU_Configuration::setSignatureKey('abe6ba848a8d6feb07191aa9f6c4c0a4'); //second MD5 key
-        OpenPayU_Configuration::setApiVersion(2);
-        OpenPayU_Configuration::setDataFormat('json'); // json, xml
+        OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID (Checkout)
+        OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //Second MD5 key. You will find it in admin panel.
 
         $this->initializeOrderData();
-
     }
 
     private function mockOpenPayU_HttpVerifyResponse($orderResponseType, $method, $with){
