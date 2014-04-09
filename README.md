@@ -10,8 +10,6 @@ The following PHP extensions are required:
 
 * cURL
 * hash
-* XMLWriter
-* XMLReader
 
 ## Documentation
 
@@ -45,6 +43,8 @@ Add this line to your application's:
 ```
 
 ##Usage
+
+Remember: All keys in "order array" must be in lowercase.
 
 ###Creating order using HTML form
 
