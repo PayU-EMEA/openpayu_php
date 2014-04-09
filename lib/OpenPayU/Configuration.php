@@ -28,11 +28,8 @@ class OpenPayU_Configuration
     private static $_availableHashAlgorithm = array('MD5', 'SHA', 'SHA1', 'SHA-1', 'SHA-256', 'SHA256', 'SHA_256');
     private static $hashAlgorithm = 'SHA-1';
 
-    private static $_availableDataFormat = array('json');
+    private static $_availableDataFormat = array('xml', 'json');
     private static $dataFormat = 'json';
-
-    private static $releaseVersion = '$Id$';
-
 
     /**
      * @access public
