@@ -17,8 +17,6 @@ The following PHP extensions are required:
 
 Full implementation guide [[Polish](http://developers.payu.com/)].
 
-Quick guide [[English](http://www.payu.com/en/openpayu/QuickGuide.pdf)] [[Polish](http://www.payu.com/pl/openpayu/QuickGuide.pdf)].
-
 Lots of methods need a parameter which value is a ORDER_ID. ORDER_ID is an identifier that is set by PayU
 Payment system, and it's used to invoke remote methods.
 
