@@ -18,6 +18,9 @@
 
     $order['continueUrl'] = 'http://localhost/examples/v2/order/ContinueUrl.php';
     $order['notifyUrl'] = 'http://localhost/examples/v2/order/OrderNotify.php';
+    $order['completeUrl'] = 'http://localhost/examples/layout/success.php';
+    $order['cancelUrl'] = 'http://localhost/examples/layout/error.php';
+
     $order['customerIp'] = '127.0.0.1';
     $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
     $order['description'] = 'New order';
@@ -25,7 +28,7 @@
     $order['totalAmount'] = 3200;
     $order['extOrderId'] = '1342';
 
-    $order['products']['productxs'][0]['name'] = 'Product1';
+    $order['products']['products'][0]['name'] = 'Product1';
     $order['products']['products'][0]['unitPrice'] = 1000;
     $order['products']['products'][0]['quantity'] = 1;
 

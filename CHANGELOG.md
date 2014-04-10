@@ -1,3 +1,15 @@
+## 2.0.2
+
+* Fixed some bugs
+* Updated README.md
+
+## 2.0.1
+
+* Fixed some bugs
+* Removed support for XML messages
+* Removed unsupported examples
+* Fixed problem with uppercase keys in order array
+
 ## 2.0
 
 * Removed support for OpenPayU 1.0

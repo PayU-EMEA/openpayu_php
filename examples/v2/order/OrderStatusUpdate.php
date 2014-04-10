@@ -65,7 +65,6 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                     <div class="controls">
                         <select name="orderStatus" id="status">
                             <option value="COMPLETED">COMPLETED</option>
-                            <option value="NEW">NEW</option>
                             <option value="REJECTED">REJECTED</option>
                         </select>
                     </div>

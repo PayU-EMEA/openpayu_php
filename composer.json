@@ -3,7 +3,7 @@
     "type": "library",
     "license": "LGPL-3.0",
     "description": "OpenPayU PHP Library",
-    "version": "2.0",
+    "version": "2.0.2",
     "minimum-stability": "stable",
     "authors": [
         {
@@ -15,8 +15,6 @@
         "php": ">=5.2.1",
         "ext-curl": "*",
         "ext-hash": "*",
-        "ext-xmlreader": "*",
-        "ext-xmlwriter": "*",
         "phpunit/phpunit": "3.7.*"
     },
     "support": {
