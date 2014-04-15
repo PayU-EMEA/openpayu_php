@@ -1,4 +1,5 @@
 <?php
+
 /*
 	OpenPayU Standard Library
 
@@ -28,8 +29,13 @@ class OpenPayU_Configuration
     private static $_availableHashAlgorithm = array('MD5', 'SHA', 'SHA1', 'SHA-1', 'SHA-256', 'SHA256', 'SHA_256');
     private static $hashAlgorithm = 'SHA-1';
 
-    private static $_availableDataFormat = array('xml', 'json');
     private static $dataFormat = 'json';
+
+    private static $sender = 'Generic';
+
+    const COMPOSER_JSON = "/composer.json";
+    const DEFAULT_SDK_VERSION = 'PHP SDK 2.0.X';
+
 
     /**
      * @access public
@@ -38,7 +44,7 @@ class OpenPayU_Configuration
      */
     public static function setApiVersion($version)
     {
-        if(empty($version))
+        if (empty($version))
             throw new OpenPayU_Exception_Configuration('Invalid API version');
 
         self::$apiVersion = intval($version);
@@ -59,7 +65,7 @@ class OpenPayU_Configuration
      */
     public static function setHashAlgorithm($value)
     {
-        if(!in_array($value, self::$_availableHashAlgorithm))
+        if (!in_array($value, self::$_availableHashAlgorithm))
             throw new OpenPayU_Exception_Configuration($value . ' - is not available');
 
         self::$hashAlgorithm = $value;
@@ -88,7 +94,7 @@ class OpenPayU_Configuration
         $country = strtolower($country) . '/';
         $service = 'standard/';
 
-        if(!in_array($value, self::$_availableEnvironment))
+        if (!in_array($value, self::$_availableEnvironment))
             throw new OpenPayU_Exception_Configuration($value . ' - is not valid environment');
 
         if (self::getApiVersion() >= 2) {
@@ -99,7 +105,7 @@ class OpenPayU_Configuration
         if ($value == 'secure') {
             self::$env = $value;
 
-            if(self::getApiVersion() >= 2)
+            if (self::getApiVersion() >= 2)
                 $domain = 'payu.com/';
 
             self::$serviceDomain = $domain;
@@ -243,14 +249,63 @@ class OpenPayU_Configuration
     }
 
     /**
+     * @access public
      * @return string
      */
     public static function getDataFormat($withDot = false)
     {
-        if ($withDot){
-            return ".".self::$dataFormat;
+        if ($withDot) {
+            return "." . self::$dataFormat;
         }
 
         return self::$dataFormat;
+    }
+
+    /**
+     * @access public
+     * @param string $sender
+     */
+    public static function setSender($sender)
+    {
+        self::$sender = $sender;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getSender()
+    {
+        return self::$sender;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getFullSenderName()
+    {
+        return sprintf("%s@%s", self::getSender(), self::getSdkVersion());
+    }
+
+    /**
+     * @return string
+     */
+    public static function getSdkVersion()
+    {
+        $composerFilePath = self::getComposerFilePath();
+        if (file_exists($composerFilePath)) {
+            $fileContent = file_get_contents($composerFilePath);
+            $composerData = json_decode($fileContent);
+            if (isset($composerData->version) && isset($composerData->extra[0]->engine) )
+                return sprintf("%s %s", $composerData->extra[0]->engine, $composerData->version);
+        }
+        return self::DEFAULT_SDK_VERSION;
+    }
+
+    /**
+     * @return string
+     */
+    private static function getComposerFilePath()
+    {
+        return '../../'.self::COMPOSER_JSON;
     }
 }

@@ -3,7 +3,12 @@
     "type": "library",
     "license": "LGPL-3.0",
     "description": "OpenPayU PHP Library",
-    "version": "2.0.2",
+    "version": "2.0.3",
+    "extra": [
+        {
+            "engine": "PHP SDK"
+        }
+    ],
     "minimum-stability": "stable",
     "authors": [
         {

@@ -65,14 +65,11 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($ch, CURLOPT_USERPWD, $userNameAndPassword);
 
-
         $response = curl_exec($ch);
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if($response === false)
             throw new OpenPayU_Exception_Network(curl_error($ch));
-
-//        $incomingSignature = self::getSignature(self::$headers);
 
         if(!empty($incomingSignature))
         {

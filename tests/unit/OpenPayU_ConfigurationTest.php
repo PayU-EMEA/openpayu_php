@@ -12,9 +12,13 @@
  */
 
 require_once realpath(dirname(__FILE__)) . '/../TestHelper.php';
+require realpath(dirname(__FILE__)).'\..\..\vendor/autoload.php';
+
 
 class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 {
+
+    const PHP_SDK_VERSION = 'PHP SDK 2.0.3';
 
     public function testSetValidEnvironment()
     {
@@ -29,21 +33,6 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testSetInvalidEnvironment()
     {
         OpenPayU_Configuration::setEnvironment('environment');
-    }
-
-    public function testSetValidDataFormat()
-    {
-        OpenPayU_Configuration::setDataFormat('json');
-        $this->assertEquals('json', OpenPayU_Configuration::getDataFormat());
-    }
-
-    /**
-     * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage ".txt" - is not valid data format
-     */
-    public function testSetInvalidDataFormat()
-    {
-        OpenPayU_Configuration::setDataFormat('.txt');
     }
 
     public function testSetValidApiVersion()
@@ -111,4 +100,41 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
         OpenPayU_Configuration::setEnvironment('secure');
         $this->assertEquals('https://secure.payu.com/api/v2/', OpenPayU_Configuration::getServiceUrl());
     }
+
+    public function testFullSenderName(){
+        $this->assertEquals('Generic@'.self::PHP_SDK_VERSION, OpenPayU_Configuration::getFullSenderName());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnValidSenderFullNameWhenSenderIsGiven(){
+        OpenPayU_Configuration::setSender("Test Data");
+        $this->assertEquals('Test Data@' . self::PHP_SDK_VERSION, OpenPayU_Configuration::getFullSenderName());
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnValidSDKVersionWhenComposerFileIsGiven(){
+        //when
+        $sdkVersion = OpenPayU_Configuration::getSdkVersion();
+        //then
+        $this->assertEquals(self::PHP_SDK_VERSION,$sdkVersion);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnDefgaultSDKVersionWhenComposerFileIsNotGiven(){
+        //given
+        $OpenPayU_ConfigurationMock = $this->getMock('OpenPayU_Configuration');
+        $OpenPayU_ConfigurationMock->staticExpects($this->any())->method('getComposerFilePath')
+            ->will($this->returnValue('mock.json'));
+        //when
+        $sdkVersion = $OpenPayU_ConfigurationMock::getSdkVersion();
+        //then
+        $this->assertEquals("xxx",$sdkVersion);
+    }
+
 }

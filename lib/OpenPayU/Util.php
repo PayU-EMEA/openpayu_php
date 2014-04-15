@@ -112,6 +112,8 @@ class OpenPayU_Util
         if (!empty($rootElement))
             $data = array($rootElement => $data);
 
+        $data = self::setSenderProperty($data);
+
         return json_encode($data);
     }
 
@@ -330,5 +332,15 @@ class OpenPayU_Util
         return $key;
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
+    public static function setSenderProperty($data)
+    {
+        $data['properties']['properties'][0]['name'] = 'sender';
+        $data['properties']['properties'][0]['value'] = OpenPayU_Configuration::getFullSenderName();
+        return $data;
+    }
 
 }
