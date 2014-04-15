@@ -312,7 +312,9 @@ class OpenPayU_Util
      */
     public static function isAssocArray($arr)
     {
-        return array_keys($arr) !== range(0, count($arr) - 1);
+        $arrKeys = array_keys($arr);
+        sort($arrKeys, SORT_NUMERIC);
+        return $arrKeys !== range(0, count($arr) - 1);
     }
 
     /**
