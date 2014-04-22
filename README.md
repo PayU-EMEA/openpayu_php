@@ -156,7 +156,7 @@ echo $orderFormData
         "orderStatus" => 'COMPLETED'
     );
 
-    $response = OpenPayU_Order::status_update($status_update);
+    $response = OpenPayU_Order::statusUpdate($status_update);
 ```
 
 ###Handling notifications from PayU
