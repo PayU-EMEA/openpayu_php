@@ -24,5 +24,8 @@
     },
     "support": {
         "issues": "https://github.com/PayU/openpayu_php_sdk/issues"
+    },
+    "autoload": {
+        "classmap": ["lib/"]
     }
 }
