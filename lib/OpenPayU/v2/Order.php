@@ -12,10 +12,6 @@
  *
  */
 
-if (!defined('OPENPAYU_LIBRARY')) {
-    exit;
-}
-
 /**
  * Class OpenPayU_Order
  */
