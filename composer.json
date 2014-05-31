@@ -19,7 +19,8 @@
     "require": {
         "php": ">=5.2.1",
         "ext-curl": "*",
-        "ext-hash": "*",
+        "ext-hash": "*"
+    "require-dev": {
         "phpunit/phpunit": "3.7.*"
     },
     "support": {
