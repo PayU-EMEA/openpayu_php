@@ -16,7 +16,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $body = file_get_contents('php://input');
-    $data = stripslashes(trim($body));
+    $data = trim($body);
 
     try {
         if (!empty($data)) {
