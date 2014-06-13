@@ -25,9 +25,23 @@ if (isset($_POST['orderId']))
     <title>Order Refund</title>
     <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../layout/css/style.css">
+    <script type="text/javascript" src="../../layout/js/jquery.min.js"></script>
 </head>
 </head>
 <body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#amount').blur(function(){
+            if($('#amount').val()!= 0 && $('#amount').val()<200){
+                $('#msg').html('<div class="alert alert-danger">Kwota zwrotu częściowego nie może być mniejsza niż 200 ' +
+                    'groszy!</div>')
+            }else{
+                $('#msg').html('')
+            }
+        })
+    })
+
+</script>
 <div class="container">
     <div class="page-header">
         <h1>Refund</h1>
@@ -45,8 +59,10 @@ if (isset($_POST['orderId']))
                 );
 
                 echo '<pre>';
-                var_dump($refund->Status->StatusCode);
-                var_dump($refund->Response->Refund);
+                echo '<br>';
+                echo $refund->getStatus().'<br>';
+                var_dump($refund->getResponse()->refund);
+
                 echo '</pre>';
             } catch (OpenPayU_Exception $e) {
                 echo '<pre>';
@@ -80,6 +96,7 @@ if (isset($_POST['orderId']))
                 <div class="control-group">
                     <label class="control-label" for="pay-button"></label>
 
+                    <div id="msg"></div>
                     <div class="controls">
                         <button class="btn btn-success" id="pay-button" type="submit">Make refund</button>
                     </div>

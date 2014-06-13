@@ -30,15 +30,17 @@ class OpenPayU_Refund extends OpenPayU
             throw new OpenPayU_Exception('Invalid description of refund');
 
         $refund = array(
-            'OrderId' => $orderId,
-            'Refund' => array('Description' => $description)
+            'orderId' => $orderId,
+            'refund' => array('description' => $description)
         );
 
         if (!empty($amount))
-            $refund['Refund']['Amount'] = (int)$amount;
+            $refund['refund']['amount'] = (int)$amount;
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl() . 'order/' . $orderId . '/refund' .
-        $data = OpenPayU_Util::buildJsonFromArray($refund, 'RefundCreateRequest');
+        $refund['refund']['currencyCode'] = "PLN";
+        $pathUrl = OpenPayU_Configuration::getServiceUrl(). $refund['orderId'] . '/refund';
+
+        $data = OpenPayU_Util::buildJsonFromArray($refund);
 
         if (empty($data))
             throw new OpenPayU_Exception('Empty message RefundCreateResponse');
@@ -53,27 +55,27 @@ class OpenPayU_Refund extends OpenPayU
      * @param string $messageName
      * @return null|OpenPayU_Result
      */
-    public static function verifyResponse($response, $messageName)
+    public static function verifyResponse($response, $messageName='')
     {
         $data = array();
         $httpStatus = $response['code'];
 
         $message = OpenPayU_Util::convertJsonToArray($response['response'], true);
 
-        if (isset($message['OpenPayU'][$messageName])) {
-            $status = $message['OpenPayU'][$messageName]['Status'];
-            $data['Status'] = $status;
-            unset($message['OpenPayU'][$messageName]['Status']);
-            $data['Response'] = $message['OpenPayU'][$messageName];
-        } elseif (isset($message['OpenPayU'])) {
-            $status = $message['OpenPayU']['Status'];
-            $data['Status'] = $status;
-            unset($message['OpenPayU']['Status']);
+        if (isset($message[$messageName])) {
+            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;
+            unset($message[$messageName]['Status']);
+            $data['response'] = $message[$messageName];
+        } elseif (isset($message)) {
+            $data['response'] = $message;
+            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;
+            unset($message['status']);
         }
 
         $result = self::build($data);
 
-        if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302)
+        if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302 || $httpStatus ==
+            400 || $httpStatus == 404)
             return $result;
         else {
             OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
