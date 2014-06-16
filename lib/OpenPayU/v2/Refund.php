@@ -38,7 +38,7 @@ class OpenPayU_Refund extends OpenPayU
             $refund['refund']['amount'] = (int)$amount;
 
         $refund['refund']['currencyCode'] = "PLN";
-        $pathUrl = OpenPayU_Configuration::getServiceUrl(). $refund['orderId'] . '/refund';
+        $pathUrl = OpenPayU_Configuration::getServiceUrl().'orders/'. $refund['orderId'] . '/refund';
 
         $data = OpenPayU_Util::buildJsonFromArray($refund);
 
