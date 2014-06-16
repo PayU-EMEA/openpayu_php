@@ -115,10 +115,10 @@ class OpenPayU_Http
                 break;
 
             case 500:
-                throw new OpenPayU_Exception_ServerError("PayU system is unavailable or your order is not processed.
+                throw new OpenPayU_Exception_ServerError('PayU system is unavailable or your order is not processed.
                 Error:
                 [' . (isset($message->Status->StatusDesc) ?
-                    $message->Status->StatusDesc : '')" . "]", $statusCode);
+                    $message->Status->StatusDesc : '') . ']', $statusCode);
                 break;
 
             case 503:

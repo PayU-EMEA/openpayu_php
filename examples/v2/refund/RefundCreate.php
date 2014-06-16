@@ -58,42 +58,12 @@ if (isset($_POST['orderId']))
                     isset($_POST['amount']) ? (int)$_POST['amount'] : null
                 );
 
-                switch ($refund->getStatus()){
-                    case 'SUCCESS':
-                        echo '<div class="alert alert-success">Żądanie zostało wykonane poprawnie. Poniżej znajdziesz odpowiedź serwera.</div>';
-                        echo '<pre>';
-                        echo '<br>';
-                        var_dump($refund->getResponse()->refund);
-                        echo '</pre>';
-                        break;
-                    case 'DATA_NOT_FOUND':
-                        echo '<div class="alert alert-warning">DATA_NOT_FOUND: W systemie PayU brak danych, które wskazano w żądaniu.</div>';
-                        break;
-                    case 'WARNING_CONTINUE_3_DS':
-                        echo '<div class="alert alert-warning">WARNING_CONTINUE_3_DS: Wymagana autoryzacja 3DS. System sprzedawcy musi wykonać przekierowanie w celu kontynuacji procesu płatności (można skorzystać z metody OpenPayU.authorize3DS()).</div>';
-                        break;
-                    case 'WARNING_CONTINUE_CVV':
-                        echo '<div class="alert alert-warning">WARNING_CONTINUE_CVV: Wymagana autoryzacja CVV/CVC. Wywołaj metodę OpenPayU.authorizeCVV().</div>';
-                        break;
-                    case 'ERROR_SYNTAX':
-                        echo '<div class="alert alert-warning">ERROR_SYNTAX: Błędna składnia żądania.</div>';
-                        break;
-                    case 'ERROR_VALUE_INVALID':
-                        echo '<div class="alert alert-warning">ERROR_VALUE_INVALID: Jedna lub więcej wartości jest nieprawidłowa.</div>';
-                        break;
-                    case 'ERROR_VALUE_MISSING':
-                        echo '<div class="alert alert-warning">ERROR_VALUE_MISSING: Brakuje jednej lub więcej wartości.</div>';
-                        break;
-                    case 'BUSINESS_ERROR':
-                        echo '<div class="alert alert-warning">BUSINESS_ERROR: System PayU jest niedostępny. Spróbuj ponownie później.</div>';
-                        break;
-                    case 'ERROR_INTERNAL':
-                        echo '<div class="alert alert-warning">ERROR_INTERNAL: System PayU jest niedostępny. Spróbuj ponownie później.</div>';
-                        break;
-                    case 'GENERAL_ERROR':
-                        echo '<div class="alert alert-warning">GENERAL_ERROR: Wystąpił niespodziewany błąd. Spróbuj ponownie później.</div>';
-                        break;
-                }
+                echo OpenPayU_Util::statusDesc($refund->getStatus());
+
+                echo '<pre>';
+                echo '<br>';
+                print_r($refund->getResponse());
+                echo '</pre>';
 
             } catch (OpenPayU_Exception $e) {
                 echo '<pre>';

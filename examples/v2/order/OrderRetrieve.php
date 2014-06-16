@@ -35,25 +35,33 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
         if (isset($_POST['orderId'])) {
             try {
                 $response = OpenPayU_Order::retrieve(stripslashes($_POST['orderId']));
-                $order = $response->getResponse()->orders->orders[0];
+
+                echo OpenPayU_Util::statusDesc($response->getStatus());
+                if($response->getStatus() == 'SUCCESS'){
+                    $order = $response->getResponse()->orders->orders[0];
+                    echo '<table class="table table-hover table-bordered">';
+                    echo '<thead>';
+                    echo '<tr><th colspan="2">Important data from response</th></tr>';
+                    echo '</thead>';
+                    echo '<tbody>';
+                    echo '<tr><td>Order status</td><td>'.$order->status.'</td></tr>';
+                    echo '<tr><td>Order id</td><td>'.$order->orderId.'</td></tr>';
+                    echo '<tr><td>Redirect Uri</td><td><a href="'.$order->notifyUrl.'">'.$order->notifyUrl.'</a></td></tr>';
+                    echo '</tbody>';
+                    echo '</table>';
+                }
 
                 echo '<pre>';
-                var_dump($order);
+                echo '<br>';
+                print_r($response->getResponse());
                 echo '</pre>';
 
-                echo '<table class="table table-hover table-bordered">';
-                echo '<thead>';
-                echo '<tr><th colspan="2">Important data from response</th></tr>';
-                echo '</thead>';
-                echo '<tbody>';
-                echo '<tr><td>Order status</td><td>'.$order->status.'</td></tr>';
-                echo '<tr><td>Order id</td><td>'.$order->orderId.'</td></tr>';
-                echo '<tr><td>Redirect Uri</td><td><a href="'.$order->notifyUrl.'">'.$order->notifyUrl.'</a></td></tr>';
-                echo '</tbody>';
-                echo '</table>';
             } catch (OpenPayU_Exception $e) {
                 echo '<pre>';
-                var_dump((string)$e);
+                echo 'Error code: '.$e->getCode();
+                echo '<br>';
+                echo 'Error message: '.$e->getMessage();
+                echo '<br>';
                 echo '</pre>';
             }
         }?>

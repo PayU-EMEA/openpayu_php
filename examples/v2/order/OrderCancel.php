@@ -32,13 +32,20 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
         <?php
         if (isset($_POST['orderId'])) {
             try {
+
                 $response = OpenPayU_Order::cancel(stripslashes($_POST['orderId']));
+                echo OpenPayU_Util::statusDesc($response->getStatus());
+
                 echo '<pre>';
-                var_dump($response->Status);
+                echo '<br>';
+                print_r($response->getResponse());
                 echo '</pre>';
-            } catch (OpenPayU_Exception $e) {
+            }catch (OpenPayU_Exception $e) {
                 echo '<pre>';
-                var_dump((string)$e);
+                echo 'Error code: '.$e->getCode();
+                echo '<br>';
+                echo 'Error message: '.$e->getMessage();
+                echo '<br>';
                 echo '</pre>';
             }
         } else {

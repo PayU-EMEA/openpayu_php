@@ -345,4 +345,44 @@ class OpenPayU_Util
         return $data;
     }
 
+    public static function statusDesc($response){
+
+        $msg = '';
+
+        switch ($response){
+            case 'SUCCESS':
+                $msg = '<div class="alert alert-success">SUCCESS: Request has been processed correctly.</div>';
+            break;
+            case 'DATA_NOT_FOUND':
+                $msg = '<div class="alert alert-warning">DATA_NOT_FOUND: Data indicated in the request is not available in the PayU system.</div>';
+            break;
+            case 'WARNING_CONTINUE_3_DS':
+                $msg = '<div class="alert alert-warning">WARNING_CONTINUE_3_DS: 3DS authorization required.Redirect the Buyer to PayU to continue the 3DS process by calling OpenPayU.authorize3DS().</div>';
+            break;
+            case 'WARNING_CONTINUE_CVV':
+                $msg = '<div class="alert alert-warning">WARNING_CONTINUE_CVV: CVV/CVC authorization required. Call OpenPayU.authorizeCVV() method.</div>';
+            break;
+            case 'ERROR_SYNTAX':
+                $msg = '<div class="alert alert-warning">ERROR_SYNTAX: BIncorrect request syntax. Supported formats are JSON or XML.</div>';
+            break;
+            case 'ERROR_VALUE_INVALID':
+                $msg = '<div class="alert alert-warning">ERROR_VALUE_INVALID: One or more required values are incorrect.</div>';
+            break;
+            case 'ERROR_VALUE_MISSING':
+                $msg = '<div class="alert alert-warning">ERROR_VALUE_MISSING: One or more required values are missing.</div>';
+            break;
+            case 'BUSINESS_ERROR':
+                $msg = '<div class="alert alert-warning">BUSINESS_ERROR: PayU system is unavailable. Try again later.</div>';
+            break;
+            case 'ERROR_INTERNAL':
+                $msg = '<div class="alert alert-warning">ERROR_INTERNAL: PayU system is unavailable. Try again later.</div>';
+            break;
+            case 'GENERAL_ERROR':
+                $msg = '<div class="alert alert-warning">GENERAL_ERROR: Unexpected error. Try again later.</div>';
+            break;
+        }
+
+        return $msg;
+    }
+
 }

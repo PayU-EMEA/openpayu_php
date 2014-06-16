@@ -42,13 +42,17 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
                 $response = OpenPayU_Order::statusUpdate($status_update);
 
+                echo OpenPayU_Util::statusDesc($response->getStatus());
                 echo '<pre>';
-                var_dump($response);
-                var_dump($response->Status);
+                echo '<br>';
+                print_r($response->getResponse());
                 echo '</pre>';
             } catch (OpenPayU_Exception $e) {
                 echo '<pre>';
-                var_dump((string)$e);
+                echo 'Error code: '.$e->getCode();
+                echo '<br>';
+                echo 'Error message: '.$e->getMessage();
+                echo '<br>';
                 echo '</pre>';
             }
         } else {

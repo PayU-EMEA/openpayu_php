@@ -12,7 +12,7 @@
 */
 
     define('OPENPAYU_LIBRARY', true);
-
+    include_once('OpenPayU/Util.php');
     include_once('openpayu_domain.php');
     include_once('OpenPayU/OpenPayUException.php');
     include_once('OpenPayU/OpenPayUNetwork.php');
@@ -25,7 +25,6 @@
 
     include_once('OpenPayU/v2/Refund.php');
     include_once('OpenPayU/v2/Order.php');
-    include_once('OpenPayU/Util.php');
     require_once('OpenPayU/Http.php');
     require_once('OpenPayU/HttpProtocol.php');
     require_once('OpenPayU/HttpCurl.php');
