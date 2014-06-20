@@ -1,3 +1,27 @@
+## 2.0.7
+
+* README.md update
+* CHANGELOG.md update
+* Cleaned and fixed links in OrderCreate.php example
+* ContinueUrl.php deleted
+* OpenPayU_Util::statusDesc($response) function update
+
+## 2.0.6
+
+* GeneratedOrderForm.php removal
+
+## 2.0.5
+
+* Fixed bugs in examples.
+
+## 2.0.4
+
+* Fixed bugs
+
+## 2.0.3
+
+* Added tracking of version
+
 ## 2.0.2
 
 * Fixed some bugs

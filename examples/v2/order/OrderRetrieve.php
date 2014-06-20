@@ -36,8 +36,10 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
             try {
                 $response = OpenPayU_Order::retrieve(stripslashes($_POST['orderId']));
 
-                echo OpenPayU_Util::statusDesc($response->getStatus());
+                $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
                 if($response->getStatus() == 'SUCCESS'){
+                    echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
+                    echo '</div>';
                     $order = $response->getResponse()->orders->orders[0];
                     echo '<table class="table table-hover table-bordered">';
                     echo '<thead>';
@@ -49,6 +51,9 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                     echo '<tr><td>Redirect Uri</td><td><a href="'.$order->notifyUrl.'">'.$order->notifyUrl.'</a></td></tr>';
                     echo '</tbody>';
                     echo '</table>';
+                }else{
+                    echo '<div class="alert alert-warning">'.$response->getStatus().': '.$status_desc;
+                    echo '</div>';
                 }
 
                 echo '<pre>';

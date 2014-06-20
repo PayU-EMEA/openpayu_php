@@ -42,7 +42,14 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
                 $response = OpenPayU_Order::statusUpdate($status_update);
 
-                echo OpenPayU_Util::statusDesc($response->getStatus());
+                $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
+                if($response->getStatus() == 'SUCCESS'){
+                    echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
+                    echo '</div>';
+                }else{
+                    echo '<div class="alert alert-warning">'.$response->getStatus().': '.$status_desc;
+                    echo '</div>';
+                }
                 echo '<pre>';
                 echo '<br>';
                 print_r($response->getResponse());

@@ -16,10 +16,8 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
 $order = array();
 
-$order['continueUrl'] = 'http://localhost/examples/v2/order/ContinueUrl.php';
 $order['notifyUrl'] = 'http://localhost/examples/v2/order/OrderNotify.php';
-$order['completeUrl'] = 'http://localhost/examples/layout/success.php';
-$order['cancelUrl'] = 'http://localhost/examples/layout/error.php';
+$order['completeUrl'] ='http://localhost'.dirname($_SERVER['REQUEST_URI']).'/../../layout/success.php';
 
 $order['customerIp'] = '127.0.0.1';
 $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
@@ -41,7 +39,6 @@ $order['buyer']['phone'] = '123123123';
 $order['buyer']['firstName'] = 'Jan';
 $order['buyer']['lastName'] = 'Kowalski';
 
-$response = OpenPayU_Order::create($order);
 ?>
 <!doctype html>
 <html lang="en-US">
@@ -57,6 +54,23 @@ $response = OpenPayU_Order::create($order);
     <div class="page-header">
         <h1>Create Order - OpenPayU v2</h1>
     </div>
+    <?php try {
+            $response = OpenPayU_Order::create($order);
+            $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
+            if($response->getStatus() == 'SUCCESS'){
+                echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
+                echo '</div>';
+            }else{
+                echo '<div class="alert alert-warning">'.$response->getStatus().': '.$status_desc;
+                echo '</div>';
+            }
+        }catch (OpenPayU_Exception $e){
+            echo '<pre>';
+            var_dump((string)$e);
+            echo '</pre>';
+        }
+    ?>
+
     <h1>Request</h1>
 
     <div id="unregisteredCardData">

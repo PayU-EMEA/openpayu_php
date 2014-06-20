@@ -351,34 +351,34 @@ class OpenPayU_Util
 
         switch ($response){
             case 'SUCCESS':
-                $msg = '<div class="alert alert-success">SUCCESS: Request has been processed correctly.</div>';
+                $msg = 'Request has been processed correctly.';
             break;
             case 'DATA_NOT_FOUND':
-                $msg = '<div class="alert alert-warning">DATA_NOT_FOUND: Data indicated in the request is not available in the PayU system.</div>';
+                $msg = 'Data indicated in the request is not available in the PayU system.';
             break;
             case 'WARNING_CONTINUE_3_DS':
-                $msg = '<div class="alert alert-warning">WARNING_CONTINUE_3_DS: 3DS authorization required.Redirect the Buyer to PayU to continue the 3DS process by calling OpenPayU.authorize3DS().</div>';
+                $msg = '3DS authorization required.Redirect the Buyer to PayU to continue the 3DS process by calling OpenPayU.authorize3DS().';
             break;
             case 'WARNING_CONTINUE_CVV':
-                $msg = '<div class="alert alert-warning">WARNING_CONTINUE_CVV: CVV/CVC authorization required. Call OpenPayU.authorizeCVV() method.</div>';
+                $msg = 'CVV/CVC authorization required. Call OpenPayU.authorizeCVV() method.';
             break;
             case 'ERROR_SYNTAX':
-                $msg = '<div class="alert alert-warning">ERROR_SYNTAX: BIncorrect request syntax. Supported formats are JSON or XML.</div>';
+                $msg = 'BIncorrect request syntax. Supported formats are JSON or XML.';
             break;
             case 'ERROR_VALUE_INVALID':
-                $msg = '<div class="alert alert-warning">ERROR_VALUE_INVALID: One or more required values are incorrect.</div>';
+                $msg = 'One or more required values are incorrect.';
             break;
             case 'ERROR_VALUE_MISSING':
-                $msg = '<div class="alert alert-warning">ERROR_VALUE_MISSING: One or more required values are missing.</div>';
+                $msg = 'One or more required values are missing.';
             break;
             case 'BUSINESS_ERROR':
-                $msg = '<div class="alert alert-warning">BUSINESS_ERROR: PayU system is unavailable. Try again later.</div>';
+                $msg = 'PayU system is unavailable. Try again later.';
             break;
             case 'ERROR_INTERNAL':
-                $msg = '<div class="alert alert-warning">ERROR_INTERNAL: PayU system is unavailable. Try again later.</div>';
+                $msg = 'PayU system is unavailable. Try again later.';
             break;
             case 'GENERAL_ERROR':
-                $msg = '<div class="alert alert-warning">GENERAL_ERROR: Unexpected error. Try again later.</div>';
+                $msg = 'Unexpected error. Try again later.';
             break;
         }
 
