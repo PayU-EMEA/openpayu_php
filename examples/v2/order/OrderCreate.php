@@ -39,6 +39,39 @@ $order['buyer']['phone'] = '123123123';
 $order['buyer']['firstName'] = 'Jan';
 $order['buyer']['lastName'] = 'Kowalski';
 
+
+/*~~~~~~~~ optional part INVOICE data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+$order['buyer']['invoice']['recipientName'] = 'Anna Nowak';
+$order['buyer']['invoice']['recipientEmail'] = 'annanowak@example.com';
+$order['buyer']['invoice']['recipientPhone'] = '+48 456 456 789';
+$order['buyer']['invoice']['name'] = 'The very first invoice';
+$order['buyer']['invoice']['street'] = 'Foo St. 155';
+$order['buyer']['invoice']['postalBox'] = 'Warsaw';
+$order['buyer']['invoice']['postalCode'] = '22-222';
+$order['buyer']['invoice']['city'] = 'Warsaw';
+$order['buyer']['invoice']['countryCode'] = 'PL';
+
+/*~~~~~~~~ optional part DELIVERY data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+//Please add at least one shipping method in "shippingMethods" part
+$order['shippingMethods']['shippingMethods'][0]['name'] = 'Shipping 1';
+$order['shippingMethods']['shippingMethods'][0]['country'] = 'PL';
+$order['shippingMethods']['shippingMethods'][0]['price'] = '800';
+
+//Add delivery informations
+$order['buyer']['delivery']['recipientName'] = 'Robert Nowak';
+$order['buyer']['delivery']['recipientEmail'] = 'robert@example.com';
+$order['buyer']['delivery']['recipientPhone'] = '+48 456 123 789';
+$order['buyer']['delivery']['street'] = 'Bar St. 155';
+$order['buyer']['delivery']['postalBox'] = 'Warsaw';
+$order['buyer']['delivery']['postalCode'] = '22-222';
+$order['buyer']['delivery']['city'] = 'Warsaw';
+$order['buyer']['delivery']['state'] = 'Masovian district';
+$order['buyer']['delivery']['countryCode'] = 'PL';
+
+
+
 ?>
 <!doctype html>
 <html lang="en-US">

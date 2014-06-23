@@ -1,3 +1,6 @@
+## 2.0.8
+* More data in OrderCreate.php example: addition of invoice and delivery optional sections
+
 ## 2.0.7
 
 * README.md update
