@@ -82,48 +82,6 @@ Or simply add this line anywhere in your application:
 
 Remember: All keys in "order array" must be in lowercase.
 
-###Creating order using HTML form
-
-   File with working example: [examples/v2/order/GeneratedOrderForm.php](examples/v2/order/GeneratedOrderForm.php)
-
-   To create an order using HTML form you must provide an Array with order data:
-
-   in your controller
-```php
-    $order['continueUrl'] = 'http://localhost/';
-    $order['notifyUrl'] = 'http://localhost/';
-    $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
-    $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
-    $order['description'] = 'New order';
-    $order['currencyCode'] = 'PLN';
-    $order['totalAmount'] = 3200;
-    $order['extOrderId'] = '1342';
-
-    $order['products']['products'][0]['name'] = 'Product1';
-    $order['products']['products'][0]['unitPrice'] = 1000;
-    $order['products']['products'][0]['quantity'] = 1;
-
-    $order['products']['products'][1]['name'] = 'Product2';
-    $order['products']['products'][1]['unitPrice'] = 2200;
-    $order['products']['products'][1]['quantity'] = 1;
-
-    $order['buyer']['email'] = 'dd@ddd.pl';
-    $order['buyer']['phone'] = '123123123';
-    $order['buyer']['firstName'] = 'Jan';
-    $order['buyer']['lastName'] = 'Kowalski';
-
-    $orderFormData = OpenPayU_Order::hostedOrderForm($order);
-```
-  in your view
-```php
-<html>
-<?php echo $orderFormData; ?>
-</html>
-```
-  or just
-```php
-echo $orderFormData
-```
 
 ###Creating order using REST API
 
