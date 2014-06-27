@@ -56,7 +56,7 @@ git clone https://github.com/PayU/openpayu_php.git
 
 ## Getting started
 
-If your using Composer:
+If you are using Composer:
 
 ```php
 include "vendor/autoload.php";
