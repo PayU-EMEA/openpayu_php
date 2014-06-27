@@ -13,20 +13,56 @@ The following PHP extensions are required:
 
 ## Documentation
 
-Full implementation guide [[Polish](http://developers.payu.com/)].
+Full implementation guide [[English](http://developers.payu.com/en/)][[Polish](http://developers.payu.com/)].
 
-Lots of methods need a parameter which value is a ORDER_ID. ORDER_ID is an identifier that is set by PayU
+To process operations such as:
+ - [order status update](examples/v2/order/OrderStatusUpdate.php)
+ - [order retrieve](examples/v2/order/OrderRetrieve.php)
+ - [order cancel](examples/v2/order/OrderCancel.php)
+
+You will need to provide a parameter called <b>orderId</b>. The value of orderId is your order identifier that is set by PayU
 Payment system, and it's used to invoke remote methods.
 
-There are two ways to get ORDER_ID.
+There are two ways to get orderId.
 
-- In the first case when you receive notification message from PayU Payment System as a result of payment.
-- In the second case, when you get a response from method OpenPayU_Order::create. In both cases you will find
-ORDER_ID using this statement: $response->getResponse()->orderId.
+1. Inside the received notification message from PayU Payment System as a result of payment.
+2. In the response from method OpenPayU_Order::create. 
+
+In both cases you will find orderId using this statement: $response->getResponse()->orderId.
 
 ## Installation
 
-Add this line to your application's:
+### Composer
+To install with Composer, simply add the requirement to your composer.json file:
+
+```php
+{
+  "require" : {
+    "openpayu/openpayu" : "v2.0.*"
+  }
+}
+```
+Then install by running
+
+```php
+composer.phar install
+```
+
+### Manual installation
+Obtain the latest version of openpayu_php SDK with:
+```php
+git clone https://github.com/PayU/openpayu_php.git
+```
+
+## Getting started
+
+If your using Composer:
+
+```php
+include "vendor/autoload.php";
+```
+
+Or simply add this line anywhere in your application:
 
 ```php
     require_once 'lib/openpayu.php';
@@ -34,7 +70,7 @@ Add this line to your application's:
 ```
 
 ##Configure
-  To configure OpenPayU environment you must provide a set of mandatory data:
+  To configure OpenPayU environment you must provide a set of mandatory data in config.php file:
 
 ```php
     OpenPayU_Configuration::setEnvironment('secure');
@@ -46,6 +82,48 @@ Add this line to your application's:
 
 Remember: All keys in "order array" must be in lowercase.
 
+###Creating order using HTML form
+
+   File with working example: [examples/v2/order/GeneratedOrderForm.php](examples/v2/order/GeneratedOrderForm.php)
+
+   To create an order using HTML form you must provide an Array with order data:
+
+   in your controller
+```php
+    $order['continueUrl'] = 'http://localhost/';
+    $order['notifyUrl'] = 'http://localhost/';
+    $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
+    $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
+    $order['description'] = 'New order';
+    $order['currencyCode'] = 'PLN';
+    $order['totalAmount'] = 3200;
+    $order['extOrderId'] = '1342';
+
+    $order['products']['products'][0]['name'] = 'Product1';
+    $order['products']['products'][0]['unitPrice'] = 1000;
+    $order['products']['products'][0]['quantity'] = 1;
+
+    $order['products']['products'][1]['name'] = 'Product2';
+    $order['products']['products'][1]['unitPrice'] = 2200;
+    $order['products']['products'][1]['quantity'] = 1;
+
+    $order['buyer']['email'] = 'dd@ddd.pl';
+    $order['buyer']['phone'] = '123123123';
+    $order['buyer']['firstName'] = 'Jan';
+    $order['buyer']['lastName'] = 'Kowalski';
+
+    $orderFormData = OpenPayU_Order::hostedOrderForm($order);
+```
+  in your view
+```php
+<html>
+<?php echo $orderFormData; ?>
+</html>
+```
+  or just
+```php
+echo $orderFormData
+```
 
 ###Creating order using REST API
 
@@ -55,7 +133,7 @@ Remember: All keys in "order array" must be in lowercase.
 
    in your controller
 ```php
-    $order['completeUrl'] = 'http://localhost/';
+    $order['continueUrl'] = 'http://localhost/';
     $order['notifyUrl'] = 'http://localhost/';
     $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
     $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
@@ -126,7 +204,7 @@ Remember: All keys in "order array" must be in lowercase.
 ```php
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $body = file_get_contents('php://input');
-        $data = trim($body);
+        $data = stripslashes(trim($body));
 
         $response = OpenPayU_Order::consumeNotification($data);
         $response->Response->Status; //NEW PENDING CANCELLED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
