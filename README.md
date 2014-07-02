@@ -91,7 +91,7 @@ Remember: All keys in "order array" must be in lowercase.
 
    in your controller
 ```php
-    $order['continueUrl'] = 'http://localhost/';
+    $order['completeUrl'] = 'http://localhost/';
     $order['notifyUrl'] = 'http://localhost/';
     $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
     $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
