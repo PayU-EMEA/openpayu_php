@@ -97,18 +97,13 @@ class OpenPayU_Configuration
         if (!in_array($value, self::$_availableEnvironment))
             throw new OpenPayU_Exception_Configuration($value . ' - is not valid environment');
 
-        if (self::getApiVersion() >= 2) {
-            $country = 'api/';
-            $service = 'v2/';
-        }
+        $country = 'api/';
+        $service = 'v2/';
 
         if ($value == 'secure') {
             self::$env = $value;
 
-            if (self::getApiVersion() >= 2)
-                $domain = 'payu.com/';
-
-            self::$serviceDomain = $domain;
+            self::$serviceDomain = 'payu.com/';
 
             self::$serviceUrl = 'https://' . $value . '.' . $domain . $country . $service;
             self::$summaryUrl = self::$serviceUrl . 'co/summary';
