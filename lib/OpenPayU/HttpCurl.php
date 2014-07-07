@@ -93,7 +93,7 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
     {
         foreach($headers as $name => $value)
         {
-            if(preg_match('/X-OpenPayU-Signature/i', $name))
+            if(preg_match('/X-OpenPayU-Signature/i', $name) || preg_match('/OpenPayu-Signature/i', $name))
                 return $value;
         }
     }
