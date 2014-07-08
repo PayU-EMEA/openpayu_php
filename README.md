@@ -171,7 +171,7 @@ Remember: All keys in "order array" must be in lowercase.
 
         //you should response to PayU with special structure (OrderNotifyResponse)
         header("Content-Type: application/json");
-        echo json_encode(OpenPayU_Util::parseXmlDocument(stripslashes($rsp)));
+        echo $rsp;
     }
 ```
 
