@@ -23,9 +23,9 @@ To process operations such as:
 You will need to provide a parameter called <b>orderId</b>. The value of orderId is your order identifier that is set by PayU
 Payment system, and it's used to invoke remote methods.
 
-There are two ways to get orderId.
+There are two ways to get orderId:
 
-1. Inside the received notification message from PayU Payment System as a result of payment.
+1. It is present inside the received notification message from PayU Payment System as a result of payment.
 2. In the response from method OpenPayU_Order::create. 
 
 In both cases you will find orderId using this statement: $response->getResponse()->orderId.
@@ -56,13 +56,13 @@ git clone https://github.com/PayU/openpayu_php.git
 
 ## Getting started
 
-If you are using Composer:
+If you are using Composer use autoload functionality:
 
 ```php
 include "vendor/autoload.php";
 ```
 
-Or simply add this line anywhere in your application:
+Or simply add this lines anywhere in your application:
 
 ```php
     require_once 'lib/openpayu.php';
@@ -91,7 +91,7 @@ Remember: All keys in "order array" must be in lowercase.
 
    in your controller
 ```php
-    $order['completeUrl'] = 'http://localhost/';
+    $order['completeUrl'] = 'http://localhost/'; //customer will be redirected to this page after successfull payment
     $order['notifyUrl'] = 'http://localhost/';
     $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
     $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
@@ -108,6 +108,7 @@ Remember: All keys in "order array" must be in lowercase.
     $order['products']['products'][1]['unitPrice'] = 2200;
     $order['products']['products'][1]['quantity'] = 1;
 
+//optional section buyer
     $order['buyer']['email'] = 'dd@ddd.pl';
     $order['buyer']['phone'] = '123123123';
     $order['buyer']['firstName'] = 'Jan';
@@ -125,7 +126,7 @@ Remember: All keys in "order array" must be in lowercase.
    You can retrieve order by its PayU order_id
 
 ```php
-    $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01'); //as parameter use ORDER_ID
+    $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01'); //as parameter use orderId
 ```
 
 ###Cancelling order
@@ -135,7 +136,7 @@ Remember: All keys in "order array" must be in lowercase.
    You can cancel order by its PayU order_id
 
 ```php
-    $response = OpenPayU_Order::cancel('Z963D5JQR2230925GUEST000P01'); //as parameter use ORDER_ID
+    $response = OpenPayU_Order::cancel('Z963D5JQR2230925GUEST000P01'); //as parameter use orderId
 ```
 
 ###Updating order status
@@ -165,9 +166,9 @@ Remember: All keys in "order array" must be in lowercase.
         $data = stripslashes(trim($body));
 
         $response = OpenPayU_Order::consumeNotification($data);
-        $response->Response->Status; //NEW PENDING CANCELLED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
+        $response->getResponse()->order->status; //NEW PENDING CANCELLED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
 
-        $rsp = OpenPayU::buildOrderNotifyResponse($response->Response->Order->OrderId);
+        $rsp = OpenPayU::buildOrderNotifyResponse($response->getResponse()->order->orderId);
 
         //you should response to PayU with special structure (OrderNotifyResponse)
         header("Content-Type: application/json");
