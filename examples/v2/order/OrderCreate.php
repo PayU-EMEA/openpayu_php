@@ -24,7 +24,7 @@ $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
 $order['description'] = 'New order';
 $order['currencyCode'] = 'PLN';
 $order['totalAmount'] = 3200;
-$order['extOrderId'] = '1342';
+$order['extOrderId'] = rand(1000, 100000);
 
 $order['products']['products'][0]['name'] = 'Product1';
 $order['products']['products'][0]['unitPrice'] = 1000;
@@ -51,6 +51,7 @@ $order['buyer']['invoice']['postalBox'] = 'Warsaw';
 $order['buyer']['invoice']['postalCode'] = '22-222';
 $order['buyer']['invoice']['city'] = 'Warsaw';
 $order['buyer']['invoice']['countryCode'] = 'PL';
+$order['buyer']['invoice']['tin'] = '8252212616';
 
 /*~~~~~~~~ optional part DELIVERY data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
