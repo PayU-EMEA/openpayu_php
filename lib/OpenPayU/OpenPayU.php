@@ -71,8 +71,8 @@ class OpenPayU extends OpenPayUBase
             'status' => array('statusCode' => 'SUCCESS')
         );
 
-        $xml = OpenPayU_Util::buildJsonFromArray($data);
-        return $xml;
+        $response = OpenPayU_Util::buildJsonFromArray($data);
+        return $response;
     }
 
     /**

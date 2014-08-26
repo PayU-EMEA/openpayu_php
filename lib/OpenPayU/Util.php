@@ -274,8 +274,8 @@ class OpenPayU_Util
         }else{
             return apache_request_headers();
         }
-    }
 
+    }
     /**
      * @param $array
      * @param string $namespace
@@ -340,8 +340,8 @@ class OpenPayU_Util
      */
     public static function setSenderProperty($data)
     {
-        $data['properties']['properties'][0]['name'] = 'sender';
-        $data['properties']['properties'][0]['value'] = OpenPayU_Configuration::getFullSenderName();
+        $data['properties'][0]['name'] = 'sender';
+        $data['properties'][0]['value'] = OpenPayU_Configuration::getFullSenderName();
         return $data;
     }
 

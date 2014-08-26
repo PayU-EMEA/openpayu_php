@@ -34,7 +34,7 @@ class OpenPayU_Configuration
     private static $sender = 'Generic';
 
     const COMPOSER_JSON = "/composer.json";
-    const DEFAULT_SDK_VERSION = 'PHP SDK 2.0.X';
+    const DEFAULT_SDK_VERSION = 'PHP SDK 2.1.0';
 
 
     /**
@@ -87,31 +87,27 @@ class OpenPayU_Configuration
      * @param string $country
      * @throws OpenPayU_Exception_Configuration
      */
-    public static function setEnvironment($value = 'secure', $domain = 'payu.pl', $country = 'pl')
+    public static function setEnvironment($value = 'secure', $domain = 'payu.com', $country = 'pl', $api = 'api/', $version = 'v2_1/')
     {
         $value = strtolower($value);
         $domain = strtolower($domain) . '/';
-        $country = strtolower($country) . '/';
-        $service = 'standard/';
 
         if (!in_array($value, self::$_availableEnvironment))
             throw new OpenPayU_Exception_Configuration($value . ' - is not valid environment');
 
-        $country = 'api/';
-        $service = 'v2/';
 
         if ($value == 'secure') {
             self::$env = $value;
 
-            self::$serviceDomain = 'payu.com/';
+            self::$serviceDomain = $domain;
 
-            self::$serviceUrl = 'https://' . $value . '.' . $domain . $country . $service;
+            self::$serviceUrl = 'https://' . $value . '.' . $domain . $api . $version;
             self::$summaryUrl = self::$serviceUrl . 'co/summary';
             self::$authUrl = self::$serviceUrl . 'oauth/user/authorize';
         } else if ($value == 'custom') {
             self::$env = $value;
 
-            self::$serviceUrl = $domain . $country . $service;
+            self::$serviceUrl = $domain . $api . $version;
             self::$summaryUrl = self::$serviceUrl . 'co/summary';
             self::$authUrl = self::$serviceUrl . 'oauth/user/authorize';
         }

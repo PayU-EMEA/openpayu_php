@@ -140,7 +140,6 @@ class OpenPayU_Order extends OpenPayU
         }
 
         $headers = OpenPayU_Util::getRequestHeaders();
-
         $incomingSignature = OpenPayU_HttpCurl::getSignature($headers);
 
         if ($sslConnection) {
@@ -178,7 +177,7 @@ class OpenPayU_Order extends OpenPayU
 
         $result = self::build($data);
 
-            if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302 || $httpStatus
+            if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 301 || $httpStatus == 302 || $httpStatus
                 == 400 || $httpStatus == 404)
         {
             return $result;

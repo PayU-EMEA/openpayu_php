@@ -27,13 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             /* Check if OrderId exists in Merchant Service, update Order data by OrderRetrieveRequest */
             $order = OpenPayU_Order::retrieve($result->getResponse()->order->orderId);
-
-            /* If exists return OrderNotifyResponse */
-            $rsp = OpenPayU::buildOrderNotifyResponse($result->getResponse()->order->orderId);
-
-            if (!empty($rsp)) {
-                header("Content-Type: application/json");
-                echo $rsp;
+            if($order->getStatus() == 'SUCCESS'){
+                //the response should be status 200
+                http_response_code(200);
             }
         }
     } catch (OpenPayU_Exception $e) {

@@ -91,22 +91,22 @@ Remember: All keys in "order array" must be in lowercase.
 
    in your controller
 ```php
-    $order['completeUrl'] = 'http://localhost/'; //customer will be redirected to this page after successfull payment
+    $order['continueUrl'] = 'http://localhost/'; //customer will be redirected to this page after successfull payment
     $order['notifyUrl'] = 'http://localhost/';
     $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
     $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
     $order['description'] = 'New order';
     $order['currencyCode'] = 'PLN';
     $order['totalAmount'] = 3200;
-    $order['extOrderId'] = '1342';
+    $order['extOrderId'] = '1342'; //must be unique!
 
-    $order['products']['products'][0]['name'] = 'Product1';
-    $order['products']['products'][0]['unitPrice'] = 1000;
-    $order['products']['products'][0]['quantity'] = 1;
+    $order['products'][0]['name'] = 'Product1';
+    $order['products'][0]['unitPrice'] = 1000;
+    $order['products'][0]['quantity'] = 1;
 
-    $order['products']['products'][1]['name'] = 'Product2';
-    $order['products']['products'][1]['unitPrice'] = 2200;
-    $order['products']['products'][1]['quantity'] = 1;
+    $order['products'][1]['name'] = 'Product2';
+    $order['products'][1]['unitPrice'] = 2200;
+    $order['products'][1]['quantity'] = 1;
 
 //optional section buyer
     $order['buyer']['email'] = 'dd@ddd.pl';

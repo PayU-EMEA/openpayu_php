@@ -40,7 +40,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 if($response->getStatus() == 'SUCCESS'){
                     echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
                     echo '</div>';
-                    $order = $response->getResponse()->orders->orders[0];
+                    $order = $response->getResponse()->orders[0];
                     echo '<table class="table table-hover table-bordered">';
                     echo '<thead>';
                     echo '<tr><th colspan="2">Important data from response</th></tr>';
@@ -70,22 +70,22 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 echo '</pre>';
             }
         }?>
-            <form action="" method="post" class="form-horizontal">
-                <div class="control-group">
-                    <label class="control-label" for="order">Order Id</label>
+        <form action="" method="post" class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="order">Order Id</label>
 
-                    <div class="controls">
-                        <input class="span3" name="orderId" id="order" type="text" value="<?=@$_POST['orderId']?>"/>
-                    </div>
+                <div class="controls">
+                    <input class="span3" name="orderId" id="order" type="text" value="<?=@$_POST['orderId']?>"/>
                 </div>
-                <div class="control-group">
-                    <label class="control-label" for="pay-button"></label>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="pay-button"></label>
 
-                    <div class="controls">
-                        <button class="btn btn-success" id="pay-button" type="submit">Retrieve order's data</button>
-                    </div>
+                <div class="controls">
+                    <button class="btn btn-success" id="pay-button" type="submit">Retrieve order's data</button>
                 </div>
-            </form>
+            </div>
+        </form>
     </div>
 </div>
 </html>

@@ -1,3 +1,12 @@
+## 2.1.0
+* Endpoint https://secure.payu.com/api/v2_1/orders
+* Simplification of request structure by eliminating nesting
+* Status code 200 as only response after receiving notification
+* Parameters starting with lowercase letters
+* CurrencyCode field removed from refund create request
+* CompleteUrl replaced with continueUrl
+* Value of optional field extOrderId must be unique within one point of sale (POS)
+
 ## 2.0.8
 * More data in OrderCreate.php example: addition of invoice and delivery optional sections
 
