@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $order = OpenPayU_Order::retrieve($result->getResponse()->order->orderId);
             if($order->getStatus() == 'SUCCESS'){
                 //the response should be status 200
-                http_response_code(200);
+                header("HTTP/1.1 200 OK");
             }
         }
     } catch (OpenPayU_Exception $e) {
