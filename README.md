@@ -38,7 +38,7 @@ To install with Composer, simply add the requirement to your composer.json file:
 ```php
 {
   "require" : {
-    "openpayu/openpayu" : "2.0.*"
+    "openpayu/openpayu" : "2.1.*"
   }
 }
 ```
