@@ -39,7 +39,7 @@ class OpenPayU_UtilTest extends PHPUnit_Framework_TestCase
     public function shouldSetSenderProperty(){
         $array  = array();
         $result = OpenPayU_Util::setSenderProperty($array);
-        $this->assertEquals($result['properties']['properties'][0]['name'], 'sender');
-        $this->assertEquals($result['properties']['properties'][0]['value'], OpenPayU_Configuration::getFullSenderName());
+        $this->assertEquals($result['properties'][0]['name'], 'sender');
+        $this->assertEquals($result['properties'][0]['value'], OpenPayU_Configuration::getFullSenderName());
     }
 }

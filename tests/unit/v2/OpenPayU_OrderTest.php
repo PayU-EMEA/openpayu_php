@@ -45,28 +45,28 @@ class OpenPayU_OrderTest extends PHPUnit_Framework_TestCase {
 
     private function initializeOrderData(){
 
-        $this->_order['ContinueUrl'] = 'http://localhost/';
-        $this->_order['NotifyUrl'] = 'http://localhost/';
-        $this->_order['CustomerIp'] = '127.0.0.1';
-        $this->_order['MerchantPosId'] = '45654';
-        $this->_order['Description'] = 'New order';
-        $this->_order['CurrencyCode'] = 'PLN';
-        $this->_order['TotalAmount'] = 1000;
-        $this->_order['ExtOrderId'] = '1342';
-        $this->_order['ValidityTime'] = 48000;
+        $this->_order['continueUrl'] = 'http://localhost/';
+        $this->_order['notifyUrl'] = 'http://localhost/';
+        $this->_order['customerIp'] = '127.0.0.1';
+        $this->_order['merchantPosId'] = '45654';
+        $this->_order['description'] = 'New order';
+        $this->_order['currencyCode'] = 'PLN';
+        $this->_order['totalAmount'] = 1000;
+        $this->_order['extOrderId'] = '1342';
+        $this->_order['validityTime'] = 48000;
 
-        $this->_order['Products']['Product'][0]['Name'] = 'Product1';
-        $this->_order['Products']['Product'][0]['UnitPrice'] = 1000;
-        $this->_order['Products']['Product'][0]['Quantity'] = 1;
+        $this->_order['products'][0]['name'] = 'Product1';
+        $this->_order['products'][0]['unitPrice'] = 1000;
+        $this->_order['products'][0]['quantity'] = 1;
 
-        $this->_order['PaymentMethods']['PaymentMethod'][0]['Type'] = 'PBL';
+        $this->_order['paymentMethods'][0]['type'] = 'PBL';
 
-        $this->_order['Buyer']['Email'] = 'dd@ddd.pl';
-        $this->_order['Buyer']['Phone'] = '123123123';
-        $this->_order['Buyer']['FirstName'] = 'Jan';
-        $this->_order['Buyer']['LastName'] = 'Kowalski';
-        $this->_order['Buyer']['Language'] = 'pl_PL';
-        $this->_order['Buyer']['NIN'] = '123456';
+        $this->_order['buyer']['email'] = 'dd@ddd.pl';
+        $this->_order['buyer']['phone'] = '123123123';
+        $this->_order['buyer']['firstName'] = 'Jan';
+        $this->_order['buyer']['lastName'] = 'Kowalski';
+        $this->_order['buyer']['language'] = 'pl_PL';
+        $this->_order['buyer']['nIN'] = '123456';
 
     }
 
@@ -91,7 +91,7 @@ class OpenPayU_OrderTest extends PHPUnit_Framework_TestCase {
 
     public function testCancel()
     {
-        $orderId = $this->_order['ExtOrderId'];
+        $orderId = $this->_order['extOrderId'];
         $mock = $this->mockOpenPayU_HttpVerifyResponse('orderCancelResponse', 'cancel', $orderId);
         $this->assertEquals('', $mock->cancel($orderId));
     }

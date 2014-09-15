@@ -326,7 +326,6 @@ class OpenPayU_Util
      */
     public static function changeFormFieldFormat($namespace, $key)
     {
-        $key = ucfirst($key);
 
         if ($key === $namespace && $key[strlen($key) - 1] == 's') {
             return substr($key, 0, -1);

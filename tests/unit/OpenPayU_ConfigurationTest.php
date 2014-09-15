@@ -18,7 +18,7 @@ require realpath(dirname(__FILE__)).'\..\..\vendor/autoload.php';
 class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 {
 
-    const PHP_SDK_VERSION = 'PHP SDK 2.0.3';
+    const PHP_SDK_VERSION = 'PHP SDK 2.1.0';
 
     public function testSetValidEnvironment()
     {
@@ -98,7 +98,7 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testServiceUrl()
     {
         OpenPayU_Configuration::setEnvironment('secure');
-        $this->assertEquals('https://secure.payu.com/api/v2/', OpenPayU_Configuration::getServiceUrl());
+        $this->assertEquals('https://secure.payu.com/api/v2_1/', OpenPayU_Configuration::getServiceUrl());
     }
 
     public function testFullSenderName(){
@@ -132,9 +132,9 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
         $OpenPayU_ConfigurationMock->staticExpects($this->any())->method('getComposerFilePath')
             ->will($this->returnValue('mock.json'));
         //when
-        $sdkVersion = $OpenPayU_ConfigurationMock::getSdkVersion();
+        $sdkVersion = OpenPayU_Configuration::getSdkVersion();
         //then
-        $this->assertEquals("xxx",$sdkVersion);
+        $this->assertEquals(self::PHP_SDK_VERSION,$sdkVersion);
     }
 
 }
