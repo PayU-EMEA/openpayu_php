@@ -33,6 +33,29 @@ class OpenPayU_Order extends OpenPayU
     );
 
     /**
+     * Function prepares Order to use default environment config values: NotifyUrl and ContinueUrl
+     * @access public
+     * @param array $order A array containing full Order
+     * @return array $order A array containing full Order with prepared values: NotifyUrl and ContinueUrl
+     */
+    public static function prepareDefaultUrls($order)
+    {
+        if (!is_array($order)) {
+            return null;
+        }
+
+        if (!isset($order['notifyUrl'])) {
+            $order['notifyUrl'] = OpenPayU_Configuration::getNotifyUrl();
+        }
+
+        if (!isset($order['continueUrl'])) {
+            $order['continueUrl'] = OpenPayU_Configuration::getContinueUrl();
+        }
+
+        return $order;
+    }
+
+    /**
      * Creates new Order
      * - Sends to PayU OrderCreateRequest
      *
@@ -44,6 +67,7 @@ class OpenPayU_Order extends OpenPayU
     public static function create($order)
     {
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE;
+        $order = self::prepareDefaultUrls($order);
         $data = OpenPayU_Util::buildJsonFromArray($order);
 
         if (empty($data)) {

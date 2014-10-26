@@ -77,6 +77,12 @@ Or simply add this lines anywhere in your application:
     OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID (Checkout)
     OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //Second MD5 key. You will find it in admin panel.
 ```
+  Optionally, you can define ContinueUrl and NotifyUrl as global parameters for every order. You can then override them at the order level.
+
+```php
+    OpenPayU_Configuration::setContinueUrl('http://localhost');
+    OpenPayU_Configuration::setNotifyUrl('http://localhost');
+```
 
 ##Usage
 

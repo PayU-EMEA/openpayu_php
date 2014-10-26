@@ -25,6 +25,9 @@ class OpenPayU_Configuration
     public static $authUrl = '';
     public static $serviceDomain = '';
 
+    public static $notifyUrl = '';
+    public static $continueUrl = '';
+
     private static $apiVersion = 2;
     private static $_availableHashAlgorithm = array('MD5', 'SHA', 'SHA1', 'SHA-1', 'SHA-256', 'SHA256', 'SHA_256');
     private static $hashAlgorithm = 'SHA-1';
@@ -237,6 +240,42 @@ class OpenPayU_Configuration
     public static function getSignatureKey()
     {
         return self::$signatureKey;
+    }
+
+    /**
+     * @access public
+     * @return string
+     */
+    public static function getContinueUrl()
+    {
+        return self::$continueUrl;
+    }
+
+    /**
+     * @access public
+     * @param string $continueUrl
+     */
+    public static function setContinueUrl($continueUrl)
+    {
+        self::$continueUrl = $continueUrl;
+    }
+
+    /**
+     * @access public
+     * @return string
+     */
+    public static function getNotifyUrl()
+    {
+        return self::$notifyUrl;
+    }
+
+    /**
+     * @access public
+     * @param string $notifyUrl
+     */
+    public static function setNotifyUrl($notifyUrl)
+    {
+        self::$notifyUrl = $notifyUrl;
     }
 
     /**
