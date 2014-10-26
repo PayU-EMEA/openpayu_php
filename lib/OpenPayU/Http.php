@@ -102,6 +102,12 @@ class OpenPayU_Http
                 throw new OpenPayU_Exception(trim($message->Status->StatusCode . (isset($message->Status->StatusDesc) ?
                     ' - ' . $message->Status->StatusDesc : '')), $statusCode);
                 break;
+
+            case 401:
+                throw new OpenPayU_Exception_Authorization(trim($message->Status->StatusCode .
+                    (isset($message->Status->StatusDesc) ? ' - ' . $message->Status->StatusDesc : '')), $statusCode);
+                break;
+
             case 403:
                 throw new OpenPayU_Exception_Authorization(trim($message->Status->StatusCode), $statusCode);
                 break;
