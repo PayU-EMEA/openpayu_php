@@ -58,26 +58,19 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
         curl_setopt($ch, CURLOPT_HEADERFUNCTION, 'OpenPayU_HttpCurl::readHeader');
         curl_setopt($ch, CURLOPT_POSTFIELDS, (OpenPayU_Configuration::getApiVersion() < 2) ? 'DOCUMENT=' . urlencode($data) : $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSLVERSION, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+        curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($ch, CURLOPT_USERPWD, $userNameAndPassword);
 
         $response = curl_exec($ch);
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
         if($response === false)
             throw new OpenPayU_Exception_Network(curl_error($ch));
-
-        if(!empty($incomingSignature))
-        {
-            $sign = OpenPayU_Util::parseSignature($incomingSignature);
-
-            if(false === OpenPayU_Util::verifySignature($response, $sign->signature, OpenPayU_Configuration::getSignatureKey(), $sign->algorithm))
-                throw new OpenPayU_Exception_Authorization('Invalid signature - ' . $sign->signature);
-        }
 
         curl_close($ch);
 
