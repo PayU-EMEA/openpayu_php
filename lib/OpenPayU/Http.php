@@ -16,9 +16,9 @@ class OpenPayU_Http
         //$signature = OpenPayU_Util::generateSignData($data, OpenPayU_Configuration::getHashAlgorithm(), OpenPayU_Configuration::getMerchantPosId(), OpenPayU_Configuration::getSignatureKey());
 
         $posId = OpenPayU_Configuration::getMerchantPosId();
-        $sigantureKey = OpenPayU_Configuration::getSignatureKey();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
 
-        $response = OpenPayU_HttpCurl::doRequest('POST', $pathUrl, $data, $posId, $sigantureKey);
+        $response = OpenPayU_HttpCurl::doRequest('POST', $pathUrl, $data, $posId, $signatureKey);
 
         return $response;
     }
@@ -28,9 +28,9 @@ class OpenPayU_Http
         //$signature = OpenPayU_Util::generateSignData($data, OpenPayU_Configuration::getHashAlgorithm(), OpenPayU_Configuration::getMerchantPosId(), OpenPayU_Configuration::getSignatureKey());
 
         $posId = OpenPayU_Configuration::getMerchantPosId();
-        $sigantureKey = OpenPayU_Configuration::getSignatureKey();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
 
-        $response = OpenPayU_HttpCurl::doRequest('POST', $pathUrl, $data, $posId, $sigantureKey);
+        $response = OpenPayU_HttpCurl::doRequest('POST', $pathUrl, $data, $posId, $signatureKey);
 
         return $response;
     }
@@ -43,9 +43,9 @@ class OpenPayU_Http
     public static function get($pathUrl, $data)
     {
         $posId = OpenPayU_Configuration::getMerchantPosId();
-        $sigantureKey = OpenPayU_Configuration::getSignatureKey();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
 
-        $response = OpenPayU_HttpCurl::doRequest('GET', $pathUrl, $data, $posId, $sigantureKey);
+        $response = OpenPayU_HttpCurl::doRequest('GET', $pathUrl, $data, $posId, $signatureKey);
 
         return $response;
     }
@@ -58,9 +58,9 @@ class OpenPayU_Http
     public static function put($pathUrl, $data)
     {
         $posId = OpenPayU_Configuration::getMerchantPosId();
-        $sigantureKey = OpenPayU_Configuration::getSignatureKey();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
 
-        $response = OpenPayU_HttpCurl::doRequest('PUT', $pathUrl, $data, $posId, $sigantureKey);
+        $response = OpenPayU_HttpCurl::doRequest('PUT', $pathUrl, $data, $posId, $signatureKey);
 
         return $response;
     }
@@ -73,9 +73,9 @@ class OpenPayU_Http
     public static function delete($pathUrl, $data)
     {
         $posId = OpenPayU_Configuration::getMerchantPosId();
-        $sigantureKey = OpenPayU_Configuration::getSignatureKey();
+        $signatureKey = OpenPayU_Configuration::getSignatureKey();
 
-        $response = OpenPayU_HttpCurl::doRequest('DELETE', $pathUrl, $data, $posId, $sigantureKey);
+        $response = OpenPayU_HttpCurl::doRequest('DELETE', $pathUrl, $data, $posId, $signatureKey);
 
         return $response;
     }
