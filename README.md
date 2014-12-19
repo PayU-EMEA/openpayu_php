@@ -211,11 +211,7 @@ echo $orderFormData
         $response = OpenPayU_Order::consumeNotification($data);
         $response->getResponse()->order->status; //NEW PENDING CANCELLED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
 
-        $rsp = OpenPayU::buildOrderNotifyResponse($response->getResponse()->order->orderId);
-
-        //you should response to PayU with special structure (OrderNotifyResponse)
-        header("Content-Type: application/json");
-        echo $rsp;
+        header("HTTP/1.1 200 OK");
     }
 ```
 
