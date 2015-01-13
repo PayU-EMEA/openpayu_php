@@ -62,7 +62,7 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, 'TLSv1');
+        curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, OpenPayU_Configuration::getServiceSslAllowedCiphers());
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($ch, CURLOPT_USERPWD, $userNameAndPassword);
