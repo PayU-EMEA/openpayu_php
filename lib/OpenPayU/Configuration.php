@@ -24,7 +24,7 @@ class OpenPayU_Configuration
     public static $summaryUrl = '';
     public static $authUrl = '';
     public static $serviceDomain = '';
-    private static $_serviceSslAllowedCiphers = 'TLSv1';
+    private static $_serviceSslCipherList = 'TLSv1';
 
     private static $apiVersion = 2;
     private static $_availableHashAlgorithm = array('MD5', 'SHA', 'SHA1', 'SHA-1', 'SHA-256', 'SHA256', 'SHA_256');
@@ -44,9 +44,9 @@ class OpenPayU_Configuration
      * 
      * @return string
      */
-    public static function getServiceSslAllowedCiphers() 
+    public static function getServiceSslCipherList() 
     {
-        return self::$_serviceSslAllowedCiphers;
+        return self::$_serviceSslCipherList;
     }
 
    /**
@@ -56,9 +56,9 @@ class OpenPayU_Configuration
      * 
      * @param string $serviceHttpAllowedCiphers
      */
-    public static function setServiceSslAllowedCiphers($serviceHttpAllowedCiphers) 
+    public static function setServiceSslCipherList($serviceHttpAllowedCiphers) 
     {
-        self::$_serviceSslAllowedCiphers = $serviceHttpAllowedCiphers;
+        self::$_serviceSslCipherList = $serviceHttpAllowedCiphers;
     }
 
    /**
