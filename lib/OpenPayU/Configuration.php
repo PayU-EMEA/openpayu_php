@@ -46,7 +46,7 @@ class OpenPayU_Configuration
      */
     public static function getServiceSslAllowedCiphers() 
     {
-        return static::$_serviceSslAllowedCiphers;
+        return self::$_serviceSslAllowedCiphers;
     }
 
    /**
@@ -58,7 +58,7 @@ class OpenPayU_Configuration
      */
     public static function setServiceSslAllowedCiphers($serviceHttpAllowedCiphers) 
     {
-        static::$_serviceSslAllowedCiphers = $serviceHttpAllowedCiphers;
+        self::$_serviceSslAllowedCiphers = $serviceHttpAllowedCiphers;
     }
 
    /**
