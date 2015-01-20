@@ -24,6 +24,7 @@ class OpenPayU_Configuration
     public static $summaryUrl = '';
     public static $authUrl = '';
     public static $serviceDomain = '';
+    private static $_serviceSslCipherList = 'TLSv1';
 
     private static $apiVersion = 2;
     private static $_availableHashAlgorithm = array('MD5', 'SHA', 'SHA1', 'SHA-1', 'SHA-256', 'SHA256', 'SHA_256');
@@ -38,6 +39,29 @@ class OpenPayU_Configuration
 
 
     /**
+     * 
+     * Get allowed ciphers for CURL SSL requests
+     * 
+     * @return string
+     */
+    public static function getServiceSslCipherList() 
+    {
+        return self::$_serviceSslCipherList;
+    }
+
+   /**
+     * Set allowed ciphers for CURL SSL requests
+     * 
+     * @link http://curl.haxx.se/libcurl/c/CURLOPT_SSL_CIPHER_LIST.html See CURL documentation for details
+     * 
+     * @param string $serviceHttpAllowedCiphers
+     */
+    public static function setServiceSslCipherList($serviceHttpAllowedCiphers) 
+    {
+        self::$_serviceSslCipherList = $serviceHttpAllowedCiphers;
+    }
+
+   /**
      * @access public
      * @param int $version
      * @throws OpenPayU_Exception_Configuration
