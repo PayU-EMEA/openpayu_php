@@ -35,7 +35,7 @@ class OpenPayU_Configuration
     private static $sender = 'Generic';
 
     const COMPOSER_JSON = "/composer.json";
-    const DEFAULT_SDK_VERSION = 'PHP SDK 2.1.0';
+    const DEFAULT_SDK_VERSION = 'PHP SDK 2.1.3';
 
 
     /**
