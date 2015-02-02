@@ -24,8 +24,6 @@ class OpenPayU_Configuration
     public static $summaryUrl = '';
     public static $authUrl = '';
     public static $serviceDomain = '';
-    private static $_serviceSslCipherList = 'TLSv1';
-
     private static $apiVersion = 2;
     private static $_availableHashAlgorithm = array('MD5', 'SHA', 'SHA1', 'SHA-1', 'SHA-256', 'SHA256', 'SHA_256');
     private static $hashAlgorithm = 'SHA-1';
@@ -37,17 +35,6 @@ class OpenPayU_Configuration
     const COMPOSER_JSON = "/composer.json";
     const DEFAULT_SDK_VERSION = 'PHP SDK 2.1.3';
 
-
-    /**
-     * 
-     * Get allowed ciphers for CURL SSL requests
-     * 
-     * @return string
-     */
-    public static function getServiceSslCipherList() 
-    {
-        return self::$_serviceSslCipherList;
-    }
 
    /**
      * Set allowed ciphers for CURL SSL requests

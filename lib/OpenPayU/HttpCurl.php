@@ -58,18 +58,12 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
         curl_setopt($ch, CURLOPT_HEADERFUNCTION, 'OpenPayU_HttpCurl::readHeader');
         curl_setopt($ch, CURLOPT_POSTFIELDS, (OpenPayU_Configuration::getApiVersion() < 2) ? 'DOCUMENT=' . urlencode($data) : $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSLVERSION, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($ch, CURLOPT_USERPWD, $userNameAndPassword);
-
-        $loaded_extensions = get_loaded_extensions();
-        if (in_array("openssl", $loaded_extensions)) {
-            curl_setopt($ch, CURLOPT_SSL_CIPHER_LIST, OpenPayU_Configuration::getServiceSslCipherList());
-        }
 
         $response = curl_exec($ch);
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
