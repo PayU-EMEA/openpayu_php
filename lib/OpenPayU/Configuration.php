@@ -37,18 +37,6 @@ class OpenPayU_Configuration
 
 
    /**
-     * Set allowed ciphers for CURL SSL requests
-     * 
-     * @link http://curl.haxx.se/libcurl/c/CURLOPT_SSL_CIPHER_LIST.html See CURL documentation for details
-     * 
-     * @param string $serviceHttpAllowedCiphers
-     */
-    public static function setServiceSslCipherList($serviceHttpAllowedCiphers) 
-    {
-        self::$_serviceSslCipherList = $serviceHttpAllowedCiphers;
-    }
-
-   /**
      * @access public
      * @param int $version
      * @throws OpenPayU_Exception_Configuration
