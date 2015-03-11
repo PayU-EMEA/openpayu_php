@@ -84,7 +84,7 @@ Remember: All keys in "order array" must be in lowercase.
 
 ###Creating order using HTML form
 
-   File with working example: [examples/v2/order/OrderForm.php](examples/v2/order/GeneratedOrderForm.php)
+   File with working example: [examples/v2/order/OrderForm.php](examples/v2/order/OrderForm.php)
 
    To create an order using HTML form you must provide an Array with order data:
 
