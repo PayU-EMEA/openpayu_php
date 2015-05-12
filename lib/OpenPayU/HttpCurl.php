@@ -62,7 +62,7 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
         curl_setopt($ch, CURLOPT_USERPWD, $userNameAndPassword);
         if ($proxy = OpenPayU_Configuration::getProxyAddress()) {
             curl_setopt($ch, CURLOPT_PROXY, $proxy);

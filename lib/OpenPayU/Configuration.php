@@ -334,6 +334,6 @@ class OpenPayU_Configuration
 
     public static function getProxyAuth()
     {
-        return self::$proxyUser?self::$proxyUser.":".self::$proxyPw:NULL;
+        return self::$proxyUser?self::$proxyUser.(self::$proxyPw?":".self::$proxyPw:NULL):NULL;
     }
 }
