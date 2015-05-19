@@ -36,10 +36,10 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 $response = OpenPayU_Order::cancel(stripslashes($_POST['orderId']));
                 $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
                 if($response->getStatus() == 'SUCCESS'){
-                    echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
+                    echo '<div class="alert alert-success">SUCCESS: ',$status_desc;
                     echo '</div>';
                 }else{
-                    echo '<div class="alert alert-warning">'.$response->getStatus().': '.$status_desc;
+                    echo '<div class="alert alert-warning">',$response->getStatus(),': ',$status_desc;
                     echo '</div>';
                 }
 
@@ -49,9 +49,9 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 echo '</pre>';
             }catch (OpenPayU_Exception $e) {
                 echo '<pre>';
-                echo 'Error code: '.$e->getCode();
+                echo 'Error code: ',$e->getCode();
                 echo '<br>';
-                echo 'Error message: '.$e->getMessage();
+                echo 'Error message: ',$e->getMessage();
                 echo '<br>';
                 echo '</pre>';
             }

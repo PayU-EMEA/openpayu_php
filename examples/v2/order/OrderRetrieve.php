@@ -38,7 +38,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
                 $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
                 if($response->getStatus() == 'SUCCESS'){
-                    echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
+                    echo '<div class="alert alert-success">SUCCESS: ',$status_desc;
                     echo '</div>';
                     $order = $response->getResponse()->orders[0];
                     echo '<table class="table table-hover table-bordered">';
@@ -46,13 +46,13 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                     echo '<tr><th colspan="2">Important data from response</th></tr>';
                     echo '</thead>';
                     echo '<tbody>';
-                    echo '<tr><td>Order status</td><td>'.$order->status.'</td></tr>';
-                    echo '<tr><td>Order id</td><td>'.$order->orderId.'</td></tr>';
-                    echo '<tr><td>Redirect Uri</td><td><a href="'.$order->notifyUrl.'">'.$order->notifyUrl.'</a></td></tr>';
+                    echo '<tr><td>Order status</td><td>',$order->status,'</td></tr>';
+                    echo '<tr><td>Order id</td><td>',$order->orderId,'</td></tr>';
+                    echo '<tr><td>Redirect Uri</td><td><a href="',$order->notifyUrl,'">',$order->notifyUrl,'</a></td></tr>';
                     echo '</tbody>';
                     echo '</table>';
                 }else{
-                    echo '<div class="alert alert-warning">'.$response->getStatus().': '.$status_desc;
+                    echo '<div class="alert alert-warning">',$response->getStatus(),': ',$status_desc;
                     echo '</div>';
                 }
 
@@ -63,9 +63,9 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 
             } catch (OpenPayU_Exception $e) {
                 echo '<pre>';
-                echo 'Error code: '.$e->getCode();
+                echo 'Error code: ',$e->getCode();
                 echo '<br>';
-                echo 'Error message: '.$e->getMessage();
+                echo 'Error message: ',$e->getMessage();
                 echo '<br>';
                 echo '</pre>';
             }
