@@ -60,10 +60,10 @@ if (isset($_POST['orderId']))
 
                 $status_desc = OpenPayU_Util::statusDesc($refund->getStatus());
                 if($refund->getStatus() == 'SUCCESS'){
-                    echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
+                    echo '<div class="alert alert-success">SUCCESS: ',$status_desc;
                     echo '</div>';
                 }else{
-                    echo '<div class="alert alert-warning">'.$refund->getStatus().': '.$status_desc;
+                    echo '<div class="alert alert-warning">',$refund->getStatus(),': ',$status_desc;
                     echo '</div>';
                 }
 
@@ -74,9 +74,9 @@ if (isset($_POST['orderId']))
 
             } catch (OpenPayU_Exception $e) {
                 echo '<pre>';
-                echo 'Error code: '.$e->getCode();
+                echo 'Error code: ',$e->getCode();
                 echo '<br>';
-                echo 'Error message: '.$e->getMessage();
+                echo 'Error message: ',$e->getMessage();
                 echo '<br>';
                 echo '</pre>';
             }

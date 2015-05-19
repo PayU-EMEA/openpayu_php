@@ -92,10 +92,10 @@ $order['buyer']['delivery']['countryCode'] = 'PL';
         $response = OpenPayU_Order::create($order);
         $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
         if($response->getStatus() == 'SUCCESS'){
-            echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
+            echo '<div class="alert alert-success">SUCCESS: ',$status_desc;
             echo '</div>';
         }else{
-            echo '<div class="alert alert-warning">'.$response->getStatus().': '.$status_desc;
+            echo '<div class="alert alert-warning">',$response->getStatus(),': ',$status_desc;
             echo '</div>';
         }
     }catch (OpenPayU_Exception $e){
