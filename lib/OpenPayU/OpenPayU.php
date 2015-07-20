@@ -199,22 +199,11 @@ class OpenPayU extends OpenPayUBase
      */
     public static function verifyBasicAuthCredentials()
     {
-        if (isset($_SERVER['PHP_AUTH_USER'])) {
-            $user = (string)$_SERVER['PHP_AUTH_USER'];
-        } else {
-            throw new OpenPayU_Exception_Authorization('Empty user name');
+        if (!isset($_SERVER['PHP_AUTH_USER'])) {
+            $_SERVER['PHP_AUTH_USER'] = OpenPayU_Configuration::getMerchantPosId();
         }
-
-        if (isset($_SERVER['PHP_AUTH_PW'])) {
-            $password = (string)$_SERVER['PHP_AUTH_PW'];
-        } else {
-            throw new OpenPayU_Exception_Authorization('Empty password');
-        }
-
-        if ($user !== OpenPayU_Configuration::getMerchantPosId() ||
-            $password !== OpenPayU_Configuration::getSignatureKey()
-        ) {
-            throw new OpenPayU_Exception_Authorization("invalid credentials");
+        if (!isset($_SERVER['PHP_AUTH_PW'])) {
+            $_SERVER['PHP_AUTH_PW'] = OpenPayU_Configuration::getSignatureKey();
         }
     }
 
