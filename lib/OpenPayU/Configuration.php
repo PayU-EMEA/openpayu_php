@@ -1,13 +1,13 @@
 <?php
 
 /*
-	OpenPayU Standard Library
+    OpenPayU Standard Library
 
-	@copyright  Copyright (c) 2011-2014 PayU
-	@license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
-	http://www.payu.com
-	http://developers.payu.com
-	http://twitter.com/openpayu
+    @copyright  Copyright (c) 2011-2014 PayU
+    @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
+    http://www.payu.com
+    http://developers.payu.com
+    http://twitter.com/openpayu
 */
 
 class OpenPayU_Configuration
@@ -24,6 +24,14 @@ class OpenPayU_Configuration
     public static $summaryUrl = '';
     public static $authUrl = '';
     public static $serviceDomain = '';
+    /**
+     * Hostname of http proxy for outgoing request
+     * @var string
+     */
+    public static $proxyHost = null;
+    public static $proxyPort = null;
+    public static $proxyUser = null;
+    public static $proxyPw = null;
     private static $apiVersion = 2;
     private static $_availableHashAlgorithm = array('MD5', 'SHA', 'SHA1', 'SHA-1', 'SHA-256', 'SHA256', 'SHA_256');
     private static $hashAlgorithm = 'SHA-1';
@@ -297,5 +305,35 @@ class OpenPayU_Configuration
     private static function getComposerFilePath()
     {
         return realpath(dirname(__FILE__)) .'/../../'.self::COMPOSER_JSON;
+    }
+
+    public static function setProxyHost($proxyHost)
+    {
+        self::$proxyHost = $proxyHost;
+    }
+
+    public static function setProxyPort($proxyPort)
+    {
+        self::$proxyPort = $proxyPort;
+    }
+
+    public static function getProxyAddress()
+    {
+        return self::$proxyHost?self::$proxyHost.(self::$proxyPort?":".self::$proxyPort:NULL):NULL;
+    }
+
+    public static function setProxyUser($proxyUser)
+    {
+        self::$proxyUser = $proxyUser;
+    }
+
+    public static function setProxyPassword($proxyPw)
+    {
+        self::$proxyPw = $proxyPw;
+    }
+
+    public static function getProxyAuth()
+    {
+        return self::$proxyUser?self::$proxyUser.(self::$proxyPw?":".self::$proxyPw:NULL):NULL;
     }
 }
