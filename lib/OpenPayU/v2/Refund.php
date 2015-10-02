@@ -61,13 +61,15 @@ class OpenPayU_Refund extends OpenPayU
 
         $message = OpenPayU_Util::convertJsonToArray($response['response'], true);
 
-        if (isset($message[$messageName])) {
-            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;
+        $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;
+
+        if (json_last_error() == JSON_ERROR_SYNTAX) {
+            $data['response'] = $response['response'];
+        } elseif (isset($message[$messageName])) {
             unset($message[$messageName]['Status']);
             $data['response'] = $message[$messageName];
         } elseif (isset($message)) {
             $data['response'] = $message;
-            $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;
             unset($message['status']);
         }
 
