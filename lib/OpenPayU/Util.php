@@ -1,20 +1,26 @@
 <?php
+
 /**
- * OpenPayU
+ * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2014 PayU
+ * @copyright  Copyright (c) 2011-2015 PayU
+ * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
+ * http://www.payu.com
+ * http://developers.payu.com
  */
 
 class OpenPayU_Util
 {
     /**
      * Function generate sign data
-     * @access public
+     *
      * @param string $data
      * @param string $algorithm
      * @param string $merchantPosId
      * @param string $signatureKey
-     * @return string $signData
+     *
+     * @return string
+     *
      * @throws OpenPayU_Exception_Configuration
      */
     public static function generateSignData($data, $algorithm = 'SHA', $merchantPosId = '', $signatureKey = '')
@@ -46,19 +52,23 @@ class OpenPayU_Util
 
     /**
      * Function returns signature data object
+     *
      * @param string $data
+     *
      * @return null|object
      */
     public static function parseSignature($data)
     {
-        if (empty($data))
+        if (empty($data)) {
             return null;
+        }
 
         $signatureData = array();
 
         $list = explode(';', rtrim($data, ';'));
-        if (empty($list))
+        if (empty($list)) {
             return null;
+        }
 
         foreach ($list as $value) {
             $explode = explode('=', $value);
@@ -70,10 +80,12 @@ class OpenPayU_Util
 
     /**
      * Function returns signature validate
-     * @param $message
-     * @param $signature
-     * @param $signatureKey
-     * @param $algorithm
+     *
+     * @param string $message
+     * @param string $signature
+     * @param string $signatureKey
+     * @param string $algorithm
+     *
      * @return bool
      */
     public static function verifySignature($message, $signature, $signatureKey, $algorithm = 'MD5')
@@ -99,18 +111,21 @@ class OpenPayU_Util
 
     /**
      * Function builds OpenPayU Json Document
-     * @access public
+     *
      * @param string $data
      * @param string $rootElement
-     * @return string $xml
+     *
+     * @return null|string
      */
     public static function buildJsonFromArray($data, $rootElement = '')
     {
-        if (!is_array($data))
+        if (!is_array($data)) {
             return null;
+        }
 
-        if (!empty($rootElement))
+        if (!empty($rootElement)) {
             $data = array($rootElement => $data);
+        }
 
         $data = self::setSenderProperty($data);
 
@@ -118,113 +133,21 @@ class OpenPayU_Util
     }
 
     /**
-     * Function builds OpenPayU Xml Document
-     * @access public
      * @param string $data
-     * @param string $rootElement
-     * @param string $version
-     * @param string $encoding
-     * @param string $rootElementXsi
-     * @return string $xml
-     */
-    public static function buildXmlFromArray($data, $rootElement, $version = '1.0', $encoding = 'UTF-8', $rootElementXsi = null)
-    {
-        if (!is_array($data))
-            return null;
-
-        $xml = new XmlWriter();
-
-        $xml->openMemory();
-
-        $xml->setIndent(true);
-
-        $xml->startDocument($version, $encoding);
-        $xml->startElementNS(null, 'OpenPayU', 'http://www.openpayu.com/20/openpayu.xsd');
-
-        $xml->startElement($rootElement);
-
-        if (!empty($rootElementXsi)) {
-            $xml->startAttributeNs('xsi', 'type', 'http://www.w3.org/2001/XMLSchema-instance');
-            $xml->text($rootElementXsi);
-            $xml->endAttribute();
-        }
-
-        self::convertArrayToXml($xml, $data);
-        $xml->endElement();
-
-        $xml->endElement();
-        $xml->endDocument();
-
-        return trim($xml->outputMemory(true));
-    }
-
-    /**
-     * Function converts array to XML document
-     * @access public
-     * @param XMLWriter $xml
-     * @param array $data
-     */
-    public static function convertArrayToXml(XMLWriter $xml, $data)
-    {
-        if (!empty($data) && is_array($data)) {
-            foreach ($data as $key => $value) {
-                if (is_array($value)) {
-                    if (is_numeric($key)) {
-                        self::convertArrayToXml($xml, $value);
-                    } else {
-                        $xml->startElement($key);
-                        self::convertArrayToXml($xml, $value);
-                        $xml->endElement();
-                    }
-                    continue;
-                }
-                $xml->writeElement($key, $value);
-            }
-        }
-    }
-
-    /**
-     * @param $data
-     * @return array
-     */
-    public static function parseXmlDocument($data)
-    {
-        if (empty($data))
-            return null;
-
-        $assoc = self::convertXmlToArray($data);
-
-        return $assoc;
-    }
-
-    /**
-     * Function converts xml to array
-     * @access public
-     * @param string $xml
-     * @return array $tree
-     */
-    public static function convertXmlToArray($xml)
-    {
-        $xmlObject = simplexml_load_string($xml);
-        $xmlArray = array( $xmlObject->getName() => (array)$xmlObject );
-        return json_decode(json_encode($xmlArray),1);
-    }
-
-    /**
-     * @param $data
      * @param bool $assoc
      * @return mixed|null
      */
     public static function convertJsonToArray($data, $assoc = false)
     {
-        if (empty($data))
+        if (empty($data)) {
             return null;
+        }
 
         return json_decode($data, $assoc);
     }
 
     /**
-     * @param $array
+     * @param array $array
      * @return bool|stdClass
      */
     public static function parseArrayToObject($array)
@@ -334,13 +257,15 @@ class OpenPayU_Util
     }
 
     /**
-     * @param $data
-     * @return mixed
+     * @param array $data
+     * @return array
      */
-    public static function setSenderProperty($data)
+    private static function setSenderProperty($data)
     {
-        $data['properties'][0]['name'] = 'sender';
-        $data['properties'][0]['value'] = OpenPayU_Configuration::getFullSenderName();
+        $data['properties'][0] = array(
+            'name' => 'sender',
+            'value' => OpenPayU_Configuration::getFullSenderName()
+        );
         return $data;
     }
 

@@ -1,14 +1,14 @@
 <?php
 /**
- * OpenPayU_HttpCurl
+ * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2014 PayU
+ * @copyright  Copyright (c) 2011-2015 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
- * http://twitter.com/openpayu
  */
-class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
+
+class OpenPayU_HttpCurl
 {
     /**
      * @var
@@ -17,9 +17,10 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
 
     /**
      * @param $requestType
-     * @param $pathUrl
+     * @param string $pathUrl
      * @param $data
-     * @param $signature
+     * @param $posId
+     * @param $signatureKey
      * @return mixed
      * @throws OpenPayU_Exception_Configuration
      * @throws OpenPayU_Exception_Network
@@ -28,7 +29,7 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
     public static function doRequest($requestType, $pathUrl, $data, $posId, $signatureKey)
     {
         if (empty($pathUrl))
-            throw new OpenPayU_Exception_Configuration('The end point is empty');
+            throw new OpenPayU_Exception_Configuration('The endpoint is empty');
 
         if (empty($posId)) {
             throw new OpenPayU_Exception_Configuration('PosId is empty');
@@ -41,12 +42,11 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
         $userNameAndPassword = $posId.":".$signatureKey;
 
         $headers = array(
-            'Content-Type:application/json',
-            'Accept:application/json'
+            'Content-Type: application/json',
+            'Accept: application/json'
         );
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $pathUrl);
+        $ch = curl_init($pathUrl);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $requestType);
         curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
@@ -65,16 +65,16 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
 
         $response = curl_exec($ch);
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if($response === false)
+        if($response === false) {
             throw new OpenPayU_Exception_Network(curl_error($ch));
-
+        }
         curl_close($ch);
 
         return array('code' => $httpStatus, 'response' => trim($response));
     }
 
     /**
-     * @param $headers
+     * @param array $headers
      *
      * @return mixed
      */
@@ -85,11 +85,13 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
             if(preg_match('/X-OpenPayU-Signature/i', $name) || preg_match('/OpenPayu-Signature/i', $name))
                 return $value;
         }
+
+        return null;
     }
 
     /**
-     * @param $ch
-     * @param $header
+     * @param resource $ch
+     * @param string $header
      * @return int
      */
     public static function readHeader($ch, $header)
@@ -101,19 +103,4 @@ class OpenPayU_HttpCurl implements OpenPayU_HttpProtocol
         return strlen($header);
     }
 
-    /**
-     * @param  $headers
-     */
-    public static function setHeaders($headers)
-    {
-        self::$headers = $headers;
-    }
-
-    /**
-     * @return mixed
-     */
-    public static function getHeader()
-    {
-        return self::$headers;
-    }
 }

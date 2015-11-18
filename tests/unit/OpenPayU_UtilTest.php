@@ -33,13 +33,12 @@ class OpenPayU_UtilTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($valid);
     }
 
-    /**
-     * @test
-     */
-    public function shouldSetSenderProperty(){
+    public function testShouldSetSenderProperty(){
         $array  = array();
-        $result = OpenPayU_Util::setSenderProperty($array);
-        $this->assertEquals($result['properties'][0]['name'], 'sender');
-        $this->assertEquals($result['properties'][0]['value'], OpenPayU_Configuration::getFullSenderName());
+        $result = json_decode(OpenPayU_Util::buildJsonFromArray($array));
+        $this->assertEquals($result->properties[0]->name, 'sender');
+        $this->assertEquals($result->properties[0]->value, OpenPayU_Configuration::getFullSenderName());
     }
+
+
 }

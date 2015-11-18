@@ -1,15 +1,14 @@
 <?php
+
 /**
- * OpenPayU
+ * OpenPayU Examples
  *
- * @copyright  Copyright (c) 2014 PayU
+ * @copyright  Copyright (c) 2011-2015 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
- *
  * http://www.payu.com
  * http://developers.payu.com
- * http://twitter.com/openpayu
- *
  */
+
 
 require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
 require_once realpath(dirname(__FILE__)) . '/../../config.php';
@@ -24,7 +23,7 @@ $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
 $order['description'] = 'New order';
 $order['currencyCode'] = 'PLN';
 $order['totalAmount'] = 3200;
-$order['extOrderId'] = rand(1000, 1000000);
+$order['extOrderId'] = uniqid('', true);
 
 $order['products'][0]['name'] = 'Product1';
 $order['products'][0]['unitPrice'] = 1000;
@@ -122,15 +121,17 @@ $order['buyer']['delivery']['countryCode'] = 'PL';
             <td>Order status</td>
             <td><?= $response->getStatus() ?></td>
         </tr>
-        <tr>
-            <td>Order id</td>
-            <td><?= $response->getResponse()->orderId ?></td>
-        </tr>
-        <tr>
-            <td>Redirect Uri</td>
-            <td><a href="<?= $response->getResponse()->redirectUri ?>"><?= $response->getResponse()->redirectUri ?></a>
-            </td>
-        </tr>
+        <?php if ($response->getStatus() == 'SUCCESS'): ?>
+            <tr>
+                <td>Order id</td>
+                <td><?= $response->getResponse()->orderId ?></td>
+            </tr>
+            <tr>
+                <td>Redirect Uri</td>
+                <td><a href="<?= $response->getResponse()->redirectUri ?>"><?= $response->getResponse()->redirectUri ?></a>
+                </td>
+            </tr>
+        <?php endif; ?>
         </tbody>
     </table>
     <h1>Response</h1>

@@ -1,14 +1,12 @@
 <?php
+
 /**
- * OpenPayU
+ * OpenPayU Examples
  *
- * @copyright  Copyright (c) 2014 PayU
+ * @copyright  Copyright (c) 2011-2015 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
- *
  * http://www.payu.com
  * http://developers.payu.com
- * http://twitter.com/openpayu
- *
  */
 
 require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
@@ -24,7 +22,7 @@ $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
 $order['description'] = 'New order';
 $order['currencyCode'] = 'PLN';
 $order['totalAmount'] = 3200;
-$order['extOrderId'] = rand(1000, 1000000);
+$order['extOrderId'] = uniqid('', true);
 
 $order['products'][0]['name'] = 'Product1';
 $order['products'][0]['unitPrice'] = 1000;
@@ -51,10 +49,9 @@ $rsp = OpenPayU_Order::hostedOrderForm($order);
     <style type="text/css">
         #payu-payment-form button[type=submit]{
             border: 0px;
-            height: 35px;
-            width: 140px;
-            background: url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png');
-            background-repeat: no-repeat;
+            height: 50px;
+            width: 290px;
+            background: url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png') no-repeat;
             cursor: pointer;
         }
     </style>

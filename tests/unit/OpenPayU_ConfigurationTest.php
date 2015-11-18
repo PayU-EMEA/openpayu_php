@@ -18,7 +18,7 @@ require realpath(dirname(__FILE__)).'\..\..\vendor/autoload.php';
 class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 {
 
-    const PHP_SDK_VERSION = 'PHP SDK 2.1.0';
+    const PHP_SDK_VERSION = 'PHP SDK 2.1.3';
 
     public function testSetValidEnvironment()
     {
@@ -58,7 +58,7 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage hash - is not available
+     * @expectedExceptionMessage Hash algorithm "hash"" is not available
      */
     public function testSetInvalidHashAlgorithm()
     {
@@ -69,24 +69,6 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
     {
         OpenPayU_Configuration::setMerchantPosId('PosId');
         $this->assertEquals('PosId', OpenPayU_Configuration::getMerchantPosId());
-    }
-
-    public function testPosAuthKey()
-    {
-        OpenPayU_Configuration::setPosAuthKey('PosAuthKey');
-        $this->assertEquals('PosAuthKey', OpenPayU_Configuration::getPosAuthKey());
-    }
-
-    public function testClientId()
-    {
-        OpenPayU_Configuration::setClientId('ClientId');
-        $this->assertEquals('ClientId', OpenPayU_Configuration::getClientId());
-    }
-
-    public function testClientSecret()
-    {
-        OpenPayU_Configuration::setClientSecret('ClientSecret');
-        $this->assertEquals('ClientSecret', OpenPayU_Configuration::getClientSecret());
     }
 
     public function testSignatureKey()
@@ -129,7 +111,7 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function shouldReturnDefgaultSDKVersionWhenComposerFileIsNotGiven(){
         //given
         $OpenPayU_ConfigurationMock = $this->getMock('OpenPayU_Configuration');
-        $OpenPayU_ConfigurationMock->staticExpects($this->any())->method('getComposerFilePath')
+        $OpenPayU_ConfigurationMock->expects($this->any())->method('getComposerFilePath')
             ->will($this->returnValue('mock.json'));
         //when
         $sdkVersion = OpenPayU_Configuration::getSdkVersion();

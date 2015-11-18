@@ -19,28 +19,12 @@ class OpenPayU_OrderTest extends PHPUnit_Framework_TestCase {
 
     protected function setUp()
     {
-        OpenPayU_Configuration::setEnvironment('secure'); // production
-        OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID (Checkout)
-        OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //Second MD5 key. You will find it in admin panel.
+        OpenPayU_Configuration::setEnvironment('secure');
+        OpenPayU_Configuration::setMerchantPosId('145227');
+        OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50');
 
         $this->initializeOrderData();
     }
-
-    private function mockOpenPayU_HttpVerifyResponse($orderResponseType, $method, $with){
-
-        $mock = $this->getMockBuilder('OpenPayU_Order')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $returnValue = file_get_contents(realpath(dirname(__FILE__)) . '/../../resources/'. $orderResponseType .'.txt');
-
-        $mock->expects($this->any())
-            ->method($method)->with($with)
-            ->will($this->returnValue($returnValue));
-
-        return $mock;
-    }
-
 
 
     private function initializeOrderData(){
@@ -73,33 +57,9 @@ class OpenPayU_OrderTest extends PHPUnit_Framework_TestCase {
     public function testHostedOrderForm()
     {
         $expectedForm = file_get_contents(realpath(dirname(__FILE__)) . '/../../resources/hostedOrderForm.txt');
-        $this->assertEquals($expectedForm, OpenPayU_Order::hostedOrderForm($this->_order));
-    }
-
-    public function testCreate()
-    {
-        $mock = $this->mockOpenPayU_HttpVerifyResponse('orderCreateResponse', 'create', $this->_order);
-        $this->assertEquals('', $mock->create($this->_order));
-    }
-
-    public function testRetrieve()
-    {
-        $mock = $this->mockOpenPayU_HttpVerifyResponse('orderRetrieveResponse', 'retrieve', $this->_order);
-        $this->assertEquals('', $mock->retrieve('Z963D5JQR2230925GUEST000P01'));
-    }
-
-
-    public function testCancel()
-    {
-        $orderId = $this->_order['extOrderId'];
-        $mock = $this->mockOpenPayU_HttpVerifyResponse('orderCancelResponse', 'cancel', $orderId);
-        $this->assertEquals('', $mock->cancel($orderId));
-    }
-
-    public function testStatusUpdate()
-    {
-        $mock = $this->mockOpenPayU_HttpVerifyResponse('orderStatusUpdateResponse', 'statusUpdate', 'Z963D5JQR2230925GUEST000P01');
-        $this->assertEquals('', $mock->statusUpdate('Z963D5JQR2230925GUEST000P01'));
+        OpenPayU_Configuration::setHashAlgorithm('MD5');
+        $form = OpenPayU_Order::hostedOrderForm($this->_order);
+        $this->assertEquals($expectedForm, $form);
     }
 
 }

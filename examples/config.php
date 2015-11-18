@@ -1,17 +1,14 @@
 <?php
-//namespace OpenPayuSdk\Examples\V2;
 
 /**
- * OpenPayU
+ * OpenPayU Examples
  *
- * @copyright  Copyright (c) 2014 PayU
+ * @copyright  Copyright (c) 2011-2015 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
- *
  * http://www.payu.com
  * http://developers.payu.com
- * http://twitter.com/openpayu
- *
  */
+
 OpenPayU_Configuration::setEnvironment('secure');
 OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID (Checkout)
 OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //Second MD5 key. You will find it in admin panel.
