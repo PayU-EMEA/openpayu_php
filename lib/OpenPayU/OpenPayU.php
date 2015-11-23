@@ -20,30 +20,6 @@ class OpenPayU
     }
 
     /**
-     * @throws OpenPayU_Exception_Authorization
-     */
-    public static function verifyBasicAuthCredentials()
-    {
-        if (isset($_SERVER['PHP_AUTH_USER'])) {
-            $user = (string)$_SERVER['PHP_AUTH_USER'];
-        } else {
-            throw new OpenPayU_Exception_Authorization('Empty user name');
-        }
-
-        if (isset($_SERVER['PHP_AUTH_PW'])) {
-            $password = (string)$_SERVER['PHP_AUTH_PW'];
-        } else {
-            throw new OpenPayU_Exception_Authorization('Empty password');
-        }
-
-        if ($user !== OpenPayU_Configuration::getMerchantPosId() ||
-            $password !== OpenPayU_Configuration::getSignatureKey()
-        ) {
-            throw new OpenPayU_Exception_Authorization("invalid credentials");
-        }
-    }
-
-    /**
      * @param $data
      * @param $incomingSignature
      * @throws OpenPayU_Exception_Authorization
@@ -63,11 +39,4 @@ class OpenPayU
         }
     }
 
-    /**
-     * @return bool
-     */
-    public static function isSecureConnection()
-    {
-        return isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
-    }
 }
