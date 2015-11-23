@@ -1,3 +1,8 @@
+## 2.1.4
+* Remove Verify Auth Basic 
+* Code cleanup 
+* Fix messages for throwHttpStatusException
+
 ## 2.1.0
 * Endpoint https://secure.payu.com/api/v2_1/orders
 * Simplification of request structure by eliminating nesting
