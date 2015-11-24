@@ -206,7 +206,7 @@ echo $orderFormData
 ```php
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $body = file_get_contents('php://input');
-        $data = stripslashes(trim($body));
+        $data = trim($body);
 
         $response = OpenPayU_Order::consumeNotification($data);
         $response->getResponse()->order->status; //NEW PENDING CANCELLED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
