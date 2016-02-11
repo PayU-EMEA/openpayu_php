@@ -17,11 +17,11 @@ class OpenPayU_UtilTest extends PHPUnit_Framework_TestCase
 {
     public function testGenerateSignData()
     {
-        $expected = 'sender=MerchantPosId;signature=52bb16149d1a5ccc8ac05f8e435c30d82efd5364;algorithm=SHA-1;content=DOCUMENT';
+        $expected = 'sender=MerchantPosId;algorithm=SHA-256;signature=e4c8315c9ab2e097ef1221f3fbd1e761405d961760e538fb2e0055d3d90b5e35';
 
         $this->assertEquals(
             $expected,
-            OpenPayU_Util::generateSignData('OpenPayUData', 'SHA-1', 'MerchantPosId', 'SignatureKey')
+            OpenPayU_Util::generateSignData(array('test'=>'OpenPayUData'), 'SHA', 'MerchantPosId', 'SignatureKey')
         );
     }
 

@@ -18,7 +18,7 @@ require realpath(dirname(__FILE__)).'\..\..\vendor/autoload.php';
 class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 {
 
-    const PHP_SDK_VERSION = 'PHP SDK 2.1.3';
+    const PHP_SDK_VERSION = 'PHP SDK 2.1.5';
 
     public function testSetValidEnvironment()
     {
@@ -52,8 +52,8 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 
     public function testSetValidHashAlgorithm()
     {
-        OpenPayU_Configuration::setHashAlgorithm('MD5');
-        $this->assertEquals('MD5', OpenPayU_Configuration::getHashAlgorithm());
+        OpenPayU_Configuration::setHashAlgorithm('SHA');
+        $this->assertEquals('SHA', OpenPayU_Configuration::getHashAlgorithm());
     }
 
     /**

@@ -14,7 +14,7 @@ class OpenPayU_Util
     /**
      * Function generate sign data
      *
-     * @param string $data
+     * @param array $data
      * @param string $algorithm
      * @param string $merchantPosId
      * @param string $signatureKey
@@ -23,7 +23,7 @@ class OpenPayU_Util
      *
      * @throws OpenPayU_Exception_Configuration
      */
-    public static function generateSignData($data, $algorithm = 'SHA', $merchantPosId = '', $signatureKey = '')
+    public static function generateSignData(array $data, $algorithm = 'SHA-256', $merchantPosId = '', $signatureKey = '')
     {
         if (empty($signatureKey))
             throw new OpenPayU_Exception_Configuration('Merchant Signature Key should not be null or empty.');
@@ -31,21 +31,27 @@ class OpenPayU_Util
         if (empty($merchantPosId))
             throw new OpenPayU_Exception_Configuration('MerchantPosId should not be null or empty.');
 
-        $signature = '';
+        $contentForSign = '';
+        ksort($data);
 
-        $data = $data . $signatureKey;
-
-        if ($algorithm == 'MD5') {
-            $signature = md5($data);
-        } else if (in_array($algorithm, array('SHA', 'SHA1', 'SHA-1'))) {
-            $signature = sha1($data);
-            $algorithm = 'SHA-1';
-        } else if (in_array($algorithm, array('SHA-256', 'SHA256', 'SHA_256'))) {
-            $signature = hash('sha256', $data);
-            $algorithm = 'SHA-256';
+        foreach ($data as $key=>$value) {
+            $contentForSign .= $key . '=' . urlencode($value) . '&';
         }
 
-        $signData = 'sender=' . $merchantPosId . ';signature=' . $signature . ';algorithm=' . $algorithm . ';content=DOCUMENT';
+        if (in_array($algorithm, array('SHA-256', 'SHA'))) {
+            $hashAlgorithm = 'sha256';
+            $algorithm = 'SHA-256';
+        } else if ($algorithm == 'SHA-384') {
+            $hashAlgorithm = 'sha384';
+            $algorithm = 'SHA-384';
+        } else if ($algorithm == 'SHA-512') {
+            $hashAlgorithm = 'sha512';
+            $algorithm = 'SHA-512';
+        }
+
+        $signature = hash($hashAlgorithm, $contentForSign.$signatureKey);
+
+        $signData = 'sender=' . $merchantPosId . ';algorithm=' . $algorithm . ';signature=' . $signature;
 
         return $signData;
     }
@@ -199,9 +205,11 @@ class OpenPayU_Util
         }
 
     }
+
     /**
      * @param $array
      * @param string $namespace
+     * @param array $outputFields
      * @return string
      */
     public static function convertArrayToHtmlForm($array, $namespace = "", &$outputFields)
@@ -211,9 +219,6 @@ class OpenPayU_Util
         $assoc = self::isAssocArray($array);
 
         foreach ($array as $key => $value) {
-
-            //Temporary important changes only for order by form method
-            $key = self::changeFormFieldFormat($namespace, $key);
 
             if ($namespace && $assoc) {
                 $key = $namespace . '.' . $key;

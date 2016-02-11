@@ -185,21 +185,19 @@ class OpenPayU_Order extends OpenPayU
      * Generate a form body for hosted order
      *
      * @access public
-     * @param $order An array containing full Order
-     * @param $params An optional array with form elements' params
+     * @param array $order an array containing full Order
+     * @param array $params an optional array with form elements' params
      * @return string Response html form
      */
     public static function hostedOrderForm($order, $params = array())
     {
         $orderFormUrl = OpenPayU_Configuration::getServiceUrl() . 'orders';
 
-        $usortedFormFieldValuesAsArray = array();
-        $htmlFormFields = OpenPayU_Util::convertArrayToHtmlForm($order, "", $usortedFormFieldValuesAsArray);
-        ksort($usortedFormFieldValuesAsArray);
-        $sortedFormFieldValuesAsString = implode('', array_values($usortedFormFieldValuesAsArray));
+        $formFieldValuesAsArray = array();
+        $htmlFormFields = OpenPayU_Util::convertArrayToHtmlForm($order, '', $formFieldValuesAsArray);
 
         $signature = OpenPayU_Util::generateSignData(
-            $sortedFormFieldValuesAsString,
+            $formFieldValuesAsArray,
             OpenPayU_Configuration::getHashAlgorithm(),
             OpenPayU_Configuration::getMerchantPosId(),
             OpenPayU_Configuration::getSignatureKey()

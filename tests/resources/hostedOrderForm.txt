@@ -18,4 +18,4 @@
 <input type="hidden" name="buyer.lastName" value="Kowalski" />
 <input type="hidden" name="buyer.language" value="pl_PL" />
 <input type="hidden" name="buyer.nIN" value="123456" />
-<input type="hidden" name="OpenPayu-Signature" value="sender=145227;signature=ac312eda20719843c076c0aa05817965;algorithm=MD5;content=DOCUMENT" /><button type="submit" formtarget="_blank" id="" class=""></button></form>
+<input type="hidden" name="OpenPayu-Signature" value="sender=145227;algorithm=SHA-256;signature=ca4bfe95e849e154bdf4c90b78791d90e342fe1669cec7874c1619635bbf1127" /><button type="submit" formtarget="_blank" id="" class=""></button></form>

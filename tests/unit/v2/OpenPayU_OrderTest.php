@@ -57,7 +57,7 @@ class OpenPayU_OrderTest extends PHPUnit_Framework_TestCase {
     public function testHostedOrderForm()
     {
         $expectedForm = file_get_contents(realpath(dirname(__FILE__)) . '/../../resources/hostedOrderForm.txt');
-        OpenPayU_Configuration::setHashAlgorithm('MD5');
+        OpenPayU_Configuration::setHashAlgorithm('SHA');
         $form = OpenPayU_Order::hostedOrderForm($this->_order);
         $this->assertEquals($expectedForm, $form);
     }

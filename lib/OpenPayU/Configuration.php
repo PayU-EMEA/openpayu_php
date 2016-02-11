@@ -12,7 +12,7 @@
 class OpenPayU_Configuration
 {
     private static $_availableEnvironment = array('custom', 'secure');
-    private static $_availableHashAlgorithm = array('MD5', 'SHA', 'SHA1', 'SHA-1', 'SHA-256', 'SHA256', 'SHA_256');
+    private static $_availableHashAlgorithm = array('SHA', 'SHA-256', 'SHA-384', 'SHA-512');
 
     private static $env = 'secure';
     private static $merchantPosId = '';
@@ -21,12 +21,12 @@ class OpenPayU_Configuration
     private static $serviceUrl = '';
     private static $serviceDomain = '';
     private static $apiVersion = '2.1';
-    private static $hashAlgorithm = 'SHA-1';
+    private static $hashAlgorithm = 'SHA-256';
 
     private static $sender = 'Generic';
 
     const COMPOSER_JSON = "/composer.json";
-    const DEFAULT_SDK_VERSION = 'PHP SDK 2.1.4';
+    const DEFAULT_SDK_VERSION = 'PHP SDK 2.1.5';
 
 
     /**
