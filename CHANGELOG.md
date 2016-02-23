@@ -1,3 +1,6 @@
+## 2.1.6
+* Remove downgrade http version in curl
+
 ## 2.1.5
 * Update signature calculate for order form
 
