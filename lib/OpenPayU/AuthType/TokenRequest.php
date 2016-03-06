@@ -11,10 +11,4 @@ class AuthType_TokenRequest implements AuthType
         );
     }
 
-
-    public function isAuthBasic()
-    {
-        return false;
-    }
-
 }

@@ -6,11 +6,7 @@ class AuthType_Basic implements AuthType
     /**
      * @var string
      */
-    private $posId;
-    /**
-     * @var string
-     */
-    private $signatureKey;
+    private $authBasicToken;
 
     public function __construct($posId, $signatureKey)
     {
@@ -22,26 +18,16 @@ class AuthType_Basic implements AuthType
             throw new OpenPayU_Exception_Configuration('SignatureKey is empty');
         }
 
-        $this->posId = $posId;
-        $this->signatureKey = $signatureKey;
+        $this->authBasicToken = base64_encode($posId . ':' . $signatureKey);
     }
 
     public function getHeaders()
     {
         return array(
             'Content-Type: application/json',
-            'Accept: application/json'
+            'Accept: application/json',
+            'Authorization: Basic ' . $this->authBasicToken
         );
-    }
-
-    public function isAuthBasic()
-    {
-        return true;
-    }
-
-    public function getAuthBasicUserAndPassword()
-    {
-        return $this->posId . ":" . $this->signatureKey;
     }
 
 }

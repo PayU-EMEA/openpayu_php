@@ -101,12 +101,6 @@ class OpenPayU_HttpCurl
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
-        if ($auth->isAuthBasic()) {
-            /** @var AuthType_Basic $auth*/
-            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            curl_setopt($ch, CURLOPT_USERPWD, $auth->getAuthBasicUserAndPassword());
-        }
-
         $response = curl_exec($ch);
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 

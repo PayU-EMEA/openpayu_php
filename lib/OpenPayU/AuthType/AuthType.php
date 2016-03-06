@@ -8,9 +8,5 @@ interface AuthType
      */
     public function getHeaders();
 
-    /**
-     * @return boolean
-     */
-    public function isAuthBasic();
 
 }

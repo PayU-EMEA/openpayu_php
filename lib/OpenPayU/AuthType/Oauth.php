@@ -36,10 +36,4 @@ class AuthType_Oauth implements AuthType
         );
     }
 
-
-    public function isAuthBasic()
-    {
-        return false;
-    }
-
 }
