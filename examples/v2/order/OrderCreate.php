@@ -19,7 +19,7 @@ $order['notifyUrl'] = 'http://localhost'.dirname($_SERVER['REQUEST_URI']).'/Orde
 $order['continueUrl'] = 'http://localhost'.dirname($_SERVER['REQUEST_URI']).'/../../layout/success.php';
 
 $order['customerIp'] = '127.0.0.1';
-$order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
+$order['merchantPosId'] = OpenPayU_Configuration::getOauthClientId() ? OpenPayU_Configuration::getOauthClientId() : OpenPayU_Configuration::getMerchantPosId();
 $order['description'] = 'New order';
 $order['currencyCode'] = 'PLN';
 $order['totalAmount'] = 3200;
@@ -90,14 +90,14 @@ $order['buyer']['delivery']['countryCode'] = 'PL';
     <?php try {
         $response = OpenPayU_Order::create($order);
         $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
-        if($response->getStatus() == 'SUCCESS'){
-            echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
+        if ($response->getStatus() == 'SUCCESS') {
+            echo '<div class="alert alert-success">SUCCESS: ' . $status_desc;
             echo '</div>';
-        }else{
-            echo '<div class="alert alert-warning">'.$response->getStatus().': '.$status_desc;
+        } else {
+            echo '<div class="alert alert-warning">' . $response->getStatus() . ': ' . $status_desc;
             echo '</div>';
         }
-    }catch (OpenPayU_Exception $e){
+    } catch (OpenPayU_Exception $e) {
         echo '<pre>';
         var_dump((string)$e);
         echo '</pre>';

@@ -47,7 +47,17 @@ class OpenPayU_Order extends OpenPayU
             throw new OpenPayU_Exception('Empty message OrderCreateRequest');
         }
 
-        $result = self::verifyResponse(OpenPayU_Http::post($pathUrl, $data), 'OrderCreateResponse');
+        if (OpenPayU_Configuration::getOauthClientId()) {
+            try {
+                $authType = new AuthType_Oauth(OpenPayU_Configuration::getOauthClientId(), OpenPayU_Configuration::getOauthClientSecret());
+            } catch (OpenPayU_Exception $e) {
+                throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
+            }
+        } else {
+            $authType = new AuthType_Basic(OpenPayU_Configuration::getMerchantPosId(), OpenPayU_Configuration::getSignatureKey());
+        }
+
+        $result = self::verifyResponse(OpenPayU_Http::doPost($pathUrl, $data, $authType), 'OrderCreateResponse');
 
         return $result;
     }

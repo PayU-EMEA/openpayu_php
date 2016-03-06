@@ -15,8 +15,33 @@ class OpenPayU_Configuration
     private static $_availableHashAlgorithm = array('SHA', 'SHA-256', 'SHA-384', 'SHA-512');
 
     private static $env = 'secure';
+
+    /**
+     * Merchant Pos ID for Auth Basic
+     * @deprecated deprecated since version 2.2 - use OAuth
+     */
     private static $merchantPosId = '';
+
+    /**
+     * Signature Key for Auth Basic
+     * @deprecated deprecated since version 2.2 - use OAuth
+     */
     private static $signatureKey = '';
+
+    /**
+     * OAuth protocol - client_id
+     */
+    private static $oauthClientId = '';
+
+    /**
+     * OAuth protocol - client_secret
+     */
+    private static $oauthClientSecret = '';
+
+    /**
+     * OAuth protocol - endpoint address
+     */
+    private static $oauthEndpoint = '';
 
     private static $serviceUrl = '';
     private static $serviceDomain = '';
@@ -26,11 +51,10 @@ class OpenPayU_Configuration
     private static $sender = 'Generic';
 
     const COMPOSER_JSON = "/composer.json";
-    const DEFAULT_SDK_VERSION = 'PHP SDK 2.1.6';
-
+    const DEFAULT_SDK_VERSION = 'PHP SDK 2.2.X-DEV / OAUTH';
+    const OAUTH_CONTEXT = 'pl/standard/user/oauth/authorize';
 
     /**
-     * @access public
      * @param string $version
      * @throws OpenPayU_Exception_Configuration
      */
@@ -52,7 +76,6 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
      * @param string
      * @throws OpenPayU_Exception_Configuration
      */
@@ -66,7 +89,6 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
      * @return string
      */
     public static function getHashAlgorithm()
@@ -75,7 +97,6 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
      * @param string $environment
      * @param string $domain
      * @param string $api
@@ -91,19 +112,19 @@ class OpenPayU_Configuration
             throw new OpenPayU_Exception_Configuration($environment . ' - is not valid environment');
         }
 
-
         if ($environment == 'secure') {
             self::$env = $environment;
             self::$serviceDomain = $domain;
             self::$serviceUrl = 'https://' . $environment . '.' . $domain . $api . $version;
+            self::$oauthEndpoint = 'https://' . $environment . '.' . $domain . self::OAUTH_CONTEXT;
         } else if ($environment == 'custom') {
             self::$env = $environment;
             self::$serviceUrl = $domain . $api . $version;
+            self::$oauthEndpoint = $domain . self::OAUTH_CONTEXT;
         }
     }
 
     /**
-     * @access public
      * @return string
      */
     public static function getServiceUrl()
@@ -112,7 +133,14 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
+     * @return string
+     */
+    public static function getOauthEndpoint()
+    {
+        return self::$oauthEndpoint;
+    }
+
+    /**
      * @return string
      */
     public static function getEnvironment()
@@ -121,8 +149,8 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
      * @param string
+     * @deprecated deprecated since version 2.2 - use OAuth
      */
     public static function setMerchantPosId($value)
     {
@@ -130,8 +158,8 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
      * @return string
+     * @deprecated deprecated since version 2.2 - use OAuth
      */
     public static function getMerchantPosId()
     {
@@ -139,8 +167,8 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
      * @param string
+     * @deprecated deprecated since version 2.2 - use OAuth
      */
     public static function setSignatureKey($value)
     {
@@ -148,7 +176,7 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
+     * @deprecated deprecated since version 2.2 - use OAuth
      * @return string
      */
     public static function getSignatureKey()
@@ -157,7 +185,39 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @access public
+     * @return string
+     */
+    public static function getOauthClientId()
+    {
+        return self::$oauthClientId;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getOauthClientSecret()
+    {
+        return self::$oauthClientSecret;
+    }
+
+    /**
+     * @param mixed $oauthClientId
+     */
+    public static function setOauthClientId($oauthClientId)
+    {
+        self::$oauthClientId = $oauthClientId;
+    }
+
+    /**
+     * @param mixed $oauthClientSecret
+     */
+    public static function setOauthClientSecret($oauthClientSecret)
+    {
+        self::$oauthClientSecret = $oauthClientSecret;
+    }
+
+
+    /**
      * @param string $sender
      */
     public static function setSender($sender)

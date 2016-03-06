@@ -1,3 +1,6 @@
+## 2.2.x DEV
+* Add experimental Oauth support
+
 ## 2.1.6
 * Remove downgrade http version in curl
 

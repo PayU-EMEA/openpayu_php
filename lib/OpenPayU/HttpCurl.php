@@ -72,6 +72,52 @@ class OpenPayU_HttpCurl
         return array('code' => $httpStatus, 'response' => trim($response));
     }
 
+
+    /**
+     * @param $requestType
+     * @param $pathUrl
+     * @param $data
+     * @param AuthType $auth
+     * @return array
+     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayU_Exception_Network
+     */
+    public static function doPayuRequest($requestType, $pathUrl, $data, $auth)
+    {
+        if (empty($pathUrl))
+            throw new OpenPayU_Exception_Configuration('The endpoint is empty');
+
+        $ch = curl_init($pathUrl);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $requestType);
+        curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $auth->getHeaders());
+        curl_setopt($ch, CURLOPT_HEADERFUNCTION, 'OpenPayU_HttpCurl::readHeader');
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+
+        if ($auth->isAuthBasic()) {
+            /** @var AuthType_Basic $auth*/
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            curl_setopt($ch, CURLOPT_USERPWD, $auth->getAuthBasicUserAndPassword());
+        }
+
+        $response = curl_exec($ch);
+        $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        if($response === false) {
+            throw new OpenPayU_Exception_Network(curl_error($ch));
+        }
+        curl_close($ch);
+
+        return array('code' => $httpStatus, 'response' => trim($response));
+    }
+
     /**
      * @param array $headers
      *
