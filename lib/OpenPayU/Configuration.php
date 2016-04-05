@@ -8,7 +8,6 @@
  * http://www.payu.com
  * http://developers.payu.com
  */
-
 class OpenPayU_Configuration
 {
     private static $_availableEnvironment = array('custom', 'secure');
@@ -47,14 +46,13 @@ class OpenPayU_Configuration
     private static $oauthTokenCache = null;
 
     private static $serviceUrl = '';
-    private static $serviceDomain = '';
     private static $hashAlgorithm = 'SHA-256';
 
     private static $sender = 'Generic';
 
     const API_VERSION = '2.1';
     const COMPOSER_JSON = "/composer.json";
-    const DEFAULT_SDK_VERSION = 'PHP SDK 2.2.X-DEV / OAUTH';
+    const DEFAULT_SDK_VERSION = 'PHP SDK 2.2.X-DEV';
     const OAUTH_CONTEXT = 'pl/standard/user/oauth/authorize';
 
     /**
@@ -104,7 +102,6 @@ class OpenPayU_Configuration
 
         if ($environment == 'secure') {
             self::$env = $environment;
-            self::$serviceDomain = $domain;
             self::$serviceUrl = 'https://' . $environment . '.' . $domain . $api . $version;
             self::$oauthEndpoint = 'https://' . $environment . '.' . $domain . self::OAUTH_CONTEXT;
         } else if ($environment == 'custom') {

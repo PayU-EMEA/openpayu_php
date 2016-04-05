@@ -12,17 +12,32 @@
  */
 
 require_once realpath(dirname(__FILE__)) . '/../TestHelper.php';
-require realpath(dirname(__FILE__)).'\..\..\vendor/autoload.php';
+require realpath(dirname(__FILE__)) . '\..\..\vendor/autoload.php';
 
 
 class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 {
 
-    const PHP_SDK_VERSION = 'PHP SDK 2.1.6';
+    const PHP_SDK_VERSION = 'PHP SDK 2.2.X-DEV';
+    const API_VERSION = '2.1';
+    const POS_ID = 'PosId';
+    const SIGNATURE_KEY = 'SignatureKey';
+    const OAUTH_CLIENT_ID = 'OauthClientId';
+    const OAUTH_CLIENT_SECRET = 'OauthClientSecret';
+
+
+    public function testValidApiVersion()
+    {
+        //then
+        $this->assertEquals(self::API_VERSION, OpenPayU_Configuration::getApiVersion());
+    }
 
     public function testSetValidEnvironment()
     {
+        //when
         OpenPayU_Configuration::setEnvironment('secure');
+
+        //then
         $this->assertEquals('secure', OpenPayU_Configuration::getEnvironment());
     }
 
@@ -32,76 +47,160 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
      */
     public function testSetInvalidEnvironment()
     {
+        //when
         OpenPayU_Configuration::setEnvironment('environment');
     }
 
+    public function testSecureServiceUrl()
+    {
+        //when
+        OpenPayU_Configuration::setEnvironment('secure');
+
+        //then
+        $this->assertEquals('https://secure.payu.com/api/v2_1/', OpenPayU_Configuration::getServiceUrl());
+    }
+
+    public function testCustomServiceUrl()
+    {
+        //when
+        OpenPayU_Configuration::setEnvironment('custom', 'http://testdomain.com', 'testapi/', 'vTest_1/');
+
+        //then
+        $this->assertEquals('http://testdomain.com/testapi/vTest_1/', OpenPayU_Configuration::getServiceUrl());
+    }
+
+    public function testSecureOauthEndpoint()
+    {
+        //when
+        OpenPayU_Configuration::setEnvironment('secure');
+
+        //then
+        $this->assertEquals('https://secure.payu.com/pl/standard/user/oauth/authorize', OpenPayU_Configuration::getOauthEndpoint());
+    }
+
+    public function testCustomOauthEndpointUrl()
+    {
+        //when
+        OpenPayU_Configuration::setEnvironment('custom', 'http://testdomain.com', 'testapi/', 'vTest_1/');
+
+        //then
+        $this->assertEquals('http://testdomain.com/pl/standard/user/oauth/authorize', OpenPayU_Configuration::getOauthEndpoint());
+    }
+
+
     public function testSetValidHashAlgorithm()
     {
+        //when
         OpenPayU_Configuration::setHashAlgorithm('SHA');
+
+        //then
         $this->assertEquals('SHA', OpenPayU_Configuration::getHashAlgorithm());
     }
 
     /**
      * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage Hash algorithm "hash"" is not available
+     * @expectedExceptionMessage Hash algorithm "MD5"" is not available
      */
     public function testSetInvalidHashAlgorithm()
     {
-        OpenPayU_Configuration::setHashAlgorithm('hash');
+        //when
+        OpenPayU_Configuration::setHashAlgorithm('MD5');
     }
 
     public function testMerchantPosId()
     {
-        OpenPayU_Configuration::setMerchantPosId('PosId');
-        $this->assertEquals('PosId', OpenPayU_Configuration::getMerchantPosId());
+        //when
+        OpenPayU_Configuration::setMerchantPosId(self::POS_ID);
+
+        //then
+        $this->assertEquals(self::POS_ID, OpenPayU_Configuration::getMerchantPosId());
     }
 
     public function testSignatureKey()
     {
-        OpenPayU_Configuration::setSignatureKey('SignatureKey');
-        $this->assertEquals('SignatureKey', OpenPayU_Configuration::getSignatureKey());
+        //when
+        OpenPayU_Configuration::setSignatureKey(self::SIGNATURE_KEY);
+
+        //then
+        $this->assertEquals(self::SIGNATURE_KEY, OpenPayU_Configuration::getSignatureKey());
     }
 
-    public function testServiceUrl()
+    public function testOauthClientId()
     {
-        OpenPayU_Configuration::setEnvironment('secure');
-        $this->assertEquals('https://secure.payu.com/api/v2_1/', OpenPayU_Configuration::getServiceUrl());
+        //when
+        OpenPayU_Configuration::setOauthClientId(self::OAUTH_CLIENT_ID);
+
+        //then
+        $this->assertEquals(self::OAUTH_CLIENT_ID, OpenPayU_Configuration::getOauthClientId());
     }
 
-    public function testFullSenderName(){
-        $this->assertEquals('Generic@'.self::PHP_SDK_VERSION, OpenPayU_Configuration::getFullSenderName());
+    public function testOauthClientSecret()
+    {
+        //when
+        OpenPayU_Configuration::setOauthClientSecret(self::OAUTH_CLIENT_SECRET);
+
+        //then
+        $this->assertEquals(self::OAUTH_CLIENT_SECRET, OpenPayU_Configuration::getOauthClientSecret());
     }
+
+    /**
+     * @expectedException OpenPayU_Exception_Configuration
+     * @expectedExceptionMessage Oauth token cache class is not instance of OauthCacheInterface
+     */
+    public function testNotOautchCacheInterfaceOfOauthTokenCache()
+    {
+        //when
+        OpenPayU_Configuration::setOauthTokenCache(new stdClass());
+    }
+
+    public function testOautchCacheInterfaceOfOauthTokenCache()
+    {
+        //given
+        $cacheFile = new OauthCacheFile('./');
+
+        //when
+        OpenPayU_Configuration::setOauthTokenCache($cacheFile);
+
+        //then
+        $this->assertInstanceOf('OauthCacheFile', OpenPayU_Configuration::getOauthTokenCache());
+    }
+
+    public function testFullSenderName()
+    {
+        //then
+        $this->assertEquals('Generic@' . self::PHP_SDK_VERSION, OpenPayU_Configuration::getFullSenderName());
+    }
+
 
     /**
      * @test
      */
-    public function shouldReturnValidSenderFullNameWhenSenderIsGiven(){
+    public function shouldReturnValidSenderFullNameWhenSenderIsGiven()
+    {
+        //given
         OpenPayU_Configuration::setSender("Test Data");
+
+        //then
         $this->assertEquals('Test Data@' . self::PHP_SDK_VERSION, OpenPayU_Configuration::getFullSenderName());
     }
 
     /**
      * @test
      */
-    public function shouldReturnValidSDKVersionWhenComposerFileIsGiven(){
-        //when
-        $sdkVersion = OpenPayU_Configuration::getSdkVersion();
+    public function shouldReturnValidSDKVersionWhenComposerFileIsGiven()
+    {
         //then
-        $this->assertEquals(self::PHP_SDK_VERSION,$sdkVersion);
+        $this->assertEquals(self::PHP_SDK_VERSION, OpenPayU_Configuration::getSdkVersion());
     }
 
     /**
      * @test
      */
-    public function shouldReturnDefgaultSDKVersionWhenComposerFileIsNotGiven(){
-        //given
-        $OpenPayU_ConfigurationMock = $this->getMock('OpenPayU_Configuration');
-        $OpenPayU_ConfigurationMock->expects($this->any())->method('getComposerFilePath')
-            ->will($this->returnValue('mock.json'));
-        //when
-        $sdkVersion = OpenPayU_Configuration::getSdkVersion();
+    public function shouldDefaultSDKVersionAndFromJsonIsTheSame()
+    {
         //then
-        $this->assertEquals(self::PHP_SDK_VERSION,$sdkVersion);
+        $this->assertEquals(OpenPayU_Configuration::DEFAULT_SDK_VERSION, OpenPayU_Configuration::getSdkVersion());
     }
+
 
 }
