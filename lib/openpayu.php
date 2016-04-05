@@ -4,7 +4,7 @@
  * OpenPayU Standard Library
  * ver. 2.1.3
  *
- * @copyright  Copyright (c) 2011-2015 PayU
+ * @copyright  Copyright (c) 2011-2016 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
@@ -23,6 +23,9 @@ require_once('OpenPayU/HttpCurl.php');
 require_once('OpenPayU/Oauth/Oauth.php');
 require_once('OpenPayU/Oauth/OauthGrantType.php');
 require_once('OpenPayU/Oauth/OauthResultClientCredentials.php');
+require_once('OpenPayU/Oauth/Cache/OauthCacheInterface.php');
+require_once('OpenPayU/Oauth/Cache/OauthCacheFile.php');
+
 require_once('OpenPayU/ResultError.php');
 
 require_once('OpenPayU/AuthType/AuthType.php');

@@ -2,7 +2,7 @@
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2015 PayU
+ * @copyright  Copyright (c) 2011-2016 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
@@ -26,7 +26,6 @@ class OpenPayU_Http
         return $response;
     }
 
-
     /**
      * @param string $pathUrl
      * @param string $data
@@ -37,59 +36,55 @@ class OpenPayU_Http
      */
     public static function doPost($pathUrl, $data, $authType)
     {
-        $response = OpenPayU_HttpCurl::doPayuRequest('POST', $pathUrl, $data, $authType);
+        $response = OpenPayU_HttpCurl::doPayuRequest('POST', $pathUrl, $authType, $data);
 
         return $response;
     }
 
     /**
-     * @param $pathUrl
-     * @param $data
+     * @param string $pathUrl
+     * @param AuthType $authType
      * @return mixed
+     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayU_Exception_Network
      */
-    public static function get($pathUrl, $data)
+    public static function doGet($pathUrl, $authType)
     {
-        $posId = OpenPayU_Configuration::getMerchantPosId();
-        $signatureKey = OpenPayU_Configuration::getSignatureKey();
-
-        $response = OpenPayU_HttpCurl::doRequest('GET', $pathUrl, $data, $posId, $signatureKey);
+        $response = OpenPayU_HttpCurl::doPayuRequest('GET', $pathUrl, $authType);
 
         return $response;
     }
 
     /**
-     * @param $pathUrl
-     * @param $data
+     * @param string $pathUrl
+     * @param AuthType $authType
      * @return mixed
+     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayU_Exception_Network
      */
-    public static function put($pathUrl, $data)
+    public static function doDelete($pathUrl, $authType)
     {
-        $posId = OpenPayU_Configuration::getMerchantPosId();
-        $signatureKey = OpenPayU_Configuration::getSignatureKey();
-
-        $response = OpenPayU_HttpCurl::doRequest('PUT', $pathUrl, $data, $posId, $signatureKey);
+        $response = OpenPayU_HttpCurl::doPayuRequest('DELETE', $pathUrl, $authType);
 
         return $response;
     }
 
     /**
-     * @param $pathUrl
-     * @param $data
+     * @param string $pathUrl
+     * @param string $data
+     * @param AuthType $authType
      * @return mixed
+     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayU_Exception_Network
      */
-    public static function delete($pathUrl, $data)
+    public static function doPut($pathUrl, $data, $authType)
     {
-        $posId = OpenPayU_Configuration::getMerchantPosId();
-        $signatureKey = OpenPayU_Configuration::getSignatureKey();
-
-        $response = OpenPayU_HttpCurl::doRequest('DELETE', $pathUrl, $data, $posId, $signatureKey);
+        $response = OpenPayU_HttpCurl::doPayuRequest('PUT', $pathUrl, $authType, $data);
 
         return $response;
     }
 
     /**
-     *
-     *
      * @param $statusCode
      * @param null $message
      * @throws OpenPayU_Exception

@@ -2,6 +2,9 @@
 
 class OpenPayU_Oauth
 {
+    private static $oauthTokenCache;
+
+    const CACHE_KEY = 'AccessToken';
 
     /**
      * @param string $clientId
@@ -11,6 +14,15 @@ class OpenPayU_Oauth
      */
     public static function getAccessToken($clientId = null, $clientSecret = null)
     {
+        self::$oauthTokenCache = OpenPayU_Configuration::getOauthTokenCache();
+
+        if (self::$oauthTokenCache) {
+            $tokenCache = self::$oauthTokenCache->get(self::CACHE_KEY . OpenPayU_Configuration::getOauthClientId());
+
+            if ($tokenCache instanceof OauthResultClientCredentials && !$tokenCache->hasExpire()) {
+                return $tokenCache;
+            }
+        }
 
         $authType = new AuthType_TokenRequest();
 
@@ -22,6 +34,10 @@ class OpenPayU_Oauth
         );
 
         $response = self::parseResponse(OpenPayU_Http::doPost($oauthUrl, http_build_query($data), $authType));
+
+        if (self::$oauthTokenCache) {
+            self::$oauthTokenCache->set(self::CACHE_KEY . OpenPayU_Configuration::getOauthClientId(), $response);
+        }
 
         return $response;
     }
@@ -58,7 +74,8 @@ class OpenPayU_Oauth
             $result->setAccessToken($message['access_token'])
                 ->setTokenType($message['token_type'])
                 ->setExpiresIn($message['expires_in'])
-                ->setGrantType($message['grant_type']);
+                ->setGrantType($message['grant_type'])
+                ->calculateExpireDate(new \DateTime());
 
             return $result;
         }
@@ -70,6 +87,5 @@ class OpenPayU_Oauth
         OpenPayU_Http::throwErrorHttpStatusException($httpStatus, $result);
 
     }
-
 
 }

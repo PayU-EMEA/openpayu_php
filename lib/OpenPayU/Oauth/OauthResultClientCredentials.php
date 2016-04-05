@@ -21,6 +21,11 @@ class OauthResultClientCredentials
     private $grantType;
 
     /**
+     * @var DateTime
+     */
+    private $expireDate;
+
+    /**
      * @return string
      */
     public function getAccessToken()
@@ -92,5 +97,25 @@ class OauthResultClientCredentials
         return $this;
     }
 
+    /**
+     * @return DateTime
+     */
+    public function getExpireDate()
+    {
+        return $this->expireDate;
+    }
+
+    /**
+     * @param DateTime $date
+     */
+    public function calculateExpireDate($date)
+    {
+        $this->expireDate = $date->add(new DateInterval('PT' . $this->expiresIn . 'S'));
+    }
+
+    public function hasExpire()
+    {
+        return ($this->expireDate <= new DateTime());
+    }
 
 }

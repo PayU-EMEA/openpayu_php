@@ -3,7 +3,7 @@
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2015 PayU
+ * @copyright  Copyright (c) 2011-2016 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
@@ -17,14 +17,12 @@ class OpenPayU_Configuration
     private static $env = 'secure';
 
     /**
-     * Merchant Pos ID for Auth Basic
-     * @deprecated deprecated since version 2.2 - use OAuth
+     * Merchant Pos ID for Auth Basic and Notification Consume
      */
     private static $merchantPosId = '';
 
     /**
-     * Signature Key for Auth Basic
-     * @deprecated deprecated since version 2.2 - use OAuth
+     * Signature Key for Auth Basic and Notification Consume
      */
     private static $signatureKey = '';
 
@@ -43,36 +41,28 @@ class OpenPayU_Configuration
      */
     private static $oauthEndpoint = '';
 
+    /**
+     * OAuth protocol - methods for token cache
+     */
+    private static $oauthTokenCache = null;
+
     private static $serviceUrl = '';
     private static $serviceDomain = '';
-    private static $apiVersion = '2.1';
     private static $hashAlgorithm = 'SHA-256';
 
     private static $sender = 'Generic';
 
+    const API_VERSION = '2.1';
     const COMPOSER_JSON = "/composer.json";
     const DEFAULT_SDK_VERSION = 'PHP SDK 2.2.X-DEV / OAUTH';
     const OAUTH_CONTEXT = 'pl/standard/user/oauth/authorize';
-
-    /**
-     * @param string $version
-     * @throws OpenPayU_Exception_Configuration
-     */
-    public static function setApiVersion($version)
-    {
-        if (empty($version)) {
-            throw new OpenPayU_Exception_Configuration('Invalid API version');
-        }
-
-        self::$apiVersion = (string)$version;
-    }
 
     /**
      * @return string
      */
     public static function getApiVersion()
     {
-        return self::$apiVersion;
+        return self::API_VERSION;
     }
 
     /**
@@ -150,7 +140,6 @@ class OpenPayU_Configuration
 
     /**
      * @param string
-     * @deprecated deprecated since version 2.2 - use OAuth
      */
     public static function setMerchantPosId($value)
     {
@@ -159,7 +148,6 @@ class OpenPayU_Configuration
 
     /**
      * @return string
-     * @deprecated deprecated since version 2.2 - use OAuth
      */
     public static function getMerchantPosId()
     {
@@ -168,7 +156,6 @@ class OpenPayU_Configuration
 
     /**
      * @param string
-     * @deprecated deprecated since version 2.2 - use OAuth
      */
     public static function setSignatureKey($value)
     {
@@ -176,7 +163,6 @@ class OpenPayU_Configuration
     }
 
     /**
-     * @deprecated deprecated since version 2.2 - use OAuth
      * @return string
      */
     public static function getSignatureKey()
@@ -216,6 +202,25 @@ class OpenPayU_Configuration
         self::$oauthClientSecret = $oauthClientSecret;
     }
 
+    /**
+     * @return null | OauthCacheInterface
+     */
+    public static function getOauthTokenCache()
+    {
+        return self::$oauthTokenCache;
+    }
+
+    /**
+     * @param OauthCacheInterface $oauthTokenCache
+     * @throws OpenPayU_Exception_Configuration
+     */
+    public static function setOauthTokenCache($oauthTokenCache)
+    {
+        if (!$oauthTokenCache instanceof OauthCacheInterface) {
+            throw new OpenPayU_Exception_Configuration('Oauth token cache class is not instance of OauthCacheInterface');
+        }
+        self::$oauthTokenCache = $oauthTokenCache;
+    }
 
     /**
      * @param string $sender
