@@ -35,21 +35,6 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
         OpenPayU_Configuration::setEnvironment('environment');
     }
 
-    public function testSetValidApiVersion()
-    {
-        OpenPayU_Configuration::setApiVersion(2);
-        $this->assertEquals(2, OpenPayU_Configuration::getApiVersion());
-    }
-
-    /**
-     * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage Invalid API version
-     */
-    public function testSetInvalidApiVersion()
-    {
-        OpenPayU_Configuration::setApiVersion(null);
-    }
-
     public function testSetValidHashAlgorithm()
     {
         OpenPayU_Configuration::setHashAlgorithm('SHA');

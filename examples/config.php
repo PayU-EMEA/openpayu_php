@@ -3,17 +3,18 @@
 /**
  * OpenPayU Examples
  *
- * @copyright  Copyright (c) 2011-2015 PayU
+ * @copyright  Copyright (c) 2011-2016 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
  */
 
 OpenPayU_Configuration::setEnvironment('secure');
-//OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID (Checkout)
+OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID (Checkout)
 OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //Second MD5 key. You will find it in admin panel. - for notification
 OpenPayU_Configuration::setOauthClientId('145227');
 OpenPayU_Configuration::setOauthClientSecret('12f071174cb7eb79d4aac5bc2f07563f');
+OpenPayU_Configuration::setOauthTokenCache(new OauthCacheFile('/tmp'));
 
 /* path for example files*/
 $dir = explode(basename(dirname(__FILE__)) . '/', $_SERVER['SCRIPT_NAME']);
