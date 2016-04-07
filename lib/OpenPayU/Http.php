@@ -12,21 +12,6 @@ class OpenPayU_Http
 {
 
     /**
-     * @param $pathUrl
-     * @param $data
-     * @return mixed
-     */
-    public static function post($pathUrl, $data)
-    {
-        $posId = OpenPayU_Configuration::getMerchantPosId();
-        $signatureKey = OpenPayU_Configuration::getSignatureKey();
-
-        $response = OpenPayU_HttpCurl::doRequest('POST', $pathUrl, $data, $posId, $signatureKey);
-
-        return $response;
-    }
-
-    /**
      * @param string $pathUrl
      * @param string $data
      * @param AuthType $authType

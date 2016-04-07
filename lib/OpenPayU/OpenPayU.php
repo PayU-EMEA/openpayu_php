@@ -31,8 +31,7 @@ class OpenPayU
                 $data,
                 $sign->signature,
                 OpenPayU_Configuration::getSignatureKey(),
-                $sign->algorithm
-            )
+                $sign->algorithm)
         ) {
             throw new OpenPayU_Exception_Authorization('Invalid signature - ' . $sign->signature);
         }
@@ -44,7 +43,7 @@ class OpenPayU
      */
     protected static function getAuth()
     {
-        if (OpenPayU_Configuration::getOauthClientId()) {
+        if (OpenPayU_Configuration::getOauthClientId() && OpenPayU_Configuration::getOauthClientSecret()) {
             $authType = new AuthType_Oauth(OpenPayU_Configuration::getOauthClientId(), OpenPayU_Configuration::getOauthClientSecret());
         } else {
             $authType = new AuthType_Basic(OpenPayU_Configuration::getMerchantPosId(), OpenPayU_Configuration::getSignatureKey());
