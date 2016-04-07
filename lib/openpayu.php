@@ -25,6 +25,7 @@ require_once('OpenPayU/Oauth/OauthGrantType.php');
 require_once('OpenPayU/Oauth/OauthResultClientCredentials.php');
 require_once('OpenPayU/Oauth/Cache/OauthCacheInterface.php');
 require_once('OpenPayU/Oauth/Cache/OauthCacheFile.php');
+require_once('OpenPayU/Oauth/Cache/OauthCacheMemcached.php');
 
 require_once('OpenPayU/ResultError.php');
 
