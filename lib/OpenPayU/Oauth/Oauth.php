@@ -2,6 +2,9 @@
 
 class OpenPayU_Oauth
 {
+    /**
+     * @var OauthCacheInterface
+     */
     private static $oauthTokenCache;
 
     const CACHE_KEY = 'AccessToken';
@@ -14,15 +17,17 @@ class OpenPayU_Oauth
      */
     public static function getAccessToken($clientId = null, $clientSecret = null)
     {
-        self::$oauthTokenCache = OpenPayU_Configuration::getOauthTokenCache();
+        $cacheKey = self::CACHE_KEY . OpenPayU_Configuration::getOauthClientId();
 
-        if (self::$oauthTokenCache) {
-            $tokenCache = self::$oauthTokenCache->get(self::CACHE_KEY . OpenPayU_Configuration::getOauthClientId());
+        self::getOauthTokenCache();
 
-            if ($tokenCache instanceof OauthResultClientCredentials && !$tokenCache->hasExpire()) {
-                return $tokenCache;
-            }
+        $tokenCache = self::$oauthTokenCache->get($cacheKey);
+
+        if ($tokenCache instanceof OauthResultClientCredentials && !$tokenCache->hasExpire()) {
+            return $tokenCache;
         }
+
+        self::$oauthTokenCache->invalidate($cacheKey);
 
         $authType = new AuthType_TokenRequest();
 
@@ -35,9 +40,7 @@ class OpenPayU_Oauth
 
         $response = self::parseResponse(OpenPayU_Http::doPost($oauthUrl, http_build_query($data), $authType));
 
-        if (self::$oauthTokenCache) {
-            self::$oauthTokenCache->set(self::CACHE_KEY . OpenPayU_Configuration::getOauthClientId(), $response);
-        }
+        self::$oauthTokenCache->set($cacheKey, $response);
 
         return $response;
     }
@@ -88,4 +91,15 @@ class OpenPayU_Oauth
 
     }
 
+    private static function getOauthTokenCache()
+    {
+        $oauthTokenCache = OpenPayU_Configuration::getOauthTokenCache();
+
+        if (!$oauthTokenCache instanceof OauthCacheInterface) {
+            $oauthTokenCache = new OauthCacheFile();
+            OpenPayU_Configuration::setOauthTokenCache($oauthTokenCache);
+        }
+
+        self::$oauthTokenCache = $oauthTokenCache;
+    }
 }
