@@ -38,7 +38,7 @@ To install with Composer, simply add the requirement to your composer.json file:
 ```php
 {
   "require" : {
-    "openpayu/openpayu" : "2.1.*"
+    "openpayu/openpayu" : "2.2.*"
   }
 }
 ```
@@ -69,20 +69,91 @@ Or simply add this lines anywhere in your application:
     require_once realpath(dirname(__FILE__)) . '/../../config.php';
 ```
 
-##Configure
-  To configure OpenPayU environment you must provide a set of mandatory data in config.php file:
+## Configure
+To configure OpenPayU environment you must provide a set of mandatory data in config.php file:
 
 ```php
+    //set Environment
     OpenPayU_Configuration::setEnvironment('secure');
-    OpenPayU_Configuration::setMerchantPosId('145227'); // POS ID (Checkout)
-    OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50'); //Second MD5 key. You will find it in admin panel.
+    
+    //set POS ID and Second MD5 Key (from merchant admin panel)
+    OpenPayU_Configuration::setMerchantPosId('145227');
+    OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50');
+    
+    //set Oauth Client Id and Oauth Client Secret (from merchant admin panel)
+    OpenPayU_Configuration::setOauthClientId('145227');
+    OpenPayU_Configuration::setOauthClientSecret('12f071174cb7eb79d4aac5bc2f07563f');
+
 ```
 
-##Usage
+## Cache
+Biblioteka OpenPayU automatycznie przechowuje w Cache pobraną informację podczas uwierzytelniania Oauth.
+
+Biblioteka OpenPayU ma zaimplementowane dwie klasy do obsługi cache: 
+
+* `OauthCacheFile` - dane są przechowywane w systemie plików
+   Jest to domyślna i automatyczna metoda Cache, która przechowuje dane w katalogu `lib/Cache`.
+   **UWAGA: Ze względu bezpieczeństwa zalecana jest zmiana katalogu Cache który nie jest dostępny z przeglądarki**
+   
+    Konfiguracja:
+    ```php
+    OpenPayU_Configuration::setOauthTokenCache(new OauthCacheFile($directory));
+    ```
+   `$directory` - absulutna ścieżka do katalogu gdzie będą przechowywane dane, w przypadku braku parametru katalogiem jest `lib/Cache` 
+   
+* `OauthCacheMemcached` - dane są przechowywane w Memcached
+   Ta metoda cache wymaga zainstalowanego na serwerze Memcached (https://memcached.org/) oraz modułu Memcached w php (http://php.net/manual/en/book.memcached.php)
+
+    Konfiguracja:
+    ```php
+    OpenPayU_Configuration::setOauthTokenCache(new OauthCacheMemcached($host, $port, $weight));
+    ```   
+   `$host` - adres serwera Memcached - domyślnie `localhost`
+   `$port` - adres serwera Memcached - domyślnie `11211`
+   `$weight` - ważność serwera Memcached - domyślnie `0`
+
+
+## Usage
 
 Remember: All keys in "order array" must be in lowercase.
 
-###Creating order using HTML form
+###Creating order using REST API
+
+   File with working example: [examples/v2/order/OrderCreate.php](examples/v2/order/OrderCreate.php)
+
+   To create an order using REST API in back-end you must provide an Array with order data:
+
+   in your controller
+```php
+    $order['continueUrl'] = 'http://localhost/'; //customer will be redirected to this page after successfull payment
+    $order['notifyUrl'] = 'http://localhost/';
+    $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
+    $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
+    $order['description'] = 'New order';
+    $order['currencyCode'] = 'PLN';
+    $order['totalAmount'] = 3200;
+    $order['extOrderId'] = '1342'; //must be unique!
+
+    $order['products'][0]['name'] = 'Product1';
+    $order['products'][0]['unitPrice'] = 1000;
+    $order['products'][0]['quantity'] = 1;
+
+    $order['products'][1]['name'] = 'Product2';
+    $order['products'][1]['unitPrice'] = 2200;
+    $order['products'][1]['quantity'] = 1;
+
+//optional section buyer
+    $order['buyer']['email'] = 'dd@ddd.pl';
+    $order['buyer']['phone'] = '123123123';
+    $order['buyer']['firstName'] = 'Jan';
+    $order['buyer']['lastName'] = 'Kowalski';
+
+    $response = OpenPayU_Order::create($order);
+
+    header('Location:'.$response->getResponse()->redirectUri); //You must redirect your client to PayU payment summary page.
+```
+
+### Creating order using HTML form
 
    File with working example: [examples/v2/order/OrderForm.php](examples/v2/order/OrderForm.php)
 
@@ -124,42 +195,6 @@ Remember: All keys in "order array" must be in lowercase.
   or just
 ```php
 echo $orderFormData
-```
-
-###Creating order using REST API
-
-   File with working example: [examples/v2/order/OrderCreate.php](examples/v2/order/OrderCreate.php)
-
-   To create an order using REST API in back-end you must provide an Array with order data:
-
-   in your controller
-```php
-    $order['continueUrl'] = 'http://localhost/'; //customer will be redirected to this page after successfull payment
-    $order['notifyUrl'] = 'http://localhost/';
-    $order['customerIp'] = $_SERVER['REMOTE_ADDR'];
-    $order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
-    $order['description'] = 'New order';
-    $order['currencyCode'] = 'PLN';
-    $order['totalAmount'] = 3200;
-    $order['extOrderId'] = '1342'; //must be unique!
-
-    $order['products'][0]['name'] = 'Product1';
-    $order['products'][0]['unitPrice'] = 1000;
-    $order['products'][0]['quantity'] = 1;
-
-    $order['products'][1]['name'] = 'Product2';
-    $order['products'][1]['unitPrice'] = 2200;
-    $order['products'][1]['quantity'] = 1;
-
-//optional section buyer
-    $order['buyer']['email'] = 'dd@ddd.pl';
-    $order['buyer']['phone'] = '123123123';
-    $order['buyer']['firstName'] = 'Jan';
-    $order['buyer']['lastName'] = 'Kowalski';
-
-    $response = OpenPayU_Order::create($order);
-
-    header('Location:'.$response->getResponse()->redirectUri); //You must redirect your client to PayU payment summary page.
 ```
 
 ###Retrieving order from OpenPayU
