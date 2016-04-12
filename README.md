@@ -112,6 +112,7 @@ Biblioteka OpenPayU ma zaimplementowane dwie klasy do obsługi cache:
    `$port` - adres serwera Memcached - domyślnie `11211`
    `$weight` - ważność serwera Memcached - domyślnie `0`
 
+Możliwe jest utworzenie własnej metody obsługi cache, musi ona implementować interfejs `OauthCacheInterface` 
 
 ## Usage
 
