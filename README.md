@@ -87,32 +87,32 @@ To configure OpenPayU environment you must provide a set of mandatory data in co
 ```
 
 ## Cache
-Biblioteka OpenPayU automatycznie przechowuje w Cache pobraną informację podczas uwierzytelniania Oauth.
+OpenPayU library automatically stores OAuth authentication data in the Cache.
 
-Biblioteka OpenPayU ma zaimplementowane dwie klasy do obsługi cache: 
+OpenPayU library has two classes implemented to manage the Cache:
 
-* `OauthCacheFile` - dane są przechowywane w systemie plików
-   Jest to domyślna i automatyczna metoda Cache, która przechowuje dane w katalogu `lib/Cache`.
-   **UWAGA: Ze względu bezpieczeństwa zalecana jest zmiana katalogu Cache który nie jest dostępny z przeglądarki**
+* `OauthCacheFile` - data is stored in the file system.
+   This is a default and automatic Cache method which stores the data in `lib/Cache` folder.
+   **ATTENTION: for security reasons it is recommended to change the Cache folder, so it would not be accessible from the web browser.**
    
-    Konfiguracja:
+    Configuration:
     ```php
     OpenPayU_Configuration::setOauthTokenCache(new OauthCacheFile($directory));
     ```
-   `$directory` - absulutna ścieżka do katalogu gdzie będą przechowywane dane, w przypadku braku parametru katalogiem jest `lib/Cache` 
+   `$directory` - absolute path to the data folder; if the parameter is missing, the folder is `lib/Cache`   
    
-* `OauthCacheMemcached` - dane są przechowywane w Memcached
-   Ta metoda cache wymaga zainstalowanego na serwerze Memcached (https://memcached.org/) oraz modułu Memcached w php (http://php.net/manual/en/book.memcached.php)
+* `OauthCacheMemcached` - data is stored in Memcached
+   This method requires Memcached (https://memcached.org/) to be installed on the server along with Memcached PHP module (http://php.net/manual/en/book.memcached.php)
 
-    Konfiguracja:
+    Configuration:
     ```php
     OpenPayU_Configuration::setOauthTokenCache(new OauthCacheMemcached($host, $port, $weight));
     ```   
-   `$host` - adres serwera Memcached - domyślnie `localhost`
-   `$port` - adres serwera Memcached - domyślnie `11211`
-   `$weight` - ważność serwera Memcached - domyślnie `0`
+   `$host` - Memcached server address - `localhost` by default
+   `$port` - Memcached server port - `11211` by default
+   `$weight` - Memcached server priority - `0` by default
 
-Możliwe jest utworzenie własnej metody obsługi cache, musi ona implementować interfejs `OauthCacheInterface` 
+It is possible to implement another method to manage cache. In such a case it needs to implement `OauthCacheInterface` 
 
 ## Usage
 
