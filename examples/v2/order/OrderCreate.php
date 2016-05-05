@@ -33,7 +33,7 @@ $order['products'][1]['name'] = 'Product2';
 $order['products'][1]['unitPrice'] = 2200;
 $order['products'][1]['quantity'] = 1;
 
-$order['buyer']['email'] = 'dd@ddd.pl';
+$order['buyer']['email'] = 'test_buyer_email@payu.com';
 $order['buyer']['phone'] = '123123123';
 $order['buyer']['firstName'] = 'Jan';
 $order['buyer']['lastName'] = 'Kowalski';
@@ -42,7 +42,7 @@ $order['buyer']['lastName'] = 'Kowalski';
 /*~~~~~~~~ optional part INVOICE data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 $order['buyer']['invoice']['recipientName'] = 'Anna Nowak';
-$order['buyer']['invoice']['recipientEmail'] = 'annanowak@example.com';
+$order['buyer']['invoice']['recipientEmail'] = 'test_buyer_email@payu.com';
 $order['buyer']['invoice']['recipientPhone'] = '+48 456 456 789';
 $order['buyer']['invoice']['name'] = 'The very first invoice';
 $order['buyer']['invoice']['street'] = 'Foo St. 155';
@@ -61,7 +61,7 @@ $order['shippingMethods'][0]['price'] = '800';
 
 //Add delivery informations
 $order['buyer']['delivery']['recipientName'] = 'Robert Nowak';
-$order['buyer']['delivery']['recipientEmail'] = 'robert@example.com';
+$order['buyer']['delivery']['recipientEmail'] = 'test_buyer_email@payu.com';
 $order['buyer']['delivery']['recipientPhone'] = '+48 456 123 789';
 $order['buyer']['delivery']['street'] = 'Bar St. 155';
 $order['buyer']['delivery']['postalBox'] = 'Warsaw';

@@ -110,7 +110,7 @@ class OauthResultClientCredentials
      */
     public function calculateExpireDate($date)
     {
-        $this->expireDate = $date->add(new DateInterval('PT' . $this->expiresIn . 'S'));
+        $this->expireDate = $date->add(new DateInterval('PT' . ($this->expiresIn - 60) . 'S'));
     }
 
     public function hasExpire()
