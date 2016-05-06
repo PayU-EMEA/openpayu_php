@@ -2,7 +2,7 @@
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2015 PayU
+ * @copyright  Copyright (c) 2011-2016 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
@@ -17,53 +17,38 @@ class OpenPayU_HttpCurl
 
     /**
      * @param $requestType
-     * @param string $pathUrl
+     * @param $pathUrl
      * @param $data
-     * @param $posId
-     * @param $signatureKey
-     * @return mixed
+     * @param AuthType $auth
+     * @return array
      * @throws OpenPayU_Exception_Configuration
      * @throws OpenPayU_Exception_Network
-     * @throws OpenPayU_Exception_Authorization
      */
-    public static function doRequest($requestType, $pathUrl, $data, $posId, $signatureKey)
+    public static function doPayuRequest($requestType, $pathUrl, $auth, $data = null)
     {
-        if (empty($pathUrl))
+        if (empty($pathUrl)) {
             throw new OpenPayU_Exception_Configuration('The endpoint is empty');
-
-        if (empty($posId)) {
-            throw new OpenPayU_Exception_Configuration('PosId is empty');
         }
-
-        if (empty($signatureKey)) {
-            throw new OpenPayU_Exception_Configuration('SignatureKey is empty');
-        }
-
-        $userNameAndPassword = $posId.":".$signatureKey;
-
-        $headers = array(
-            'Content-Type: application/json',
-            'Accept: application/json'
-        );
 
         $ch = curl_init($pathUrl);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $requestType);
         curl_setopt($ch, CURLOPT_ENCODING, 'gzip');
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($ch, CURLOPT_HEADER, false);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $auth->getHeaders());
         curl_setopt($ch, CURLOPT_HEADERFUNCTION, 'OpenPayU_HttpCurl::readHeader');
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        if ($data) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
-        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($ch, CURLOPT_USERPWD, $userNameAndPassword);
 
         $response = curl_exec($ch);
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
         if($response === false) {
             throw new OpenPayU_Exception_Network(curl_error($ch));
         }

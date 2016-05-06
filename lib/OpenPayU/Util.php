@@ -3,12 +3,11 @@
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2015 PayU
+ * @copyright  Copyright (c) 2011-2016 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
  */
-
 class OpenPayU_Util
 {
     /**
@@ -34,7 +33,7 @@ class OpenPayU_Util
         $contentForSign = '';
         ksort($data);
 
-        foreach ($data as $key=>$value) {
+        foreach ($data as $key => $value) {
             $contentForSign .= $key . '=' . urlencode($value) . '&';
         }
 
@@ -49,7 +48,7 @@ class OpenPayU_Util
             $algorithm = 'SHA-512';
         }
 
-        $signature = hash($hashAlgorithm, $contentForSign.$signatureKey);
+        $signature = hash($hashAlgorithm, $contentForSign . $signatureKey);
 
         $signData = 'sender=' . $merchantPosId . ';algorithm=' . $algorithm . ';signature=' . $signature;
 
@@ -78,6 +77,9 @@ class OpenPayU_Util
 
         foreach ($list as $value) {
             $explode = explode('=', $value);
+            if (count($explode) != 2) {
+                return null;
+            }
             $signatureData[$explode[0]] = $explode[1];
         }
 
@@ -162,21 +164,19 @@ class OpenPayU_Util
             return $array;
         }
 
-        if (self::isAssocArray($array)){
+        if (self::isAssocArray($array)) {
             $object = new stdClass();
-        }
-        else{
+        } else {
             $object = array();
         }
 
         if (is_array($array) && count($array) > 0) {
             foreach ($array as $name => $value) {
                 $name = trim($name);
-                if (isset($name)){
-                    if (is_numeric($name)){
+                if (isset($name)) {
+                    if (is_numeric($name)) {
                         $object[] = self::parseArrayToObject($value);
-                    }
-                    else{
+                    } else {
                         $object->$name = self::parseArrayToObject($value);
                     }
                 }
@@ -192,15 +192,15 @@ class OpenPayU_Util
      */
     public static function getRequestHeaders()
     {
-        if(!function_exists('apache_request_headers')) {
-                $headers = array();
-                foreach($_SERVER as $key => $value) {
-                    if(substr($key, 0, 5) == 'HTTP_') {
-                        $headers[str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))))] = $value;
-                    }
+        if (!function_exists('apache_request_headers')) {
+            $headers = array();
+            foreach ($_SERVER as $key => $value) {
+                if (substr($key, 0, 5) == 'HTTP_') {
+                    $headers[str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))))] = $value;
                 }
-                return $headers;
-        }else{
+            }
+            return $headers;
+        } else {
             return apache_request_headers();
         }
 
@@ -274,41 +274,42 @@ class OpenPayU_Util
         return $data;
     }
 
-    public static function statusDesc($response){
+    public static function statusDesc($response)
+    {
 
         $msg = '';
 
-        switch ($response){
+        switch ($response) {
             case 'SUCCESS':
                 $msg = 'Request has been processed correctly.';
-            break;
+                break;
             case 'DATA_NOT_FOUND':
                 $msg = 'Data indicated in the request is not available in the PayU system.';
-            break;
+                break;
             case 'WARNING_CONTINUE_3_DS':
                 $msg = '3DS authorization required.Redirect the Buyer to PayU to continue the 3DS process by calling OpenPayU.authorize3DS().';
-            break;
+                break;
             case 'WARNING_CONTINUE_CVV':
                 $msg = 'CVV/CVC authorization required. Call OpenPayU.authorizeCVV() method.';
-            break;
+                break;
             case 'ERROR_SYNTAX':
                 $msg = 'BIncorrect request syntax. Supported formats are JSON or XML.';
-            break;
+                break;
             case 'ERROR_VALUE_INVALID':
                 $msg = 'One or more required values are incorrect.';
-            break;
+                break;
             case 'ERROR_VALUE_MISSING':
                 $msg = 'One or more required values are missing.';
-            break;
+                break;
             case 'BUSINESS_ERROR':
                 $msg = 'PayU system is unavailable. Try again later.';
-            break;
+                break;
             case 'ERROR_INTERNAL':
                 $msg = 'PayU system is unavailable. Try again later.';
-            break;
+                break;
             case 'GENERAL_ERROR':
                 $msg = 'Unexpected error. Try again later.';
-            break;
+                break;
         }
 
         return $msg;

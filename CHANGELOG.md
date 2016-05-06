@@ -1,3 +1,6 @@
+## 2.2.0
+* Add Oauth
+
 ## 2.1.6
 * Remove downgrade http version in curl
 

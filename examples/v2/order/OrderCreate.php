@@ -3,7 +3,7 @@
 /**
  * OpenPayU Examples
  *
- * @copyright  Copyright (c) 2011-2015 PayU
+ * @copyright  Copyright (c) 2011-2016 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
@@ -19,7 +19,7 @@ $order['notifyUrl'] = 'http://localhost'.dirname($_SERVER['REQUEST_URI']).'/Orde
 $order['continueUrl'] = 'http://localhost'.dirname($_SERVER['REQUEST_URI']).'/../../layout/success.php';
 
 $order['customerIp'] = '127.0.0.1';
-$order['merchantPosId'] = OpenPayU_Configuration::getMerchantPosId();
+$order['merchantPosId'] = OpenPayU_Configuration::getOauthClientId() ? OpenPayU_Configuration::getOauthClientId() : OpenPayU_Configuration::getMerchantPosId();
 $order['description'] = 'New order';
 $order['currencyCode'] = 'PLN';
 $order['totalAmount'] = 3200;
@@ -33,7 +33,7 @@ $order['products'][1]['name'] = 'Product2';
 $order['products'][1]['unitPrice'] = 2200;
 $order['products'][1]['quantity'] = 1;
 
-$order['buyer']['email'] = 'dd@ddd.pl';
+$order['buyer']['email'] = 'test_buyer_email@payu.com';
 $order['buyer']['phone'] = '123123123';
 $order['buyer']['firstName'] = 'Jan';
 $order['buyer']['lastName'] = 'Kowalski';
@@ -42,7 +42,7 @@ $order['buyer']['lastName'] = 'Kowalski';
 /*~~~~~~~~ optional part INVOICE data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 $order['buyer']['invoice']['recipientName'] = 'Anna Nowak';
-$order['buyer']['invoice']['recipientEmail'] = 'annanowak@example.com';
+$order['buyer']['invoice']['recipientEmail'] = 'test_buyer_email@payu.com';
 $order['buyer']['invoice']['recipientPhone'] = '+48 456 456 789';
 $order['buyer']['invoice']['name'] = 'The very first invoice';
 $order['buyer']['invoice']['street'] = 'Foo St. 155';
@@ -61,7 +61,7 @@ $order['shippingMethods'][0]['price'] = '800';
 
 //Add delivery informations
 $order['buyer']['delivery']['recipientName'] = 'Robert Nowak';
-$order['buyer']['delivery']['recipientEmail'] = 'robert@example.com';
+$order['buyer']['delivery']['recipientEmail'] = 'test_buyer_email@payu.com';
 $order['buyer']['delivery']['recipientPhone'] = '+48 456 123 789';
 $order['buyer']['delivery']['street'] = 'Bar St. 155';
 $order['buyer']['delivery']['postalBox'] = 'Warsaw';
@@ -90,14 +90,14 @@ $order['buyer']['delivery']['countryCode'] = 'PL';
     <?php try {
         $response = OpenPayU_Order::create($order);
         $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
-        if($response->getStatus() == 'SUCCESS'){
-            echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
+        if ($response->getStatus() == 'SUCCESS') {
+            echo '<div class="alert alert-success">SUCCESS: ' . $status_desc;
             echo '</div>';
-        }else{
-            echo '<div class="alert alert-warning">'.$response->getStatus().': '.$status_desc;
+        } else {
+            echo '<div class="alert alert-warning">' . $response->getStatus() . ': ' . $status_desc;
             echo '</div>';
         }
-    }catch (OpenPayU_Exception $e){
+    } catch (OpenPayU_Exception $e) {
         echo '<pre>';
         var_dump((string)$e);
         echo '</pre>';
