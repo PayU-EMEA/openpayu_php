@@ -1,8 +1,8 @@
 [![Code Climate](https://codeclimate.com/repos/524eb044f3ea00329815dff1/badges/885c2d52f25c02295344/gpa.png)](https://codeclimate.com/repos/524eb044f3ea00329815dff1/feed)
 
-# Official OpenPayU PHP Library 2.1
+# Official OpenPayU PHP Library 2.2
 
-The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2.1
+The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2.2
 
 ## Dependencies
 
