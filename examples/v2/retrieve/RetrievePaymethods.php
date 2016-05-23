@@ -30,7 +30,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
     <?php
     $response = null;
     try {
-        $response = OpenPayU_Retrieve::paymethods();
+        $response = OpenPayU_Retrieve::payMethods();
         $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
         if ($response->getStatus() == 'SUCCESS') {
             echo '<div class="alert alert-success">SUCCESS: ' . $status_desc;

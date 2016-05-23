@@ -265,6 +265,23 @@ echo $orderFormData
     );
 ```
 
+### Retrieving pay methods from POS
+
+   File with working example: [examples/v2/retrieve/RetrievePaymethods.php](examples/v2/retrieve/RetrievePaymethods.php)
+
+   You can retrieve pay methods from POS
+
+```php
+    $response = OpenPayU_Retrieve::payMethods();
+```
+
+   You can add optional parameter `lang` to `payMethods()`  
+
+```php
+    $response = OpenPayU_Retrieve::payMethods('en');
+```
+
+
 ## Contributing
 
 1. Fork it
