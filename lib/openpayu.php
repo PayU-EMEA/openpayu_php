@@ -36,4 +36,4 @@ require_once('OpenPayU/AuthType/Oauth.php');
 
 include_once('OpenPayU/v2/Refund.php');
 include_once('OpenPayU/v2/Order.php');
-include_once('OpenPayU/v2/Retrive.php');
+include_once('OpenPayU/v2/Retrieve.php');

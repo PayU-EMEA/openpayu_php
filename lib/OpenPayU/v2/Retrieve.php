@@ -1,5 +1,4 @@
 <?php
-
 /**
  * OpenPayU Standard Library
  *
@@ -9,19 +8,19 @@
  * http://developers.payu.com
  */
 
-class OpenPayU_Retrive extends OpenPayU
+class OpenPayU_Retrieve extends OpenPayU
 {
 
     const PAYMETHODS_SERVICE = 'paymethods';
 
     /**
-     * Get paymethods from POS
+     * Get Pay Methods from POS
      * @param string $lang
      * @return null|OpenPayU_Result
      * @throws OpenPayU_Exception
      * @throws OpenPayU_Exception_Configuration
      */
-    public static function paymethods($lang = null)
+    public static function payMethods($lang = null)
     {
 
         try {
@@ -31,12 +30,12 @@ class OpenPayU_Retrive extends OpenPayU
         }
 
         if (!$authType instanceof AuthType_Oauth) {
-            throw new OpenPayU_Exception_Configuration('Retrive works only with OAuth');
+            throw new OpenPayU_Exception_Configuration('Retrieve works only with OAuth');
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl().self::PAYMETHODS_SERVICE;
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::PAYMETHODS_SERVICE;
         if ($lang !== null) {
-            $pathUrl .= '?lang='.$lang;
+            $pathUrl .= '?lang=' . $lang;
         }
 
         $response = self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType));
@@ -66,10 +65,9 @@ class OpenPayU_Retrive extends OpenPayU
 
         $result = self::build($data);
 
-        if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302 || $httpStatus ==
-            400 || $httpStatus == 404)
+        if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302 || $httpStatus == 400 || $httpStatus == 404) {
             return $result;
-        else {
+        } else {
             OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
         }
 

@@ -17,7 +17,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 <html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <title>Retrive Paymethods - OpenPayU v2</title>
+    <title>Retrieve Pay Methods - OpenPayU v2.1</title>
     <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../layout/css/style.css">
 </head>
@@ -25,12 +25,12 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 <body>
 <div class="container">
     <div class="page-header">
-        <h1>Retrive Paymethods - OpenPayU v2</h1>
+        <h1>Retrieve Pay Methods - OpenPayU v2.1</h1>
     </div>
     <?php
     $response = null;
     try {
-        $response = OpenPayU_Retrive::paymethods();
+        $response = OpenPayU_Retrieve::paymethods();
         $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
         if ($response->getStatus() == 'SUCCESS') {
             echo '<div class="alert alert-success">SUCCESS: ' . $status_desc;
@@ -47,10 +47,10 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
     ?>
 
     <?php if ($response && $response->getStatus() == 'SUCCESS'): ?>
-        <h1>Paymethods</h1>
+        <h1>Pay Methods</h1>
 
         <?php
-            $paymethods = $response->getResponse();
+        $payMethods = $response->getResponse();
         ?>
 
         <table class="table table-hover table-bordered">
@@ -66,16 +66,16 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 <td>Status</td>
                 <td style="width: 120px">Image</td>
             </tr>
-            <?php if ($paymethods->payByLinks):
-                foreach ($paymethods->payByLinks as $payByLink):
-            ?>
-                <tr>
-                    <td><?php echo $payByLink->value; ?></td>
-                    <td><?php echo $payByLink->name; ?></td>
-                    <td><?php echo $payByLink->status; ?></td>
-                    <td><img src="<?php echo $payByLink->brandImageUrl; ?>" style="width: 100px"></td>
-                </tr>
-            <?php
+            <?php if ($payMethods->payByLinks):
+                foreach ($payMethods->payByLinks as $payByLink):
+                    ?>
+                    <tr>
+                        <td><?php echo $payByLink->value; ?></td>
+                        <td><?php echo $payByLink->name; ?></td>
+                        <td><?php echo $payByLink->status; ?></td>
+                        <td><img src="<?php echo $payByLink->brandImageUrl; ?>" style="width: 100px"></td>
+                    </tr>
+                    <?php
                 endforeach;
             endif;
             ?>
@@ -83,7 +83,6 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
         </table>
 
     <?php endif; ?>
-
 
     <h1>Response</h1>
     <div id="unregisteredCardData">
