@@ -1,3 +1,6 @@
+## 2.2.1
+* Add retrieving pay methods
+
 ## 2.2.0
 * Add Oauth
 
