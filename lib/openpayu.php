@@ -14,6 +14,7 @@ include_once('OpenPayU/Configuration.php');
 include_once('OpenPayU/OpenPayUException.php');
 include_once('OpenPayU/Util.php');
 include_once('OpenPayU/OpenPayU.php');
+include_once('OpenPayU/OpenPayuOrderStatus.php');
 
 include_once('OpenPayU/Result.php');
 
