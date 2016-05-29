@@ -14,11 +14,11 @@
  */
 abstract class OpenPayuOrderStatus
 {
-    const NEW = 'NEW';
-    const PENDING = 'PENDING';
-    const CANCELED = 'CANCELED';
-    const REJECTED = 'REJECTED';
-    const COMPLETED = 'COMPLETED';
-    const WAITING_FOR_CONFIRMATION = 'WAITING_FOR_CONFIRMATION';
+    const STATUS_NEW = 'NEW';
+    const STATUS_PENDING = 'PENDING';
+    const STATUS_CANCELED = 'CANCELED';
+    const STATUS_REJECTED = 'REJECTED';
+    const STATUS_COMPLETED = 'COMPLETED';
+    const STATUS_WAITING_FOR_CONFIRMATION = 'WAITING_FOR_CONFIRMATION';
 
 }
