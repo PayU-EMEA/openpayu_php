@@ -55,7 +55,7 @@ class OpenPayU_Refund extends OpenPayU
     /**
      * @param string $response
      * @param string $messageName
-     * @return null|OpenPayU_Result
+     * @return OpenPayU_Result
      */
     public static function verifyResponse($response, $messageName='')
     {
@@ -78,13 +78,10 @@ class OpenPayU_Refund extends OpenPayU
 
         $result = self::build($data);
 
-        if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302 || $httpStatus ==
-            400 || $httpStatus == 404)
+        if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302) {
             return $result;
-        else {
+        } else {
             OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
         }
-
-        return null;
     }
 }

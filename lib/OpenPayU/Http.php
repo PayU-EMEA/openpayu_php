@@ -80,19 +80,22 @@ class OpenPayU_Http
      */
     public static function throwHttpStatusException($statusCode, $message = null)
     {
+
+        $response = $message->getResponse();
+        $statusDesc = ($response->status && $response->status->statusDesc) ? $response->status->statusDesc : '';
+
         switch ($statusCode) {
             case 400:
-                throw new OpenPayU_Exception($message->getStatus().' - '.$message->getResponse(), $statusCode);
+                throw new OpenPayU_Exception($message->getStatus().' - '.$statusDesc, $statusCode);
                 break;
 
             case 401:
             case 403:
-                throw new OpenPayU_Exception_Authorization($message->getStatus().' - '.$message->getResponse(), $statusCode);
+                throw new OpenPayU_Exception_Authorization($message->getStatus().' - '.$statusDesc, $statusCode);
                 break;
 
-
             case 404:
-                throw new OpenPayU_Exception_Network('Data indicated in the request is not available in the PayU system.');
+                throw new OpenPayU_Exception_Network($message->getStatus().' - '.$statusDesc, $statusCode);
                 break;
 
             case 408:
@@ -102,7 +105,7 @@ class OpenPayU_Http
             case 500:
                 throw new OpenPayU_Exception_ServerError('PayU system is unavailable or your order is not processed.
                 Error:
-                [' . ($message->getResponse() ? $message->getResponse() : '') . ']', $statusCode);
+                [' . $statusDesc . ']', $statusCode);
                 break;
 
             case 503:
@@ -138,7 +141,7 @@ class OpenPayU_Http
                 break;
 
             case 404:
-                throw new OpenPayU_Exception_Network('Data indicated in the request is not available in the PayU system.');
+                throw new OpenPayU_Exception_Network($resultError->getError().' - '.$resultError->getErrorDescription(), $statusCode);
                 break;
 
             case 408:
