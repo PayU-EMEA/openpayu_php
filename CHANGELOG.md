@@ -1,3 +1,7 @@
+## 2.2.2
+* Add Order statuses constants
+* Fix for HttpStatusException
+
 ## 2.2.1
 * Add retrieving pay methods
 
