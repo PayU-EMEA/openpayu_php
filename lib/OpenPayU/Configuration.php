@@ -188,7 +188,7 @@ class OpenPayU_Configuration
      */
     public static function setOauthClientId($oauthClientId)
     {
-        self::$oauthClientId = $oauthClientId;
+        self::$oauthClientId = trim($oauthClientId);
     }
 
     /**
@@ -196,7 +196,7 @@ class OpenPayU_Configuration
      */
     public static function setOauthClientSecret($oauthClientSecret)
     {
-        self::$oauthClientSecret = $oauthClientSecret;
+        self::$oauthClientSecret = trim($oauthClientSecret);
     }
 
     /**
