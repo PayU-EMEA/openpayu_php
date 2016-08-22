@@ -29,13 +29,25 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(self::API_VERSION, OpenPayU_Configuration::getApiVersion());
     }
 
-    public function testSetValidEnvironment()
+    public function getCorrectEnvironments()
+    {
+        return array(
+            array('secure'),
+            array('sandbox'),
+            array('custom')
+        );
+    }
+
+    /**
+     * @dataProvider getCorrectEnvironments
+     */
+    public function testSetValidEnvironment($environment)
     {
         //when
-        OpenPayU_Configuration::setEnvironment('secure');
+        OpenPayU_Configuration::setEnvironment($environment);
 
         //then
-        $this->assertEquals('secure', OpenPayU_Configuration::getEnvironment());
+        $this->assertEquals($environment, OpenPayU_Configuration::getEnvironment());
     }
 
     /**
@@ -57,6 +69,15 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('https://secure.payu.com/api/v2_1/', OpenPayU_Configuration::getServiceUrl());
     }
 
+    public function testSandboxServiceUrl()
+    {
+        //when
+        OpenPayU_Configuration::setEnvironment('sandbox');
+
+        //then
+        $this->assertEquals('https://secure.snd.payu.com/api/v2_1/', OpenPayU_Configuration::getServiceUrl());
+    }
+
     public function testCustomServiceUrl()
     {
         //when
@@ -73,6 +94,15 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 
         //then
         $this->assertEquals('https://secure.payu.com/pl/standard/user/oauth/authorize', OpenPayU_Configuration::getOauthEndpoint());
+    }
+
+    public function testSandboxOauthEndpoint()
+    {
+        //when
+        OpenPayU_Configuration::setEnvironment('sandbox');
+
+        //then
+        $this->assertEquals('https://secure.snd.payu.com/pl/standard/user/oauth/authorize', OpenPayU_Configuration::getOauthEndpoint());
     }
 
     public function testCustomOauthEndpointUrl()

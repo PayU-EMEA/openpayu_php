@@ -10,7 +10,7 @@
  */
 class OpenPayU_Configuration
 {
-    private static $_availableEnvironment = array('custom', 'secure');
+    private static $_availableEnvironment = array('custom', 'secure', 'sandbox');
     private static $_availableHashAlgorithm = array('SHA', 'SHA-256', 'SHA-384', 'SHA-512');
 
     private static $env = 'secure';
@@ -100,12 +100,15 @@ class OpenPayU_Configuration
             throw new OpenPayU_Exception_Configuration($environment . ' - is not valid environment');
         }
 
+        self::$env = $environment;
+
         if ($environment == 'secure') {
-            self::$env = $environment;
             self::$serviceUrl = 'https://' . $environment . '.' . $domain . $api . $version;
             self::$oauthEndpoint = 'https://' . $environment . '.' . $domain . self::OAUTH_CONTEXT;
+        } else if ($environment == 'sandbox') {
+            self::$serviceUrl = 'https://secure.snd.' . $domain . $api . $version;
+            self::$oauthEndpoint = 'https://secure.snd.' . $domain . self::OAUTH_CONTEXT;
         } else if ($environment == 'custom') {
-            self::$env = $environment;
             self::$serviceUrl = $domain . $api . $version;
             self::$oauthEndpoint = $domain . self::OAUTH_CONTEXT;
         }
