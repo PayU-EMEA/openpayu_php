@@ -1,3 +1,7 @@
+## 2.2.3
+* Trim oauthClientId and oauthClientSecret
+* Add support for sandbox environment
+
 ## 2.2.2
 * Add Order statuses constants
 * Fix for HttpStatusException
