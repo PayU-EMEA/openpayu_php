@@ -70,21 +70,35 @@ Or simply add this lines anywhere in your application:
 ```
 
 ## Configure
-To configure OpenPayU environment you must provide a set of mandatory data in config.php file:
+To configure OpenPayU environment you must provide a set of mandatory data in config.php file.
 
+For production environment:
 ```php
-    //set Environment
+    //set Production Environment
     OpenPayU_Configuration::setEnvironment('secure');
-    
+
     //set POS ID and Second MD5 Key (from merchant admin panel)
     OpenPayU_Configuration::setMerchantPosId('145227');
     OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50');
     
     //set Oauth Client Id and Oauth Client Secret (from merchant admin panel)
     OpenPayU_Configuration::setOauthClientId('145227');
-    OpenPayU_Configuration::setOauthClientSecret('12f071174cb7eb79d4aac5bc2f07563f');
-
+    OpenPayU_Configuration::setOauthClientSecret('12f071174cb7eb79d4aac5bc2f07563f');    
 ```
+
+For sandbox environment:
+```php  
+    //set Sandbox Environment
+    OpenPayU_Configuration::setEnvironment('sandbox');
+
+    //set POS ID and Second MD5 Key (from merchant admin panel)
+    OpenPayU_Configuration::setMerchantPosId('300046');
+    OpenPayU_Configuration::setSignatureKey('0c017495773278c50c7b35434017b2ca');
+    
+    //set Oauth Client Id and Oauth Client Secret (from merchant admin panel)
+    OpenPayU_Configuration::setOauthClientId('300046');
+    OpenPayU_Configuration::setOauthClientSecret('c8d4b7ac61758704f38ed5564d8c0ae0');
+``` 
 
 ## Cache
 OpenPayU library automatically stores OAuth authentication data in the Cache.
