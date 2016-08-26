@@ -33,6 +33,7 @@ In both cases you will find orderId using this statement: $response->getResponse
 ## Installation
 
 ### Composer
+
 To install with Composer, simply add the requirement to your composer.json file:
 
 ```php
@@ -49,6 +50,7 @@ composer.phar install
 ```
 
 ### Manual installation
+
 Obtain the latest version of openpayu_php SDK with:
 ```php
 git clone https://github.com/PayU/openpayu_php.git
@@ -70,6 +72,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 ```
 
 ## Configure
+
 To configure OpenPayU environment you must provide a set of mandatory data in config.php file.
 
 For production environment:
@@ -101,6 +104,7 @@ OpenPayU_Configuration::setOauthClientSecret('c8d4b7ac61758704f38ed5564d8c0ae0')
 ``` 
 
 ## Cache
+
 OpenPayU library automatically stores OAuth authentication data in the Cache.
 
 OpenPayU library has two classes implemented to manage the Cache:
@@ -132,7 +136,7 @@ It is possible to implement another method to manage cache. In such a case it ne
 
 Remember: All keys in "order array" must be in lowercase.
 
-###Creating order using REST API
+### Creating order using REST API
 
    File with working example: [examples/v2/order/OrderCreate.php](examples/v2/order/OrderCreate.php)
 
@@ -212,7 +216,7 @@ $orderFormData = OpenPayU_Order::hostedOrderForm($order);
 echo $orderFormData
 ```
 
-###Retrieving order from OpenPayU
+### Retrieving order from OpenPayU
 
    File with working example: [examples/v2/order/OrderRetrieve.php](examples/v2/order/OrderRetrieve.php)
 
@@ -222,7 +226,7 @@ echo $orderFormData
 $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01'); //as parameter use orderId
 ```
 
-###Cancelling order
+### Cancelling order
 
    File with working example: [examples/v2/order/OrderCancel.php](examples/v2/order/OrderCancel.php)
 
@@ -232,7 +236,7 @@ $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01'); //as parame
 $response = OpenPayU_Order::cancel('Z963D5JQR2230925GUEST000P01'); //as parameter use orderId
 ```
 
-###Updating order status
+### Updating order status
 
    File with working example: [examples/v2/order/OrderStatusUpdate.php](examples/v2/order/OrderStatusUpdate.php)
 
@@ -247,7 +251,7 @@ $status_update = array(
 $response = OpenPayU_Order::statusUpdate($status_update);
 ```
 
-###Handling notifications from PayU
+### Handling notifications from PayU
 
    File with working example: [examples/v2/order/OrderNotify.php](examples/v2/order/OrderNotify.php)
 
@@ -265,7 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ```
 
-###Refund money
+### Refund money
 
    File with working example: [examples/v2/refund/RefundCreate.php](examples/v2/refund/RefundCreate.php)
 
