@@ -8,8 +8,8 @@ The OpenPayU PHP library provides integration access to the PayU Gateway API ver
 
 The following PHP extensions are required:
 
-* cURL
-* hash
+* [cURL](http://php.net/manual/en/book.curl.php)
+* [hash](http://php.net/manual/en/book.hash.php)
 
 ## Documentation
 
