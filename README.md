@@ -43,6 +43,7 @@ To install with Composer, simply add the requirement to your composer.json file:
   }
 }
 ```
+
 Then install by running
 
 ```php
@@ -52,6 +53,7 @@ composer.phar install
 ### Manual installation
 
 Obtain the latest version of openpayu_php SDK with:
+
 ```php
 git clone https://github.com/PayU/openpayu_php.git
 ```
@@ -76,6 +78,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 To configure OpenPayU environment you must provide a set of mandatory data in config.php file.
 
 For production environment:
+
 ```php
 //set Production Environment
 OpenPayU_Configuration::setEnvironment('secure');
@@ -90,6 +93,7 @@ OpenPayU_Configuration::setOauthClientSecret('12f071174cb7eb79d4aac5bc2f07563f')
 ```
 
 For sandbox environment:
+
 ```php  
 //set Sandbox Environment
 OpenPayU_Configuration::setEnvironment('sandbox');
@@ -114,18 +118,22 @@ OpenPayU library has two classes implemented to manage the Cache:
    **ATTENTION: for security reasons it is recommended to change the Cache folder, so it would not be accessible from the web browser.**
    
     Configuration:
+
     ```php
     OpenPayU_Configuration::setOauthTokenCache(new OauthCacheFile($directory));
     ```
+
    `$directory` - absolute path to the data folder; if the parameter is missing, the folder is `lib/Cache`   
    
 * `OauthCacheMemcached` - data is stored in Memcached
    This method requires Memcached (https://memcached.org/) to be installed on the server along with Memcached PHP module (http://php.net/manual/en/book.memcached.php)
 
     Configuration:
+
     ```php
     OpenPayU_Configuration::setOauthTokenCache(new OauthCacheMemcached($host, $port, $weight));
     ```   
+
    `$host` - Memcached server address - `localhost` by default
    `$port` - Memcached server port - `11211` by default
    `$weight` - Memcached server priority - `0` by default
@@ -138,11 +146,12 @@ Remember: All keys in "order array" must be in lowercase.
 
 ### Creating order using REST API
 
-   File with working example: [examples/v2/order/OrderCreate.php](examples/v2/order/OrderCreate.php)
+File with working example: [examples/v2/order/OrderCreate.php](examples/v2/order/OrderCreate.php)
 
-   To create an order using REST API in back-end you must provide an Array with order data:
+To create an order using REST API in back-end you must provide an Array with order data:
 
-   in your controller
+in your controller
+
 ```php
 $order['continueUrl'] = 'http://localhost/'; //customer will be redirected to this page after successfull payment
 $order['notifyUrl'] = 'http://localhost/';
@@ -174,11 +183,12 @@ header('Location:'.$response->getResponse()->redirectUri); //You must redirect y
 
 ### Creating order using HTML form
 
-   File with working example: [examples/v2/order/OrderForm.php](examples/v2/order/OrderForm.php)
+File with working example: [examples/v2/order/OrderForm.php](examples/v2/order/OrderForm.php)
 
-   To create an order using HTML form you must provide an Array with order data:
+To create an order using HTML form you must provide an Array with order data:
 
-   in your controller
+in your controller
+
 ```php
 $order['notifyUrl'] = 'http://localhost';
 $order['continueUrl'] = 'http://localhost';
@@ -205,22 +215,26 @@ $order['buyer']['lastName'] = 'Kowalski';
 
 $orderFormData = OpenPayU_Order::hostedOrderForm($order);
 ```
-  in your view
+
+in your view
+
 ```php
 <html>
 <?php echo $orderFormData; ?>
 </html>
 ```
-  or just
+
+or just
+
 ```php
 echo $orderFormData
 ```
 
 ### Retrieving order from OpenPayU
 
-   File with working example: [examples/v2/order/OrderRetrieve.php](examples/v2/order/OrderRetrieve.php)
+File with working example: [examples/v2/order/OrderRetrieve.php](examples/v2/order/OrderRetrieve.php)
 
-   You can retrieve order by its PayU order_id
+You can retrieve order by its PayU order_id
 
 ```php
 $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01'); //as parameter use orderId
@@ -228,9 +242,9 @@ $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01'); //as parame
 
 ### Cancelling order
 
-   File with working example: [examples/v2/order/OrderCancel.php](examples/v2/order/OrderCancel.php)
+File with working example: [examples/v2/order/OrderCancel.php](examples/v2/order/OrderCancel.php)
 
-   You can cancel order by its PayU order_id
+You can cancel order by its PayU order_id
 
 ```php
 $response = OpenPayU_Order::cancel('Z963D5JQR2230925GUEST000P01'); //as parameter use orderId
@@ -238,9 +252,9 @@ $response = OpenPayU_Order::cancel('Z963D5JQR2230925GUEST000P01'); //as paramete
 
 ### Updating order status
 
-   File with working example: [examples/v2/order/OrderStatusUpdate.php](examples/v2/order/OrderStatusUpdate.php)
+File with working example: [examples/v2/order/OrderStatusUpdate.php](examples/v2/order/OrderStatusUpdate.php)
 
-   You can update order status to accept order.
+You can update order status to accept order.
 
 ```php
 $status_update = array(
@@ -253,9 +267,9 @@ $response = OpenPayU_Order::statusUpdate($status_update);
 
 ### Handling notifications from PayU
 
-   File with working example: [examples/v2/order/OrderNotify.php](examples/v2/order/OrderNotify.php)
+File with working example: [examples/v2/order/OrderNotify.php](examples/v2/order/OrderNotify.php)
 
-   PayU sends requests to your application when order status changes
+PayU sends requests to your application when order status changes
 
 ```php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -271,9 +285,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ### Refund money
 
-   File with working example: [examples/v2/refund/RefundCreate.php](examples/v2/refund/RefundCreate.php)
+File with working example: [examples/v2/refund/RefundCreate.php](examples/v2/refund/RefundCreate.php)
 
-   You can create refund to refund money on buyer account
+You can create refund to refund money on buyer account
 
 ```php
 $refund = OpenPayU_Refund::create(
@@ -285,20 +299,19 @@ $refund = OpenPayU_Refund::create(
 
 ### Retrieving pay methods from POS
 
-   File with working example: [examples/v2/retrieve/RetrievePaymethods.php](examples/v2/retrieve/RetrievePaymethods.php)
+File with working example: [examples/v2/retrieve/RetrievePaymethods.php](examples/v2/retrieve/RetrievePaymethods.php)
 
-   You can retrieve pay methods from POS
+You can retrieve pay methods from POS
 
 ```php
 $response = OpenPayU_Retrieve::payMethods();
 ```
 
-   You can add optional parameter `lang` to `payMethods()`  
+You can add optional parameter `lang` to `payMethods()`  
 
 ```php
 $response = OpenPayU_Retrieve::payMethods('en');
 ```
-
 
 ## Contributing
 
