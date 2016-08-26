@@ -16,6 +16,7 @@ The following PHP extensions are required:
 Full implementation guide [[English](http://developers.payu.com/en/)][[Polish](http://developers.payu.com/)].
 
 To process operations such as:
+
  - [order status update](examples/v2/order/OrderStatusUpdate.php)
  - [order retrieve](examples/v2/order/OrderRetrieve.php)
  - [order cancel](examples/v2/order/OrderCancel.php)
