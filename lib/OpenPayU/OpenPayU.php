@@ -14,9 +14,9 @@ class OpenPayU
     {
         $instance = new OpenPayU_Result();
 
-        if($data['status']=='WARNING_CONTINUE_REDIRECT'){
-            $data['status']='SUCCESS';
-            $data['response']['status']['statusCode']='SUCCESS';
+        if (array_key_exists('status', $data) && $data['status'] == 'WARNING_CONTINUE_REDIRECT') {
+            $data['status'] = 'SUCCESS';
+            $data['response']['status']['statusCode'] = 'SUCCESS';
         }
 
         $instance->init($data);
