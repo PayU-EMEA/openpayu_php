@@ -13,6 +13,12 @@ class OpenPayU
     protected static function build($data)
     {
         $instance = new OpenPayU_Result();
+
+        if($data['status']=='WARNING_CONTINUE_REDIRECT'){
+            $data['status']='SUCCESS';
+            $data['response']['status']['statusCode']='SUCCESS';
+        }
+
         $instance->init($data);
 
         return $instance;
