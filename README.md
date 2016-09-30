@@ -99,6 +99,7 @@ For sandbox environment:
     OpenPayU_Configuration::setOauthClientId('300046');
     OpenPayU_Configuration::setOauthClientSecret('c8d4b7ac61758704f38ed5564d8c0ae0');
 ``` 
+If you want use sandbox environment, will register at this link  https://secure.snd.payu.com/cp/register?lang=en
 
 ## Cache
 OpenPayU library automatically stores OAuth authentication data in the Cache.
