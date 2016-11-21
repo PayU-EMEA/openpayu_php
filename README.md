@@ -260,7 +260,7 @@ echo $orderFormData
         $data = trim($body);
 
         $response = OpenPayU_Order::consumeNotification($data);
-        $response->getResponse()->order->status; //NEW PENDING CANCELLED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
+        $response->getResponse()->order->status; //NEW PENDING CANCELED REJECTED COMPLETED WAITING_FOR_CONFIRMATION
 
         header("HTTP/1.1 200 OK");
     }
