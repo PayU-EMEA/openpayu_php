@@ -46,6 +46,13 @@ class OpenPayU_HttpCurl
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
+        if ($proxy = self::getProxy()) {
+            curl_setopt($ch, CURLOPT_PROXY, $proxy);
+            if ($proxyAuth = self::getProxyAuth()) {
+                curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyAuth);
+            }
+        }
+
         $response = curl_exec($ch);
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
@@ -85,6 +92,18 @@ class OpenPayU_HttpCurl
         }
 
         return strlen($header);
+    }
+
+    private static function getProxy()
+    {
+        return OpenPayU_Configuration::getProxyHost() != null ? OpenPayU_Configuration::getProxyHost()
+            . (OpenPayU_Configuration::getProxyPort() ? ':' . OpenPayU_Configuration::getProxyPort() : '') : false;
+    }
+
+    private static function getProxyAuth()
+    {
+        return OpenPayU_Configuration::getProxyUser() != null ? OpenPayU_Configuration::getProxyUser()
+            . (OpenPayU_Configuration::getProxyPassword() ? ':' . OpenPayU_Configuration::getProxyPassword() : '') : false;
     }
 
 }

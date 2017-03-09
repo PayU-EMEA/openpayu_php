@@ -45,6 +45,26 @@ class OpenPayU_Configuration
      */
     private static $oauthTokenCache = null;
 
+    /**
+     * Proxy - host
+     */
+    private static $proxyHost = null;
+
+    /**
+     * Proxy - port
+     */
+    private static $proxyPort = null;
+
+    /**
+     * Proxy - user
+     */
+    private static $proxyUser = null;
+
+    /**
+     * Proxy - password
+     */
+    private static $proxyPassword = null;
+
     private static $serviceUrl = '';
     private static $hashAlgorithm = 'SHA-256';
 
@@ -220,6 +240,70 @@ class OpenPayU_Configuration
             throw new OpenPayU_Exception_Configuration('Oauth token cache class is not instance of OauthCacheInterface');
         }
         self::$oauthTokenCache = $oauthTokenCache;
+    }
+
+    /**
+     * @return string | null
+     */
+    public static function getProxyHost()
+    {
+        return self::$proxyHost;
+    }
+
+    /**
+     * @param string | null $proxyHost
+     */
+    public static function setProxyHost($proxyHost)
+    {
+        self::$proxyHost = $proxyHost;
+    }
+
+    /**
+     * @return int | null
+     */
+    public static function getProxyPort()
+    {
+        return self::$proxyPort;
+    }
+
+    /**
+     * @param int | null $proxyPort
+     */
+    public static function setProxyPort($proxyPort)
+    {
+        self::$proxyPort = $proxyPort;
+    }
+
+    /**
+     * @return string | null
+     */
+    public static function getProxyUser()
+    {
+        return self::$proxyUser;
+    }
+
+    /**
+     * @param string | null $proxyUser
+     */
+    public static function setProxyUser($proxyUser)
+    {
+        self::$proxyUser = $proxyUser;
+    }
+
+    /**
+     * @return string | null
+     */
+    public static function getProxyPassword()
+    {
+        return self::$proxyPassword;
+    }
+
+    /**
+     * @param string | null $proxyPassword
+     */
+    public static function setProxyPassword($proxyPassword)
+    {
+        self::$proxyPassword = $proxyPassword;
     }
 
     /**
