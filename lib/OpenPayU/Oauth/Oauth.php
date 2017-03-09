@@ -33,10 +33,15 @@ class OpenPayU_Oauth
 
         $oauthUrl = OpenPayU_Configuration::getOauthEndpoint();
         $data = array(
-            'grant_type' => OauthGrantType::CLIENT_CREDENTIAL,
+            'grant_type' => OpenPayU_Configuration::getOauthGrantType(),
             'client_id' => $clientId ? $clientId : OpenPayU_Configuration::getOauthClientId(),
             'client_secret' => $clientSecret ? $clientSecret : OpenPayU_Configuration::getOauthClientSecret()
         );
+
+        if (OpenPayU_Configuration::getOauthGrantType() === OauthGrantType::TRUSTED_MERCHANT) {
+            $data['email'] = OpenPayU_Configuration::getOauthEmail();
+            $data['ext_customer_id'] = OpenPayU_Configuration::getOauthExtCustomerId();
+        }
 
         $response = self::parseResponse(OpenPayU_Http::doPost($oauthUrl, http_build_query($data), $authType));
 

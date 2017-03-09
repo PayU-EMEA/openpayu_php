@@ -26,6 +26,10 @@ class OpenPayU_Configuration
     private static $signatureKey = '';
 
     /**
+     * OAuth protocol - default type
+     */
+    private static $oauthGrantType = OauthGrantType::CLIENT_CREDENTIAL;
+    /**
      * OAuth protocol - client_id
      */
     private static $oauthClientId = '';
@@ -34,6 +38,16 @@ class OpenPayU_Configuration
      * OAuth protocol - client_secret
      */
     private static $oauthClientSecret = '';
+
+    /**
+     * OAuth protocol - email
+     */
+    private static $oauthEmail = '';
+
+    /**
+     * OAuth protocol - extCustomerId
+     */
+    private static $oauthExtCustomerId;
 
     /**
      * OAuth protocol - endpoint address
@@ -193,6 +207,27 @@ class OpenPayU_Configuration
     /**
      * @return string
      */
+    public static function getOauthGrantType()
+    {
+        return self::$oauthGrantType;
+    }
+
+    /**
+     * @param string $oauthGrantType
+     * @throws OpenPayU_Exception_Configuration
+     */
+    public static function setOauthGrantType($oauthGrantType)
+    {
+        if ($oauthGrantType !== OauthGrantType::CLIENT_CREDENTIAL && $oauthGrantType !== OauthGrantType::TRUSTED_MERCHANT) {
+            throw new OpenPayU_Exception_Configuration('Oauth grand type "' . $oauthGrantType . '"" is not available');
+        }
+
+        self::$oauthGrantType = $oauthGrantType;
+    }
+
+    /**
+     * @return string
+     */
     public static function getOauthClientId()
     {
         return self::$oauthClientId;
@@ -220,6 +255,38 @@ class OpenPayU_Configuration
     public static function setOauthClientSecret($oauthClientSecret)
     {
         self::$oauthClientSecret = trim($oauthClientSecret);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getOauthEmail()
+    {
+        return self::$oauthEmail;
+    }
+
+    /**
+     * @param mixed $oauthEmail
+     */
+    public static function setOauthEmail($oauthEmail)
+    {
+        self::$oauthEmail = $oauthEmail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getOauthExtCustomerId()
+    {
+        return self::$oauthExtCustomerId;
+    }
+
+    /**
+     * @param mixed $oauthExtCustomerId
+     */
+    public static function setOauthExtCustomerId($oauthExtCustomerId)
+    {
+        self::$oauthExtCustomerId = $oauthExtCustomerId;
     }
 
     /**
