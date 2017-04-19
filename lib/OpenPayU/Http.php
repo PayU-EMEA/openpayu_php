@@ -82,7 +82,7 @@ class OpenPayU_Http
     {
 
         $response = $message->getResponse();
-        $statusDesc = ($response->status && $response->status->statusDesc) ? $response->status->statusDesc : '';
+        $statusDesc = isset($response->status->statusDesc) ? $response->status->statusDesc : '';
 
         switch ($statusCode) {
             case 400:
