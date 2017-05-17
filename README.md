@@ -2,7 +2,7 @@
 
 # Official OpenPayU PHP Library 2.2
 
-The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2.2
+The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2.1
 
 ## Dependencies
 
@@ -99,7 +99,47 @@ For sandbox environment:
     OpenPayU_Configuration::setOauthClientId('300046');
     OpenPayU_Configuration::setOauthClientSecret('c8d4b7ac61758704f38ed5564d8c0ae0');
 ``` 
-If you want use sandbox environment, will register at this link  https://secure.snd.payu.com/cp/register?lang=en
+If you want to use sandbox environment, register at this link  https://secure.snd.payu.com/cp/register?lang=en
+
+## OAuth configuration
+SDK supports two PayU OAuth grant types: `client_credentials` and `trusted_merchant`. Default is `client_credentials`. 
+
+If you want to change grant type use:
+
+```php
+    OpenPayU_Configuration::setOauthGrantType('grant_type');
+```
+grant_type can be one of the following `OauthGrantType::TRUSTED_MERCHANT` or `OauthGrantType::TRUSTED_MERCHANT`
+
+
+Parameters needed for `client_credentials`
+
+```php
+    //set Oauth Client Id and Oauth Client Secret (from merchant admin panel)
+    OpenPayU_Configuration::setOauthClientId('300046');
+    OpenPayU_Configuration::setOauthClientSecret('c8d4b7ac61758704f38ed5564d8c0ae0');
+```
+
+Parameters needed for `trusted_merchant`
+
+```php
+    //set Oauth Client Id and Oauth Client Secret (from merchant admin panel)
+    OpenPayU_Configuration::setOauthClientId('clent_id');
+    OpenPayU_Configuration::setOauthClientSecret('clent_secret');
+
+    //set Oauth Email and Oauth Ext Customer Id
+    OpenPayU_Configuration::setOauthEmail('email');
+    OpenPayU_Configuration::setOauthExtCustomerId('ext_customer_id');
+```
+
+## Connection over Proxy
+
+```php
+    OpenPayU_Configuration::setProxyHost('address');
+    OpenPayU_Configuration::setProxyPort(8080);
+    OpenPayU_Configuration::setProxyUser('user');
+    OpenPayU_Configuration::setProxyPassword('password');
+```
 
 ## Cache
 OpenPayU library automatically stores OAuth authentication data in the Cache.

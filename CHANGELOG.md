@@ -1,16 +1,20 @@
+## 2.2.4
+* Added connection over proxy support
+* Added trusted_merchant Oauth Grant Type
+
 ## 2.2.3
 * Trim oauthClientId and oauthClientSecret
 * Add support for sandbox environment
 
 ## 2.2.2
-* Add Order statuses constants
+* Added Order statuses constants
 * Fix for HttpStatusException
 
 ## 2.2.1
-* Add retrieving pay methods
+* Added retrieving pay methods
 
 ## 2.2.0
-* Add Oauth
+* Added Oauth
 
 ## 2.1.6
 * Remove downgrade http version in curl
