@@ -36,6 +36,7 @@ $order['buyer']['email'] = 'dd@ddd.pl';
 $order['buyer']['phone'] = '123123123';
 $order['buyer']['firstName'] = 'Jan';
 $order['buyer']['lastName'] = 'Kowalski';
+$order['buyer']['language'] = 'en';
 
 $rsp = OpenPayU_Order::hostedOrderForm($order);
 ?>

@@ -37,28 +37,9 @@ $order['buyer']['email'] = 'test_buyer_email@payu.com';
 $order['buyer']['phone'] = '123123123';
 $order['buyer']['firstName'] = 'Jan';
 $order['buyer']['lastName'] = 'Kowalski';
-
-
-/*~~~~~~~~ optional part INVOICE data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-$order['buyer']['invoice']['recipientName'] = 'Anna Nowak';
-$order['buyer']['invoice']['recipientEmail'] = 'test_buyer_email@payu.com';
-$order['buyer']['invoice']['recipientPhone'] = '+48 456 456 789';
-$order['buyer']['invoice']['name'] = 'The very first invoice';
-$order['buyer']['invoice']['street'] = 'Foo St. 155';
-$order['buyer']['invoice']['postalBox'] = 'Warsaw';
-$order['buyer']['invoice']['postalCode'] = '22-222';
-$order['buyer']['invoice']['city'] = 'Warsaw';
-$order['buyer']['invoice']['countryCode'] = 'PL';
-$order['buyer']['invoice']['tin'] = '8252212616';
+$order['buyer']['language'] = 'en';
 
 /*~~~~~~~~ optional part DELIVERY data ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-
-//Please add at least one shipping method in "shippingMethods" part
-$order['shippingMethods'][0]['name'] = 'Shipping 1';
-$order['shippingMethods'][0]['country'] = 'PL';
-$order['shippingMethods'][0]['price'] = '800';
-
 //Add delivery informations
 $order['buyer']['delivery']['recipientName'] = 'Robert Nowak';
 $order['buyer']['delivery']['recipientEmail'] = 'test_buyer_email@payu.com';
