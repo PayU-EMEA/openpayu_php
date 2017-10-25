@@ -17,7 +17,7 @@ class OpenPayU_Oauth
      */
     public static function getAccessToken($clientId = null, $clientSecret = null)
     {
-        $cacheKey = self::CACHE_KEY . OpenPayU_Configuration::getOauthClientId();
+        $cacheKey = self::CACHE_KEY . OpenPayU_Configuration::getOauthGrantType() . OpenPayU_Configuration::getOauthClientId();
 
         self::getOauthTokenCache();
 
