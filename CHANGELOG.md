@@ -1,5 +1,5 @@
 ## 2.2.6
-* Added grant type to cache key
+* Remove cache for Trusted Merchant
 
 ## 2.2.5
 * Added grant type to cache key
