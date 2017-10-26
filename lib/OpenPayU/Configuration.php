@@ -86,7 +86,7 @@ class OpenPayU_Configuration
 
     const API_VERSION = '2.1';
     const COMPOSER_JSON = "/composer.json";
-    const DEFAULT_SDK_VERSION = 'PHP SDK 2.2.5';
+    const DEFAULT_SDK_VERSION = 'PHP SDK 2.2.6';
     const OAUTH_CONTEXT = 'pl/standard/user/oauth/authorize';
 
     /**

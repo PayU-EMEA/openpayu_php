@@ -1,3 +1,6 @@
+## 2.2.6
+* Added grant type to cache key
+
 ## 2.2.5
 * Added grant type to cache key
 
