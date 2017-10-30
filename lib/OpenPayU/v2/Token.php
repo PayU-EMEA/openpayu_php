@@ -30,7 +30,7 @@ class OpenPayU_Token extends OpenPayU
         }
 
         if (!$authType instanceof AuthType_Oauth) {
-            throw new OpenPayU_Exception_Configuration('Retrieve works only with OAuth');
+            throw new OpenPayU_Exception_Configuration('Delete token works only with OAuth');
         }
 
         if (OpenPayU_Configuration::getOauthGrantType() !== OauthGrantType::TRUSTED_MERCHANT) {

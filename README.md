@@ -258,7 +258,7 @@ Remember: All keys in "order array" must be in lowercase.
     }
 ```
 
-###Refund money
+### Refund money
 
    File with working example: [examples/v2/refund/RefundCreate.php](examples/v2/refund/RefundCreate.php)
 
@@ -288,6 +288,19 @@ Remember: All keys in "order array" must be in lowercase.
     $response = OpenPayU_Retrieve::payMethods('en');
 ```
 
+### Delete card token
+
+   File with working example: [examples/v2/token/TokenDelete.php](examples/v2/token/TokenDelete.php)
+
+   You can delete user's card token.
+
+   Token deletion is possible only for `trusted_merchant` grant type.
+
+```php
+    $refund = OpenPayU_Token::delete(
+        'TOKC_EXAMPLE_TOKEN' // as a value use user card token 
+    );
+```
 
 ## Contributing
 
