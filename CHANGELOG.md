@@ -1,3 +1,6 @@
+## 2.2.7
+* Add delete token
+
 ## 2.2.6
 * Remove cache for Trusted Merchant
 
