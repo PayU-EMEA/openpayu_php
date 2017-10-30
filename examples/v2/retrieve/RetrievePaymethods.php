@@ -54,12 +54,9 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
         ?>
 
         <table class="table table-hover table-bordered">
-            <thead>
             <tr>
-                <th colspan="4">payByLinks</th>
+                <th colspan="4">Pay By Links</th>
             </tr>
-            </thead>
-            <tbody>
             <tr>
                 <td>payType</td>
                 <td>Name of payType</td>
@@ -79,7 +76,33 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 endforeach;
             endif;
             ?>
-            </tbody>
+            <?php if ($payMethods->cardTokens): ?>
+                <tr>
+                    <th colspan="4">Card Tokens</th>
+                </tr>
+                <tr>
+                    <td>Card Info</td>
+                    <td>Token</td>
+                    <td>Status</td>
+                    <td style="width: 120px">Image</td>
+                </tr>
+
+                <?php foreach ($payMethods->cardTokens as $cardToken):
+                    print_r($cardToken);
+                    ?>
+                    <tr>
+                        <td>Card: <?php echo $cardToken->cardNumberMasked; ?><br>
+                            Expiry: <?php echo $cardToken->cardExpirationMonth; ?> / <?php echo $cardToken->cardExpirationYear; ?><br>
+                            Brand:<?php echo $cardToken->cardBrand; ?>
+                        </td>
+                        <td><?php echo $cardToken->value; ?></td>
+                        <td><?php echo $cardToken->status; ?></td>
+                        <td><img src="<?php echo $cardToken->brandImageUrl; ?>" style="width: 100px"></td>
+                    </tr>
+                    <?php
+                endforeach;
+            endif;
+            ?>
         </table>
 
     <?php endif; ?>
