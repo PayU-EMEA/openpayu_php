@@ -60,7 +60,7 @@ class OpenPayU_Oauth
             $data['ext_customer_id'] = OpenPayU_Configuration::getOauthExtCustomerId();
         }
 
-        return self::parseResponse(OpenPayU_Http::doPost($oauthUrl, http_build_query($data), $authType));
+        return self::parseResponse(OpenPayU_Http::doPost($oauthUrl, http_build_query($data, '', '&'), $authType));
     }
 
     /**
