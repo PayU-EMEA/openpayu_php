@@ -1,3 +1,6 @@
+## 2.2.8
+* Set args separator
+
 ## 2.2.7
 * Add delete token
 
