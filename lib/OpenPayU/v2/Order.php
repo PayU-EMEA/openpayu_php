@@ -143,7 +143,7 @@ class OpenPayU_Order extends OpenPayU
      * Consume notification message
      *
      * @access public
-     * @param $data Request array received from with PayU OrderNotifyRequest
+     * @param $data string Request array received from with PayU OrderNotifyRequest
      * @return null|OpenPayU_Result Response array with OrderNotifyRequest
      * @throws OpenPayU_Exception
      */
