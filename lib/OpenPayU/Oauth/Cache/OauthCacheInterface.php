@@ -1,5 +1,6 @@
 <?php
 
+namespace PayU\OpenPayU\Oauth\Cache;
 
 interface OauthCacheInterface
 {

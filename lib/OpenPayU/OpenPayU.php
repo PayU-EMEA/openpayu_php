@@ -1,8 +1,17 @@
 <?php
+
+namespace PayU\OpenPayU;
+
+use PayU\OpenPayU\AuthType\AuthType;
+use PayU\OpenPayU\AuthType\Basic;
+use PayU\OpenPayU\AuthType\Oauth;
+use PayU\OpenPayU\Exception\OpenPayUException;
+use PayU\OpenPayU\Exception\OpenPayUExceptionAuthorization;
+
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2016 PayU
+ * @copyright  Copyright (c) 2011-2017 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
@@ -12,7 +21,7 @@ class OpenPayU
 {
     protected static function build($data)
     {
-        $instance = new OpenPayU_Result();
+        $instance = new Result();
 
         if (array_key_exists('status', $data) && $data['status'] == 'WARNING_CONTINUE_REDIRECT') {
             $data['status'] = 'SUCCESS';
@@ -27,32 +36,32 @@ class OpenPayU
     /**
      * @param $data
      * @param $incomingSignature
-     * @throws OpenPayU_Exception_Authorization
+     * @throws OpenPayUExceptionAuthorization
      */
     public static function verifyDocumentSignature($data, $incomingSignature)
     {
-        $sign = OpenPayU_Util::parseSignature($incomingSignature);
+        $sign = Util::parseSignature($incomingSignature);
 
-        if (false === OpenPayU_Util::verifySignature(
+        if (false === Util::verifySignature(
                 $data,
                 $sign->signature,
-                OpenPayU_Configuration::getSignatureKey(),
+                Configuration::getSignatureKey(),
                 $sign->algorithm)
         ) {
-            throw new OpenPayU_Exception_Authorization('Invalid signature - ' . $sign->signature);
+            throw new OpenPayUExceptionAuthorization('Invalid signature - ' . $sign->signature);
         }
     }
 
     /**
      * @return AuthType
-     * @throws OpenPayU_Exception
+     * @throws OpenPayUException
      */
     protected static function getAuth()
     {
-        if (OpenPayU_Configuration::getOauthClientId() && OpenPayU_Configuration::getOauthClientSecret()) {
-            $authType = new AuthType_Oauth(OpenPayU_Configuration::getOauthClientId(), OpenPayU_Configuration::getOauthClientSecret());
+        if (Configuration::getOauthClientId() && Configuration::getOauthClientSecret()) {
+            $authType = new Oauth(Configuration::getOauthClientId(), Configuration::getOauthClientSecret());
         } else {
-            $authType = new AuthType_Basic(OpenPayU_Configuration::getMerchantPosId(), OpenPayU_Configuration::getSignatureKey());
+            $authType = new Basic(Configuration::getMerchantPosId(), Configuration::getSignatureKey());
         }
 
         return $authType;

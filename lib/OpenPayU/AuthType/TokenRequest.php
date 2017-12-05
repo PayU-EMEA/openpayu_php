@@ -1,6 +1,8 @@
 <?php
 
-class AuthType_TokenRequest implements AuthType
+namespace PayU\OpenPayU\AuthType;
+
+class TokenRequest implements AuthType
 {
 
     public function getHeaders()

@@ -1,4 +1,17 @@
 <?php
+
+namespace PayU\OpenPayU\v2;
+
+use PayU\OpenPayU\AuthType\Oauth;
+use PayU\OpenPayU\Configuration;
+use PayU\OpenPayU\Exception\OpenPayUException;
+use PayU\OpenPayU\Exception\OpenPayUExceptionConfiguration;
+use PayU\OpenPayU\Http;
+use PayU\OpenPayU\Oauth\OauthGrantType;
+use PayU\OpenPayU\OpenPayU;
+use PayU\OpenPayU\Result;
+use PayU\OpenPayU\Util;
+
 /**
  * OpenPayU Standard Library
  *
@@ -8,7 +21,7 @@
  * http://developers.payu.com
  */
 
-class OpenPayU_Token extends OpenPayU
+class Token extends OpenPayU
 {
 
     const TOKENS_SERVICE = 'tokens';
@@ -16,44 +29,38 @@ class OpenPayU_Token extends OpenPayU
     /**
      * Deleting a payment token
      * @param string $token
-     * @return null|OpenPayU_Result
-     * @throws OpenPayU_Exception
-     * @throws OpenPayU_Exception_Configuration
+     * @return null|Result
+     * @throws OpenPayUException
+     * @throws OpenPayUExceptionConfiguration
      */
     public static function delete($token)
     {
 
-        try {
-            $authType = self::getAuth();
-        } catch (OpenPayU_Exception $e) {
-            throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
+        $authType = self::getAuth();
+
+        if (!$authType instanceof Oauth) {
+            throw new OpenPayUExceptionConfiguration('Delete token works only with OAuth');
         }
 
-        if (!$authType instanceof AuthType_Oauth) {
-            throw new OpenPayU_Exception_Configuration('Delete token works only with OAuth');
+        if (Configuration::getOauthGrantType() !== OauthGrantType::TRUSTED_MERCHANT) {
+            throw new OpenPayUExceptionConfiguration('Token delete request is available only for trusted_merchant');
         }
 
-        if (OpenPayU_Configuration::getOauthGrantType() !== OauthGrantType::TRUSTED_MERCHANT) {
-            throw new OpenPayU_Exception_Configuration('Token delete request is available only for trusted_merchant');
-        }
+        $pathUrl = Configuration::getServiceUrl() . self::TOKENS_SERVICE . '/' . $token;
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::TOKENS_SERVICE . '/' . $token;
-
-        $response = self::verifyResponse(OpenPayU_Http::doDelete($pathUrl, $authType));
-
-        return $response;
+        return self::verifyResponse(Http::doDelete($pathUrl, $authType));
     }
 
     /**
      * @param string $response
-     * @return null|OpenPayU_Result
+     * @return null|Result
      */
     public static function verifyResponse($response)
     {
         $data = array();
         $httpStatus = $response['code'];
 
-        $message = OpenPayU_Util::convertJsonToArray($response['response'], true);
+        $message = Util::convertJsonToArray($response['response'], true);
 
         $data['status'] = isset($message['status']['statusCode']) ? $message['status']['statusCode'] : null;
 
@@ -69,7 +76,7 @@ class OpenPayU_Token extends OpenPayU
         if ($httpStatus == 204) {
             return $result;
         } else {
-            OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
+            Http::throwHttpStatusException($httpStatus, $result);
         }
     }
 }

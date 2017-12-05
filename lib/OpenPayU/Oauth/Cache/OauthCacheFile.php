@@ -1,12 +1,16 @@
 <?php
 
+namespace PayU\OpenPayU\Oauth\Cache;
+
+use PayU\OpenPayU\Exception\OpenPayUExceptionConfiguration;
+
 class OauthCacheFile implements OauthCacheInterface
 {
     private $directory;
 
     /**
      * @param string $directory
-     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayUExceptionConfiguration
      */
     public function __construct($directory = null)
     {
@@ -15,7 +19,7 @@ class OauthCacheFile implements OauthCacheInterface
         }
 
         if (!is_dir($directory) || !is_writable($directory)) {
-            throw new OpenPayU_Exception_Configuration('Cache directory [' . $directory . '] not exist or not writable.');
+            throw new OpenPayUExceptionConfiguration('Cache directory [' . $directory . '] not exist or not writable.');
         }
 
         $this->directory = $directory . (substr($directory, -1) != '/' ? '/' : '');

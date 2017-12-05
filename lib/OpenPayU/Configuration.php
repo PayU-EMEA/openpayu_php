@@ -1,5 +1,11 @@
 <?php
 
+namespace PayU\OpenPayU;
+
+use PayU\OpenPayU\Exception\OpenPayUExceptionConfiguration;
+use PayU\OpenPayU\Oauth\Cache\OauthCacheInterface;
+use PayU\OpenPayU\Oauth\OauthGrantType;
+
 /**
  * OpenPayU Standard Library
  *
@@ -8,7 +14,8 @@
  * http://www.payu.com
  * http://developers.payu.com
  */
-class OpenPayU_Configuration
+
+class Configuration
 {
     private static $_availableEnvironment = array('custom', 'secure', 'sandbox');
     private static $_availableHashAlgorithm = array('SHA', 'SHA-256', 'SHA-384', 'SHA-512');
@@ -99,12 +106,12 @@ class OpenPayU_Configuration
 
     /**
      * @param string
-     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayUExceptionConfiguration
      */
     public static function setHashAlgorithm($value)
     {
         if (!in_array($value, self::$_availableHashAlgorithm)) {
-            throw new OpenPayU_Exception_Configuration('Hash algorithm "' . $value . '"" is not available');
+            throw new OpenPayUExceptionConfiguration('Hash algorithm "' . $value . '"" is not available');
         }
 
         self::$hashAlgorithm = $value;
@@ -123,7 +130,7 @@ class OpenPayU_Configuration
      * @param string $domain
      * @param string $api
      * @param string $version
-     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayUExceptionConfiguration
      */
     public static function setEnvironment($environment = 'secure', $domain = 'payu.com', $api = 'api/', $version = 'v2_1/')
     {
@@ -131,7 +138,7 @@ class OpenPayU_Configuration
         $domain = strtolower($domain) . '/';
 
         if (!in_array($environment, self::$_availableEnvironment)) {
-            throw new OpenPayU_Exception_Configuration($environment . ' - is not valid environment');
+            throw new OpenPayUExceptionConfiguration($environment . ' - is not valid environment');
         }
 
         self::$env = $environment;
@@ -214,12 +221,12 @@ class OpenPayU_Configuration
 
     /**
      * @param string $oauthGrantType
-     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayUExceptionConfiguration
      */
     public static function setOauthGrantType($oauthGrantType)
     {
         if ($oauthGrantType !== OauthGrantType::CLIENT_CREDENTIAL && $oauthGrantType !== OauthGrantType::TRUSTED_MERCHANT) {
-            throw new OpenPayU_Exception_Configuration('Oauth grand type "' . $oauthGrantType . '"" is not available');
+            throw new OpenPayUExceptionConfiguration('Oauth grand type "' . $oauthGrantType . '"" is not available');
         }
 
         self::$oauthGrantType = $oauthGrantType;
@@ -299,12 +306,12 @@ class OpenPayU_Configuration
 
     /**
      * @param OauthCacheInterface $oauthTokenCache
-     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayUExceptionConfiguration
      */
     public static function setOauthTokenCache($oauthTokenCache)
     {
         if (!$oauthTokenCache instanceof OauthCacheInterface) {
-            throw new OpenPayU_Exception_Configuration('Oauth token cache class is not instance of OauthCacheInterface');
+            throw new OpenPayUExceptionConfiguration('Oauth token cache class is not instance of OauthCacheInterface');
         }
         self::$oauthTokenCache = $oauthTokenCache;
     }

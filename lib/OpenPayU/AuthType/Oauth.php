@@ -1,8 +1,14 @@
 <?php
 
-class AuthType_Oauth implements AuthType
-{
+namespace PayU\OpenPayU\AuthType;
 
+use PayU\OpenPayU\Exception\OpenPayUException;
+use PayU\OpenPayU\Exception\OpenPayUExceptionConfiguration;
+use PayU\OpenPayU\Oauth\OauthResultClientCredentials;
+use PayU\OpenPayU\Oauth as GrantOauth;
+
+class Oauth implements AuthType
+{
     /**
      * @var OauthResultClientCredentials
      */
@@ -11,21 +17,20 @@ class AuthType_Oauth implements AuthType
     public function __construct($clientId, $clientSecret)
     {
         if (empty($clientId)) {
-            throw new OpenPayU_Exception_Configuration('ClientId is empty');
+            throw new OpenPayUExceptionConfiguration('ClientId is empty');
         }
 
         if (empty($clientSecret)) {
-            throw new OpenPayU_Exception_Configuration('ClientSecret is empty');
+            throw new OpenPayUExceptionConfiguration('ClientSecret is empty');
         }
 
         try {
-            $this->oauthResult = OpenPayU_Oauth::getAccessToken();
-        } catch (OpenPayU_Exception $e) {
-            throw new OpenPayU_Exception('Oauth error: [code=' . $e->getCode() . '], [message=' . $e->getMessage() . ']');
+            $this->oauthResult = GrantOauth::getAccessToken();
+        } catch (OpenPayUException $e) {
+            throw new OpenPayUException('Oauth error: [code=' . $e->getCode() . '], [message=' . $e->getMessage() . ']');
         }
 
     }
-
 
     public function getHeaders()
     {
@@ -35,5 +40,4 @@ class AuthType_Oauth implements AuthType
             'Authorization: Bearer ' . $this->oauthResult->getAccessToken()
         );
     }
-
 }

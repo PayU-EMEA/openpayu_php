@@ -1,6 +1,10 @@
 <?php
 
-class AuthType_Basic implements AuthType
+namespace PayU\OpenPayU\AuthType;
+
+use PayU\OpenPayU\Exception\OpenPayUExceptionConfiguration;
+
+class Basic implements AuthType
 {
 
     /**
@@ -11,11 +15,11 @@ class AuthType_Basic implements AuthType
     public function __construct($posId, $signatureKey)
     {
         if (empty($posId)) {
-            throw new OpenPayU_Exception_Configuration('PosId is empty');
+            throw new OpenPayUExceptionConfiguration('PosId is empty');
         }
 
         if (empty($signatureKey)) {
-            throw new OpenPayU_Exception_Configuration('SignatureKey is empty');
+            throw new OpenPayUExceptionConfiguration('SignatureKey is empty');
         }
 
         $this->authBasicToken = base64_encode($posId . ':' . $signatureKey);

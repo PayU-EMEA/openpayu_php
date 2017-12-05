@@ -1,5 +1,7 @@
 <?php
 
+namespace PayU\OpenPayU\Oauth;
+
 class OauthResultClientCredentials
 {
 
@@ -21,7 +23,7 @@ class OauthResultClientCredentials
     private $grantType;
 
     /**
-     * @var DateTime
+     * @var \DateTime
      */
     private $expireDate;
 
@@ -98,7 +100,7 @@ class OauthResultClientCredentials
     }
 
     /**
-     * @return DateTime
+     * @return \DateTime
      */
     public function getExpireDate()
     {
@@ -106,16 +108,19 @@ class OauthResultClientCredentials
     }
 
     /**
-     * @param DateTime $date
+     * @param \DateTime $date
      */
     public function calculateExpireDate($date)
     {
-        $this->expireDate = $date->add(new DateInterval('PT' . ($this->expiresIn - 60) . 'S'));
+        $this->expireDate = $date->add(new \DateInterval('PT' . ($this->expiresIn - 60) . 'S'));
     }
 
+    /**
+     * @return bool
+     */
     public function hasExpire()
     {
-        return ($this->expireDate <= new DateTime());
+        return ($this->expireDate <= new \DateTime());
     }
 
 }

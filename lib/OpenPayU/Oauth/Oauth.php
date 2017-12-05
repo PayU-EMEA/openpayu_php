@@ -1,6 +1,21 @@
 <?php
 
-class OpenPayU_Oauth
+namespace PayU\OpenPayU\Oauth;
+
+use PayU\OpenPayU\AuthType\TokenRequest;
+use PayU\OpenPayU\Configuration;
+use PayU\OpenPayU\Exception\OpenPayUException;
+use PayU\OpenPayU\Exception\OpenPayUExceptionAuthorization;
+use PayU\OpenPayU\Exception\OpenPayUExceptionNetwork;
+use PayU\OpenPayU\Exception\OpenPayUExceptionServerError;
+use PayU\OpenPayU\Exception\OpenPayUExceptionServerMaintenance;
+use PayU\OpenPayU\Http;
+use PayU\OpenPayU\Oauth\Cache\OauthCacheFile;
+use PayU\OpenPayU\Oauth\Cache\OauthCacheInterface;
+use PayU\OpenPayU\ResultError;
+use PayU\OpenPayU\Util;
+
+class Oauth
 {
     /**
      * @var OauthCacheInterface
@@ -13,15 +28,15 @@ class OpenPayU_Oauth
      * @param string $clientId
      * @param string $clientSecret
      * @return OauthResultClientCredentials
-     * @throws OpenPayU_Exception_ServerError
+     * @throws OpenPayUExceptionServerError
      */
     public static function getAccessToken($clientId = null, $clientSecret = null)
     {
-        if (OpenPayU_Configuration::getOauthGrantType() === OauthGrantType::TRUSTED_MERCHANT) {
+        if (Configuration::getOauthGrantType() === OauthGrantType::TRUSTED_MERCHANT) {
             return self::retrieveAccessToken($clientId, $clientSecret);
         }
 
-        $cacheKey = self::CACHE_KEY . OpenPayU_Configuration::getOauthClientId();
+        $cacheKey = self::CACHE_KEY . Configuration::getOauthClientId();
 
         self::getOauthTokenCache();
 
@@ -42,25 +57,25 @@ class OpenPayU_Oauth
      * @param $clientId
      * @param $clientSecret
      * @return OauthResultClientCredentials
-     * @throws OpenPayU_Exception_ServerError
+     * @throws OpenPayUExceptionServerError
      */
     private static function retrieveAccessToken($clientId, $clientSecret)
     {
-        $authType = new AuthType_TokenRequest();
+        $authType = new TokenRequest();
 
-        $oauthUrl = OpenPayU_Configuration::getOauthEndpoint();
+        $oauthUrl = Configuration::getOauthEndpoint();
         $data = array(
-            'grant_type' => OpenPayU_Configuration::getOauthGrantType(),
-            'client_id' => $clientId ? $clientId : OpenPayU_Configuration::getOauthClientId(),
-            'client_secret' => $clientSecret ? $clientSecret : OpenPayU_Configuration::getOauthClientSecret()
+            'grant_type' => Configuration::getOauthGrantType(),
+            'client_id' => $clientId ? $clientId : Configuration::getOauthClientId(),
+            'client_secret' => $clientSecret ? $clientSecret : Configuration::getOauthClientSecret()
         );
 
-        if (OpenPayU_Configuration::getOauthGrantType() === OauthGrantType::TRUSTED_MERCHANT) {
-            $data['email'] = OpenPayU_Configuration::getOauthEmail();
-            $data['ext_customer_id'] = OpenPayU_Configuration::getOauthExtCustomerId();
+        if (Configuration::getOauthGrantType() === OauthGrantType::TRUSTED_MERCHANT) {
+            $data['email'] = Configuration::getOauthEmail();
+            $data['ext_customer_id'] = Configuration::getOauthExtCustomerId();
         }
 
-        return self::parseResponse(OpenPayU_Http::doPost($oauthUrl, http_build_query($data, '', '&'), $authType));
+        return self::parseResponse(Http::doPost($oauthUrl, http_build_query($data, '', '&'), $authType));
     }
 
     /**
@@ -68,11 +83,11 @@ class OpenPayU_Oauth
      *
      * @param array $response
      * @return OauthResultClientCredentials
-     * @throws OpenPayU_Exception
-     * @throws OpenPayU_Exception_Authorization
-     * @throws OpenPayU_Exception_Network
-     * @throws OpenPayU_Exception_ServerError
-     * @throws OpenPayU_Exception_ServerMaintenance
+     * @throws OpenPayUException
+     * @throws OpenPayUExceptionAuthorization
+     * @throws OpenPayUExceptionNetwork
+     * @throws OpenPayUExceptionServerError
+     * @throws OpenPayUExceptionServerMaintenance
      */
     private static function parseResponse($response)
     {
@@ -81,13 +96,13 @@ class OpenPayU_Oauth
         if ($httpStatus == 500) {
             $result = new ResultError();
             $result->setErrorDescription($response['response']);
-            OpenPayU_Http::throwErrorHttpStatusException($httpStatus, $result);
+            Http::throwErrorHttpStatusException($httpStatus, $result);
         }
 
-        $message = OpenPayU_Util::convertJsonToArray($response['response'], true);
+        $message = Util::convertJsonToArray($response['response'], true);
 
         if (json_last_error() == JSON_ERROR_SYNTAX) {
-            throw new OpenPayU_Exception_ServerError('Incorrect json response. Response: [' . $response['response'] . ']');
+            throw new OpenPayUExceptionServerError('Incorrect json response. Response: [' . $response['response'] . ']');
         }
 
         if ($httpStatus == 200) {
@@ -105,17 +120,17 @@ class OpenPayU_Oauth
         $result->setError($message['error'])
             ->setErrorDescription($message['error_description']);
 
-        OpenPayU_Http::throwErrorHttpStatusException($httpStatus, $result);
+        Http::throwErrorHttpStatusException($httpStatus, $result);
 
     }
 
     private static function getOauthTokenCache()
     {
-        $oauthTokenCache = OpenPayU_Configuration::getOauthTokenCache();
+        $oauthTokenCache = Configuration::getOauthTokenCache();
 
         if (!$oauthTokenCache instanceof OauthCacheInterface) {
             $oauthTokenCache = new OauthCacheFile();
-            OpenPayU_Configuration::setOauthTokenCache($oauthTokenCache);
+            Configuration::setOauthTokenCache($oauthTokenCache);
         }
 
         self::$oauthTokenCache = $oauthTokenCache;

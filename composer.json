@@ -1,5 +1,5 @@
 {
-  "name": "openpayu/openpayu_php_sdk",
+  "name": "payu/openpayu",
   "type": "library",
   "license": "LGPL-3.0",
   "description": "OpenPayU PHP Library",
@@ -12,7 +12,7 @@
   "minimum-stability": "stable",
   "authors": [
     {
-      "name": "OpenPayU",
+      "name": "PayU",
       "homepage": "http://developers.payu.com"
     }
   ],
@@ -28,8 +28,8 @@
     "issues": "https://github.com/PayU/openpayu_php/issues"
   },
   "autoload": {
-    "classmap": [
-      "lib/"
-    ]
+    "psr-4": {
+      "PayU\\OpenPayU\\": "lib/OpenPayU/"
+    }
   }
 }

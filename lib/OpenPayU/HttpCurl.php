@@ -1,14 +1,19 @@
 <?php
+
+namespace PayU\OpenPayU;
+
+use PayU\OpenPayU\AuthType\AuthType;
+
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2016 PayU
+ * @copyright  Copyright (c) 2011-2017 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
  */
 
-class OpenPayU_HttpCurl
+class HttpCurl
 {
     /**
      * @var
@@ -21,13 +26,13 @@ class OpenPayU_HttpCurl
      * @param $data
      * @param AuthType $auth
      * @return array
-     * @throws OpenPayU_Exception_Configuration
-     * @throws OpenPayU_Exception_Network
+     * @throws OpenPayUExceptionConfiguration
+     * @throws OpenPayUExceptionNetwork
      */
     public static function doPayuRequest($requestType, $pathUrl, $auth, $data = null)
     {
         if (empty($pathUrl)) {
-            throw new OpenPayU_Exception_Configuration('The endpoint is empty');
+            throw new OpenPayUExceptionConfiguration('The endpoint is empty');
         }
 
         $ch = curl_init($pathUrl);
@@ -36,7 +41,7 @@ class OpenPayU_HttpCurl
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $auth->getHeaders());
-        curl_setopt($ch, CURLOPT_HEADERFUNCTION, 'OpenPayU_HttpCurl::readHeader');
+        curl_setopt($ch, CURLOPT_HEADERFUNCTION, 'HttpCurl::readHeader');
         if ($data) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         }
@@ -57,7 +62,7 @@ class OpenPayU_HttpCurl
         $httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         if($response === false) {
-            throw new OpenPayU_Exception_Network(curl_error($ch));
+            throw new OpenPayUExceptionNetwork(curl_error($ch));
         }
         curl_close($ch);
 
@@ -96,14 +101,14 @@ class OpenPayU_HttpCurl
 
     private static function getProxy()
     {
-        return OpenPayU_Configuration::getProxyHost() != null ? OpenPayU_Configuration::getProxyHost()
-            . (OpenPayU_Configuration::getProxyPort() ? ':' . OpenPayU_Configuration::getProxyPort() : '') : false;
+        return Configuration::getProxyHost() != null ? Configuration::getProxyHost()
+            . (Configuration::getProxyPort() ? ':' . Configuration::getProxyPort() : '') : false;
     }
 
     private static function getProxyAuth()
     {
-        return OpenPayU_Configuration::getProxyUser() != null ? OpenPayU_Configuration::getProxyUser()
-            . (OpenPayU_Configuration::getProxyPassword() ? ':' . OpenPayU_Configuration::getProxyPassword() : '') : false;
+        return Configuration::getProxyUser() != null ? Configuration::getProxyUser()
+            . (Configuration::getProxyPassword() ? ':' . Configuration::getProxyPassword() : '') : false;
     }
 
 }

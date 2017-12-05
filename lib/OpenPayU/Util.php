@@ -1,14 +1,19 @@
 <?php
 
+namespace PayU\OpenPayU;
+use PayU\OpenPayU\Exception\OpenPayUException;
+use PayU\OpenPayU\Exception\OpenPayUExceptionConfiguration;
+
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2016 PayU
+ * @copyright  Copyright (c) 2011-2017 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
  */
-class OpenPayU_Util
+
+class Util
 {
     /**
      * Function generate sign data
@@ -17,18 +22,17 @@ class OpenPayU_Util
      * @param string $algorithm
      * @param string $merchantPosId
      * @param string $signatureKey
-     *
      * @return string
-     *
-     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayUException
+     * @throws OpenPayUExceptionConfiguration
      */
     public static function generateSignData(array $data, $algorithm = 'SHA-256', $merchantPosId = '', $signatureKey = '')
     {
         if (empty($signatureKey))
-            throw new OpenPayU_Exception_Configuration('Merchant Signature Key should not be null or empty.');
+            throw new OpenPayUExceptionConfiguration('Merchant Signature Key should not be null or empty.');
 
         if (empty($merchantPosId))
-            throw new OpenPayU_Exception_Configuration('MerchantPosId should not be null or empty.');
+            throw new OpenPayUExceptionConfiguration('MerchantPosId should not be null or empty.');
 
         $contentForSign = '';
         ksort($data);
@@ -46,6 +50,8 @@ class OpenPayU_Util
         } else if ($algorithm == 'SHA-512') {
             $hashAlgorithm = 'sha512';
             $algorithm = 'SHA-512';
+        } else {
+            throw new OpenPayUException('Unknown "' . $algorithm . '" hash algorithm');
         }
 
         $signature = hash($hashAlgorithm, $contentForSign . $signatureKey);
@@ -93,14 +99,14 @@ class OpenPayU_Util
      * @param string $signature
      * @param string $signatureKey
      * @param string $algorithm
-     *
      * @return bool
+     * @throws OpenPayUException
      */
     public static function verifySignature($message, $signature, $signatureKey, $algorithm = 'MD5')
     {
-        $hash = '';
-
         if (isset($signature)) {
+            $hash = '';
+
             if ($algorithm == 'MD5') {
                 $hash = md5($message . $signatureKey);
             } else if (in_array($algorithm, array('SHA', 'SHA1', 'SHA-1'))) {
@@ -109,9 +115,7 @@ class OpenPayU_Util
                 $hash = hash('sha256', $message . $signatureKey);
             }
 
-            if (strcmp($signature, $hash) == 0) {
-                return true;
-            }
+            return strcmp($signature, $hash) === 0;
         }
 
         return false;
@@ -120,7 +124,7 @@ class OpenPayU_Util
     /**
      * Function builds OpenPayU Json Document
      *
-     * @param string $data
+     * @param array $data
      * @param string $rootElement
      *
      * @return null|string
@@ -156,7 +160,7 @@ class OpenPayU_Util
 
     /**
      * @param array $array
-     * @return bool|stdClass
+     * @return bool | \stdClass
      */
     public static function parseArrayToObject($array)
     {
@@ -165,7 +169,7 @@ class OpenPayU_Util
         }
 
         if (self::isAssocArray($array)) {
-            $object = new stdClass();
+            $object = new \stdClass();
         } else {
             $object = array();
         }
@@ -269,7 +273,7 @@ class OpenPayU_Util
     {
         $data['properties'][0] = array(
             'name' => 'sender',
-            'value' => OpenPayU_Configuration::getFullSenderName()
+            'value' => Configuration::getFullSenderName()
         );
         return $data;
     }
