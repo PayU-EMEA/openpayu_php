@@ -73,6 +73,7 @@ class OpenPayU_Http
      * @param $statusCode
      * @param null $message
      * @throws OpenPayU_Exception
+     * @throws OpenPayU_Exception_Request
      * @throws OpenPayU_Exception_Authorization
      * @throws OpenPayU_Exception_Network
      * @throws OpenPayU_Exception_ServerMaintenance
@@ -86,7 +87,7 @@ class OpenPayU_Http
 
         switch ($statusCode) {
             case 400:
-                throw new OpenPayU_Exception($message->getStatus().' - '.$statusDesc, $statusCode);
+                throw new OpenPayU_Exception_Request($message, $message->getStatus().' - '.$statusDesc, $statusCode);
                 break;
 
             case 401:
