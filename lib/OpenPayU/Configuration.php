@@ -94,7 +94,7 @@ class OpenPayU_Configuration
      */
     public static function getApiVersion()
     {
-        return self::API_VERSION;
+        return static::API_VERSION;
     }
 
     /**
@@ -103,11 +103,11 @@ class OpenPayU_Configuration
      */
     public static function setHashAlgorithm($value)
     {
-        if (!in_array($value, self::$_availableHashAlgorithm)) {
+        if (!in_array($value, static::$_availableHashAlgorithm)) {
             throw new OpenPayU_Exception_Configuration('Hash algorithm "' . $value . '"" is not available');
         }
 
-        self::$hashAlgorithm = $value;
+        static::$hashAlgorithm = $value;
     }
 
     /**
@@ -115,7 +115,7 @@ class OpenPayU_Configuration
      */
     public static function getHashAlgorithm()
     {
-        return self::$hashAlgorithm;
+        return static::$hashAlgorithm;
     }
 
     /**
@@ -130,21 +130,21 @@ class OpenPayU_Configuration
         $environment = strtolower($environment);
         $domain = strtolower($domain) . '/';
 
-        if (!in_array($environment, self::$_availableEnvironment)) {
+        if (!in_array($environment, static::$_availableEnvironment)) {
             throw new OpenPayU_Exception_Configuration($environment . ' - is not valid environment');
         }
 
-        self::$env = $environment;
+        static::$env = $environment;
 
         if ($environment == 'secure') {
-            self::$serviceUrl = 'https://' . $environment . '.' . $domain . $api . $version;
-            self::$oauthEndpoint = 'https://' . $environment . '.' . $domain . self::OAUTH_CONTEXT;
+            static::$serviceUrl = 'https://' . $environment . '.' . $domain . $api . $version;
+            static::$oauthEndpoint = 'https://' . $environment . '.' . $domain . static::OAUTH_CONTEXT;
         } else if ($environment == 'sandbox') {
-            self::$serviceUrl = 'https://secure.snd.' . $domain . $api . $version;
-            self::$oauthEndpoint = 'https://secure.snd.' . $domain . self::OAUTH_CONTEXT;
+            static::$serviceUrl = 'https://secure.snd.' . $domain . $api . $version;
+            static::$oauthEndpoint = 'https://secure.snd.' . $domain . static::OAUTH_CONTEXT;
         } else if ($environment == 'custom') {
-            self::$serviceUrl = $domain . $api . $version;
-            self::$oauthEndpoint = $domain . self::OAUTH_CONTEXT;
+            static::$serviceUrl = $domain . $api . $version;
+            static::$oauthEndpoint = $domain . static::OAUTH_CONTEXT;
         }
     }
 
@@ -153,7 +153,7 @@ class OpenPayU_Configuration
      */
     public static function getServiceUrl()
     {
-        return self::$serviceUrl;
+        return static::$serviceUrl;
     }
 
     /**
@@ -161,7 +161,7 @@ class OpenPayU_Configuration
      */
     public static function getOauthEndpoint()
     {
-        return self::$oauthEndpoint;
+        return static::$oauthEndpoint;
     }
 
     /**
@@ -169,7 +169,7 @@ class OpenPayU_Configuration
      */
     public static function getEnvironment()
     {
-        return self::$env;
+        return static::$env;
     }
 
     /**
@@ -177,7 +177,7 @@ class OpenPayU_Configuration
      */
     public static function setMerchantPosId($value)
     {
-        self::$merchantPosId = trim($value);
+        static::$merchantPosId = trim($value);
     }
 
     /**
@@ -185,7 +185,7 @@ class OpenPayU_Configuration
      */
     public static function getMerchantPosId()
     {
-        return self::$merchantPosId;
+        return static::$merchantPosId;
     }
 
     /**
@@ -193,7 +193,7 @@ class OpenPayU_Configuration
      */
     public static function setSignatureKey($value)
     {
-        self::$signatureKey = trim($value);
+        static::$signatureKey = trim($value);
     }
 
     /**
@@ -201,7 +201,7 @@ class OpenPayU_Configuration
      */
     public static function getSignatureKey()
     {
-        return self::$signatureKey;
+        return static::$signatureKey;
     }
 
     /**
@@ -209,7 +209,7 @@ class OpenPayU_Configuration
      */
     public static function getOauthGrantType()
     {
-        return self::$oauthGrantType;
+        return static::$oauthGrantType;
     }
 
     /**
@@ -222,7 +222,7 @@ class OpenPayU_Configuration
             throw new OpenPayU_Exception_Configuration('Oauth grand type "' . $oauthGrantType . '"" is not available');
         }
 
-        self::$oauthGrantType = $oauthGrantType;
+        static::$oauthGrantType = $oauthGrantType;
     }
 
     /**
@@ -230,7 +230,7 @@ class OpenPayU_Configuration
      */
     public static function getOauthClientId()
     {
-        return self::$oauthClientId;
+        return static::$oauthClientId;
     }
 
     /**
@@ -238,7 +238,7 @@ class OpenPayU_Configuration
      */
     public static function getOauthClientSecret()
     {
-        return self::$oauthClientSecret;
+        return static::$oauthClientSecret;
     }
 
     /**
@@ -246,7 +246,7 @@ class OpenPayU_Configuration
      */
     public static function setOauthClientId($oauthClientId)
     {
-        self::$oauthClientId = trim($oauthClientId);
+        static::$oauthClientId = trim($oauthClientId);
     }
 
     /**
@@ -254,7 +254,7 @@ class OpenPayU_Configuration
      */
     public static function setOauthClientSecret($oauthClientSecret)
     {
-        self::$oauthClientSecret = trim($oauthClientSecret);
+        static::$oauthClientSecret = trim($oauthClientSecret);
     }
 
     /**
@@ -262,7 +262,7 @@ class OpenPayU_Configuration
      */
     public static function getOauthEmail()
     {
-        return self::$oauthEmail;
+        return static::$oauthEmail;
     }
 
     /**
@@ -270,7 +270,7 @@ class OpenPayU_Configuration
      */
     public static function setOauthEmail($oauthEmail)
     {
-        self::$oauthEmail = $oauthEmail;
+        static::$oauthEmail = $oauthEmail;
     }
 
     /**
@@ -278,7 +278,7 @@ class OpenPayU_Configuration
      */
     public static function getOauthExtCustomerId()
     {
-        return self::$oauthExtCustomerId;
+        return static::$oauthExtCustomerId;
     }
 
     /**
@@ -286,7 +286,7 @@ class OpenPayU_Configuration
      */
     public static function setOauthExtCustomerId($oauthExtCustomerId)
     {
-        self::$oauthExtCustomerId = $oauthExtCustomerId;
+        static::$oauthExtCustomerId = $oauthExtCustomerId;
     }
 
     /**
@@ -294,7 +294,7 @@ class OpenPayU_Configuration
      */
     public static function getOauthTokenCache()
     {
-        return self::$oauthTokenCache;
+        return static::$oauthTokenCache;
     }
 
     /**
@@ -306,7 +306,7 @@ class OpenPayU_Configuration
         if (!$oauthTokenCache instanceof OauthCacheInterface) {
             throw new OpenPayU_Exception_Configuration('Oauth token cache class is not instance of OauthCacheInterface');
         }
-        self::$oauthTokenCache = $oauthTokenCache;
+        static::$oauthTokenCache = $oauthTokenCache;
     }
 
     /**
@@ -314,7 +314,7 @@ class OpenPayU_Configuration
      */
     public static function getProxyHost()
     {
-        return self::$proxyHost;
+        return static::$proxyHost;
     }
 
     /**
@@ -322,7 +322,7 @@ class OpenPayU_Configuration
      */
     public static function setProxyHost($proxyHost)
     {
-        self::$proxyHost = $proxyHost;
+        static::$proxyHost = $proxyHost;
     }
 
     /**
@@ -330,7 +330,7 @@ class OpenPayU_Configuration
      */
     public static function getProxyPort()
     {
-        return self::$proxyPort;
+        return static::$proxyPort;
     }
 
     /**
@@ -338,7 +338,7 @@ class OpenPayU_Configuration
      */
     public static function setProxyPort($proxyPort)
     {
-        self::$proxyPort = $proxyPort;
+        static::$proxyPort = $proxyPort;
     }
 
     /**
@@ -346,7 +346,7 @@ class OpenPayU_Configuration
      */
     public static function getProxyUser()
     {
-        return self::$proxyUser;
+        return static::$proxyUser;
     }
 
     /**
@@ -354,7 +354,7 @@ class OpenPayU_Configuration
      */
     public static function setProxyUser($proxyUser)
     {
-        self::$proxyUser = $proxyUser;
+        static::$proxyUser = $proxyUser;
     }
 
     /**
@@ -362,7 +362,7 @@ class OpenPayU_Configuration
      */
     public static function getProxyPassword()
     {
-        return self::$proxyPassword;
+        return static::$proxyPassword;
     }
 
     /**
@@ -370,7 +370,7 @@ class OpenPayU_Configuration
      */
     public static function setProxyPassword($proxyPassword)
     {
-        self::$proxyPassword = $proxyPassword;
+        static::$proxyPassword = $proxyPassword;
     }
 
     /**
@@ -378,7 +378,7 @@ class OpenPayU_Configuration
      */
     public static function setSender($sender)
     {
-        self::$sender = $sender;
+        static::$sender = $sender;
     }
 
     /**
@@ -386,7 +386,7 @@ class OpenPayU_Configuration
      */
     public static function getSender()
     {
-        return self::$sender;
+        return static::$sender;
     }
 
     /**
@@ -394,7 +394,7 @@ class OpenPayU_Configuration
      */
     public static function getFullSenderName()
     {
-        return sprintf("%s@%s", self::getSender(), self::getSdkVersion());
+        return sprintf("%s@%s", static::getSender(), static::getSdkVersion());
     }
 
     /**
@@ -402,7 +402,7 @@ class OpenPayU_Configuration
      */
     public static function getSdkVersion()
     {
-        $composerFilePath = self::getComposerFilePath();
+        $composerFilePath = static::getComposerFilePath();
         if (file_exists($composerFilePath)) {
             $fileContent = file_get_contents($composerFilePath);
             $composerData = json_decode($fileContent);
@@ -411,7 +411,7 @@ class OpenPayU_Configuration
             }
         }
 
-        return self::DEFAULT_SDK_VERSION;
+        return static::DEFAULT_SDK_VERSION;
     }
 
     /**
@@ -419,6 +419,6 @@ class OpenPayU_Configuration
      */
     private static function getComposerFilePath()
     {
-        return realpath(dirname(__FILE__)) . '/../../' . self::COMPOSER_JSON;
+        return realpath(dirname(__FILE__)) . '/../../' . static::COMPOSER_JSON;
     }
 }

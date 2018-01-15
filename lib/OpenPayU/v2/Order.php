@@ -46,14 +46,14 @@ class OpenPayU_Order extends OpenPayU
         }
 
         try {
-            $authType = self::getAuth();
+            $authType = static::getAuth();
         } catch (OpenPayU_Exception $e) {
             throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE;
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . static::ORDER_SERVICE;
 
-        $result = self::verifyResponse(OpenPayU_Http::doPost($pathUrl, $data, $authType), 'OrderCreateResponse');
+        $result = static::verifyResponse(OpenPayU_Http::doPost($pathUrl, $data, $authType), 'OrderCreateResponse');
 
         return $result;
     }
@@ -73,14 +73,14 @@ class OpenPayU_Order extends OpenPayU
         }
 
         try {
-            $authType = self::getAuth();
+            $authType = static::getAuth();
         } catch (OpenPayU_Exception $e) {
             throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId;
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . static::ORDER_SERVICE . $orderId;
 
-        $result = self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'OrderRetrieveResponse');
+        $result = static::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'OrderRetrieveResponse');
 
         return $result;
     }
@@ -100,14 +100,14 @@ class OpenPayU_Order extends OpenPayU
         }
 
         try {
-            $authType = self::getAuth();
+            $authType = static::getAuth();
         } catch (OpenPayU_Exception $e) {
             throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId;
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . static::ORDER_SERVICE . $orderId;
 
-        $result = self::verifyResponse(OpenPayU_Http::doDelete($pathUrl, $authType), 'OrderCancelResponse');
+        $result = static::verifyResponse(OpenPayU_Http::doDelete($pathUrl, $authType), 'OrderCancelResponse');
         return $result;
     }
 
@@ -126,15 +126,15 @@ class OpenPayU_Order extends OpenPayU
         }
 
         try {
-            $authType = self::getAuth();
+            $authType = static::getAuth();
         } catch (OpenPayU_Exception $e) {
             throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
         }
 
         $data = OpenPayU_Util::buildJsonFromArray($orderStatusUpdate);
-        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderStatusUpdate['orderId'] . '/status';
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . static::ORDER_SERVICE . $orderStatusUpdate['orderId'] . '/status';
 
-        $result = self::verifyResponse(OpenPayU_Http::doPut($pathUrl, $data, $authType), 'OrderStatusUpdateResponse');
+        $result = static::verifyResponse(OpenPayU_Http::doPut($pathUrl, $data, $authType), 'OrderStatusUpdateResponse');
 
         return $result;
     }
@@ -156,7 +156,7 @@ class OpenPayU_Order extends OpenPayU
         $headers = OpenPayU_Util::getRequestHeaders();
         $incomingSignature = OpenPayU_HttpCurl::getSignature($headers);
 
-        self::verifyDocumentSignature($data, $incomingSignature);
+        static::verifyDocumentSignature($data, $incomingSignature);
 
         return OpenPayU_Order::verifyResponse(array('response' => $data, 'code' => 200), 'OrderNotifyRequest');
     }
@@ -187,7 +187,7 @@ class OpenPayU_Order extends OpenPayU
             unset($message['status']);
         }
 
-        $result = self::build($data);
+        $result = static::build($data);
 
         if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 301 || $httpStatus == 302)
         {
@@ -219,7 +219,7 @@ class OpenPayU_Order extends OpenPayU
             OpenPayU_Configuration::getSignatureKey()
         );
 
-        $formParams = array_merge(self::$defaultFormParams, $params);
+        $formParams = array_merge(static::$defaultFormParams, $params);
 
         $htmlOutput = sprintf("<form method=\"POST\" action=\"%s\" id=\"%s\" class=\"%s\">\n", $orderFormUrl, $formParams['formId'], $formParams['formClass']);
         $htmlOutput .= $htmlFormFields;

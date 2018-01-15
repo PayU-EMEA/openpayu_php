@@ -24,7 +24,7 @@ class OpenPayU_Retrieve extends OpenPayU
     {
 
         try {
-            $authType = self::getAuth();
+            $authType = static::getAuth();
         } catch (OpenPayU_Exception $e) {
             throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
         }
@@ -33,12 +33,12 @@ class OpenPayU_Retrieve extends OpenPayU
             throw new OpenPayU_Exception_Configuration('Retrieve works only with OAuth');
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::PAYMETHODS_SERVICE;
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . static::PAYMETHODS_SERVICE;
         if ($lang !== null) {
             $pathUrl .= '?lang=' . $lang;
         }
 
-        $response = self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType));
+        $response = static::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType));
 
         return $response;
     }
@@ -63,7 +63,7 @@ class OpenPayU_Retrieve extends OpenPayU
             unset($message['status']);
         }
 
-        $result = self::build($data);
+        $result = static::build($data);
 
         if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302 || $httpStatus == 400 || $httpStatus == 404) {
             return $result;

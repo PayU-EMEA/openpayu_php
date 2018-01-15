@@ -18,22 +18,22 @@ class OpenPayU_Oauth
     public static function getAccessToken($clientId = null, $clientSecret = null)
     {
         if (OpenPayU_Configuration::getOauthGrantType() === OauthGrantType::TRUSTED_MERCHANT) {
-            return self::retrieveAccessToken($clientId, $clientSecret);
+            return static::retrieveAccessToken($clientId, $clientSecret);
         }
 
-        $cacheKey = self::CACHE_KEY . OpenPayU_Configuration::getOauthClientId();
+        $cacheKey = static::CACHE_KEY . OpenPayU_Configuration::getOauthClientId();
 
-        self::getOauthTokenCache();
+        static::getOauthTokenCache();
 
-        $tokenCache = self::$oauthTokenCache->get($cacheKey);
+        $tokenCache = static::$oauthTokenCache->get($cacheKey);
 
         if ($tokenCache instanceof OauthResultClientCredentials && !$tokenCache->hasExpire()) {
             return $tokenCache;
         }
 
-        self::$oauthTokenCache->invalidate($cacheKey);
-        $response =  self::retrieveAccessToken($clientId, $clientSecret);
-        self::$oauthTokenCache->set($cacheKey, $response);
+        static::$oauthTokenCache->invalidate($cacheKey);
+        $response =  static::retrieveAccessToken($clientId, $clientSecret);
+        static::$oauthTokenCache->set($cacheKey, $response);
 
         return $response;
     }
@@ -60,7 +60,7 @@ class OpenPayU_Oauth
             $data['ext_customer_id'] = OpenPayU_Configuration::getOauthExtCustomerId();
         }
 
-        return self::parseResponse(OpenPayU_Http::doPost($oauthUrl, http_build_query($data, '', '&'), $authType));
+        return static::parseResponse(OpenPayU_Http::doPost($oauthUrl, http_build_query($data, '', '&'), $authType));
     }
 
     /**
@@ -118,6 +118,6 @@ class OpenPayU_Oauth
             OpenPayU_Configuration::setOauthTokenCache($oauthTokenCache);
         }
 
-        self::$oauthTokenCache = $oauthTokenCache;
+        static::$oauthTokenCache = $oauthTokenCache;
     }
 }
