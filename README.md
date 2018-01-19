@@ -7,7 +7,7 @@ PHP >= 5.3 with extensions [cURL][ext1] i [hash][ext2]
 
 ## Documentation
 
-Full implementation guide [[English]([ext3])][[Polish]([ext4])].
+Full implementation guide: [English][ext3], [Polish][ext4].
 
 To process operations such as:
  - [order status update](examples/v2/order/OrderStatusUpdate.php)
