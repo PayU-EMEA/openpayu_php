@@ -1,3 +1,7 @@
+## 2.2.9
+* Add a new exception type which holds the original server response (Răzvan Tache)
+* Add method to retrieve order transaction (Mariusz Kalota)
+
 ## 2.2.8
 * Set args separator
 
