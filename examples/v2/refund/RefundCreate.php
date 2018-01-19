@@ -25,7 +25,6 @@ if (isset($_POST['orderId']))
     <link rel="stylesheet" href="../../layout/css/style.css">
     <script type="text/javascript" src="../../layout/js/jquery.min.js"></script>
 </head>
-</head>
 <body>
 <script type="text/javascript">
     $(document).ready(function(){

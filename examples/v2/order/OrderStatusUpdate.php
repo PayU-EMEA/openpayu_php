@@ -22,7 +22,6 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
     <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../layout/css/style.css">
 </head>
-</head>
 <body>
 <div class="container">
     <div class="page-header">

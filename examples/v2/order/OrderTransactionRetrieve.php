@@ -3,7 +3,7 @@
 /**
  * OpenPayU Examples
  *
- * @copyright  Copyright (c) 2011-2016 PayU
+ * @copyright  Copyright (c) 2011-2018 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
@@ -24,34 +24,16 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
 <body>
 <div class="container">
     <div class="page-header">
-        <h1>Retrieve order's data - OpenPayU v2</h1>
+        <h1>Retrieve transaction's data - OpenPayU v2</h1>
     </div>
     <div id="message"></div>
     <div id="unregisteredCardData">
         <?php
         if (isset($_POST['orderId'])) {
             try {
-                $response = OpenPayU_Order::retrieve(stripslashes($_POST['orderId']));
+                $response = OpenPayU_Order::retrieveTransaction(stripslashes($_POST['orderId']));
 
-                $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
-                if($response->getStatus() == 'SUCCESS'){
-                    echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
-                    echo '</div>';
-                    $order = $response->getResponse()->orders[0];
-                    echo '<table class="table table-hover table-bordered">';
-                    echo '<thead>';
-                    echo '<tr><th colspan="2">Important data from response</th></tr>';
-                    echo '</thead>';
-                    echo '<tbody>';
-                    echo '<tr><td>Order status</td><td>'.$order->status.'</td></tr>';
-                    echo '<tr><td>Order id</td><td>'.$order->orderId.'</td></tr>';
-                    echo '<tr><td>Redirect Uri</td><td><a href="'.$order->notifyUrl.'">'.$order->notifyUrl.'</a></td></tr>';
-                    echo '</tbody>';
-                    echo '</table>';
-                }else{
-                    echo '<div class="alert alert-warning">'.$response->getStatus().': '.$status_desc;
-                    echo '</div>';
-                }
+                echo '<div class="alert alert-success">SUCCESS</div>';
 
                 echo '<pre>';
                 echo '<br>';
@@ -79,7 +61,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 <label class="control-label" for="pay-button"></label>
 
                 <div class="controls">
-                    <button class="btn btn-success" id="pay-button" type="submit">Retrieve order's data</button>
+                    <button class="btn btn-success" id="pay-button" type="submit">Retrieve transaction's data</button>
                 </div>
             </div>
         </form>

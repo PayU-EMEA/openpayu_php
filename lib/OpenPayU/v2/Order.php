@@ -3,7 +3,7 @@
 /**
  * OpenPayU Standard Library
  *
- * @copyright  Copyright (c) 2011-2016 PayU
+ * @copyright  Copyright (c) 2011-2018 PayU
  * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
  * http://www.payu.com
  * http://developers.payu.com
@@ -195,6 +195,11 @@ class OpenPayU_Order extends OpenPayU
      * @param string $response
      * @param string $messageName
      * @return null|OpenPayU_Result
+     * @throws OpenPayU_Exception
+     * @throws OpenPayU_Exception_Authorization
+     * @throws OpenPayU_Exception_Network
+     * @throws OpenPayU_Exception_ServerError
+     * @throws OpenPayU_Exception_ServerMaintenance
      */
     public static function verifyResponse($response, $messageName)
     {
@@ -217,12 +222,11 @@ class OpenPayU_Order extends OpenPayU
 
         $result = self::build($data);
 
-        if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 301 || $httpStatus == 302)
-        {
+        if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 301 || $httpStatus == 302) {
             return $result;
-        } else {
-            OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
         }
+
+        OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
     }
 
     /**
@@ -232,6 +236,7 @@ class OpenPayU_Order extends OpenPayU
      * @param array $order an array containing full Order
      * @param array $params an optional array with form elements' params
      * @return string Response html form
+     * @throws OpenPayU_Exception_Configuration
      */
     public static function hostedOrderForm($order, $params = array())
     {

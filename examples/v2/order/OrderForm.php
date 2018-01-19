@@ -57,7 +57,6 @@ $rsp = OpenPayU_Order::hostedOrderForm($order);
         }
     </style>
 </head>
-</head>
 
 <body>
 <div class="container">
