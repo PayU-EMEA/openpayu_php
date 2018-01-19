@@ -1,5 +1,3 @@
-[![Code Climate](https://codeclimate.com/repos/524eb044f3ea00329815dff1/badges/885c2d52f25c02295344/gpa.png)](https://codeclimate.com/repos/524eb044f3ea00329815dff1/feed)
-
 # Official OpenPayU PHP Library 2.2
 
 The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2.1
@@ -16,7 +14,7 @@ To process operations such as:
  - [order retrieve](examples/v2/order/OrderRetrieve.php)
  - [order cancel](examples/v2/order/OrderCancel.php)
 
-You will need to provide a parameter called <b>orderId</b>. The value of orderId is your order identifier that is set by PayU
+You will need to provide a parameter called **orderId**. The value of orderId is your order identifier that is set by PayU
 Payment system, and it's used to invoke remote methods.
 
 There are two ways to get orderId:
@@ -66,6 +64,13 @@ Or simply add this lines anywhere in your application:
 ```
 
 ## Configure
+**Important:** SDK works only with 'REST API' (Checkout) points of sales (POS).
+If you do not already have PayU merchant account, [**please register in Production**][ext5] or [**please register in Sandbox**][ext6]
+
+Example "Configuration keys" from Merchant Panel
+
+![pos_configuration][img0]
+
 To configure OpenPayU environment you must provide a set of mandatory data in config.php file.
 
 For production environment:
@@ -316,3 +321,8 @@ Remember: All keys in "order array" must be in lowercase.
 [ext2]: http://php.net/manual/en/book.hash.php
 [ext3]: http://developers.payu.com/en/
 [ext4]: http://developers.payu.com/pl/
+[ext5]: https://secure.payu.com/boarding/#/form&pk_campaign=Plugin-Github&pk_kwd=SDK
+[ext6]: https://secure.snd.payu.com/boarding/#/form&pk_campaign=Plugin-Github&pk_kwd=SDK
+
+<!--images:-->
+[img0]: readme_images/pos_configuration.png
