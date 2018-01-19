@@ -13,6 +13,25 @@ class OpenPayU_Exception extends \Exception
 
 }
 
+class OpenPayU_Exception_Request extends OpenPayU_Exception
+{
+    /** @var stdClass|null */
+    private $originalResponseMessage;
+
+    public function __construct($originalResponseMessage, $message = "", $code = 0, $previous = null)
+    {
+        $this->originalResponseMessage = $originalResponseMessage;
+
+        parent::__construct($message, $code, $previous);
+    }
+
+    /** @return null|stdClass */
+    public function getOriginalResponse()
+    {
+        return $this->originalResponseMessage;
+    }
+}
+
 class OpenPayU_Exception_Configuration extends OpenPayU_Exception
 {
 
