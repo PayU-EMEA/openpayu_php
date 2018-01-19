@@ -219,6 +219,15 @@ Remember: All keys in "order array" must be in lowercase.
 ```php
     $response = OpenPayU_Order::retrieve('Z963D5JQR2230925GUEST000P01'); //as parameter use orderId
 ```
+### Retrieving transactions for order from OpenPayU
+
+   File with working example: [examples/v2/order/OrderTransactionRetrieve.php](examples/v2/order/OrderTransactionRetrieve.php)
+
+   You can retrieve transactions for order by its PayU order_id
+
+```php
+    $response = OpenPayU_Order::retrieveTransaction('Z963D5JQR2230925GUEST000P01'); //as parameter use orderId
+```
 
 ### Cancelling order
 
