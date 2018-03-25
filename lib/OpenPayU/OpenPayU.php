@@ -33,6 +33,10 @@ class OpenPayU
     {
         $sign = OpenPayU_Util::parseSignature($incomingSignature);
 
+        if ($sign === null) {
+            throw new OpenPayU_Exception_Authorization('Signature not found');
+        }
+
         if (false === OpenPayU_Util::verifySignature(
                 $data,
                 $sign->signature,
