@@ -3,7 +3,7 @@
 The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2.1
 
 ## Dependencies
-PHP >= 5.3 with extensions [cURL][ext1] i [hash][ext2]
+PHP >= 5.3 with extensions [cURL][ext1] and [hash][ext2]
 
 ## Documentation
 
