@@ -1,3 +1,6 @@
+## 2.2.10
+* SHA256 as default algorithm
+
 ## 2.2.9
 * Add a new exception type which holds the original server response (Răzvan Tache)
 * Add method to retrieve order transaction (Mariusz Kalota)
