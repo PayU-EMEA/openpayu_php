@@ -98,14 +98,12 @@ class OpenPayU_Util
      */
     public static function verifySignature($message, $signature, $signatureKey, $algorithm = 'MD5')
     {
-        $hash = '';
-
         if (isset($signature)) {
-            if ($algorithm == 'MD5') {
+            if ($algorithm === 'MD5') {
                 $hash = md5($message . $signatureKey);
             } else if (in_array($algorithm, array('SHA', 'SHA1', 'SHA-1'))) {
                 $hash = sha1($message . $signatureKey);
-            } else if (in_array($algorithm, array('SHA-256', 'SHA256', 'SHA_256'))) {
+            } else {
                 $hash = hash('sha256', $message . $signatureKey);
             }
 
