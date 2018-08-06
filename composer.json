@@ -1,5 +1,5 @@
 {
-  "name": "openpayu/openpayu_php_sdk",
+  "name": "openpayu/openpayu",
   "type": "library",
   "license": "LGPL-3.0",
   "description": "OpenPayU PHP Library",
