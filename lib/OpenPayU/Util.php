@@ -105,6 +105,8 @@ class OpenPayU_Util
                 $hash = sha1($message . $signatureKey);
             } else {
                 $hash = hash('sha256', $message . $signatureKey);
+            } else {
+                return false;
             }
 
             if (strcmp($signature, $hash) == 0) {
