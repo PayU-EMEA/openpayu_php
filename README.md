@@ -280,9 +280,13 @@ Remember: All keys in "order array" must be in lowercase.
 
 ```php
     $refund = OpenPayU_Refund::create(
-        'Z963D5JQR2230925GUEST000P01', //as a value use ORDER_ID
-        'Money refund', //Description - required
-        '100' //Amount - If not provided, returns whole transaction, optional
+        [
+            'orderId' => 'Z963D5JQR2230925GUEST000P01', //as a value use ORDER_ID
+            'description' => 'Money refund', //Description - required
+            'amount' => '100', //Amount - If not provided, returns whole transaction, optional
+            'extCustomerId' => 'ext-customer-id', // External submerchant ID, required only for marketplace
+            'extRefundId' => 'ext-refund-id' // External refund ID, required only for marketplace
+        ]
     );
 ```
 

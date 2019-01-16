@@ -13,28 +13,34 @@ class OpenPayU_Refund extends OpenPayU
 {
     /**
      * Function make refund for order
-     * @param $orderId
-     * @param $description
-     * @param int $amount Amount of refund in pennies
+     * @param $refund
      * @return null|OpenPayU_Result
      * @throws OpenPayU_Exception
      */
-    public static function create($orderId, $description, $amount = null)
+    public static function create($refund)
     {
-        if (empty($orderId)) {
+        if (!isset($refund['orderId'])) {
             throw new OpenPayU_Exception('Invalid orderId value for refund');
         }
 
-        if (empty($description)) {
+        if (!isset($refund['description'])) {
             throw new OpenPayU_Exception('Invalid description of refund');
         }
-        $refund = array(
-            'orderId' => $orderId,
-            'refund' => array('description' => $description)
+        $data = array(
+            'orderId' => $refund['orderId'],
+            'refund' => array('description' => $refund['description'])
         );
 
-        if (!empty($amount)) {
-            $refund['refund']['amount'] = (int)$amount;
+        if (isset($refund['amount'])) {
+            $data['refund']['amount'] = (int)$refund['amount'];
+        }
+
+        if (isset($refund['extCustomerId'])) {
+            $data['refund']['extCustomerId'] = $refund['extCustomerId'];
+        }
+
+        if (isset($refund['extRefundId'])) {
+            $data['refund']['extRefundId'] = $refund['extRefundId'];
         }
 
         try {
@@ -43,9 +49,9 @@ class OpenPayU_Refund extends OpenPayU
             throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl().'orders/'. $refund['orderId'] . '/refund';
+        $pathUrl = OpenPayU_Configuration::getServiceUrl().'orders/'. $data['orderId'] . '/refund';
 
-        $data = OpenPayU_Util::buildJsonFromArray($refund);
+        $data = OpenPayU_Util::buildJsonFromArray($data);
 
         $result = self::verifyResponse(OpenPayU_Http::doPost($pathUrl, $data, $authType), 'RefundCreateResponse');
 

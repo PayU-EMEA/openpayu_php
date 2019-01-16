@@ -50,9 +50,11 @@ if (isset($_POST['orderId']))
             $orderId = trim($_POST['orderId']);
             try {
                 $refund = OpenPayU_Refund::create(
-                    $orderId,
-                    $_POST['description'],
-                    isset($_POST['amount']) ? (int)$_POST['amount'] : null
+                    [
+                        'orderId' => $orderId,
+                        'description' => $_POST['description'],
+                        'amount' => isset($_POST['amount']) ? (int)$_POST['amount'] : null
+                    ]
                 );
 
                 $status_desc = OpenPayU_Util::statusDesc($refund->getStatus());
