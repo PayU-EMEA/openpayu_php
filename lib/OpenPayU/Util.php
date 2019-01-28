@@ -83,7 +83,7 @@ class OpenPayU_Util
             $signatureData[$explode[0]] = $explode[1];
         }
 
-        return (object)$signatureData;
+        return $signatureData;
     }
 
     /**

@@ -34,6 +34,31 @@ class OpenPayUTest extends PHPUnit_Framework_TestCase
 
     }
 
+    public function badSignatureDataProvider()
+    {
+        return array(
+            array(null),
+            array(''),
+            array('sender=145227;algorithm=SHA-256'),
+            array('sender=145227;signature=846b2de129d2200443bd72abe691ce174fcec064f89dc529d6a5d98a046cbb4d')
+        );
+    }
+
+    /**
+     * @test
+     * @dataProvider badSignatureDataProvider
+     * @expectedException OpenPayU_Exception_Authorization
+     * @expectedExceptionMessage Signature not found
+     * @param string $signature
+     * @throws OpenPayU_Exception_Authorization
+     */
+    public function shouldEmptySignature($signature)
+    {
+        //when
+        OpenPayU::verifyDocumentSignature('ANY DATA', $signature);
+
+    }
+
     /**
      * @test
      */
