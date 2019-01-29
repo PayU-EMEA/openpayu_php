@@ -13,34 +13,38 @@ class OpenPayU_Refund extends OpenPayU
 {
     /**
      * Function make refund for order
-     * @param $refund
+     * @param $orderId
+     * @param $description
+     * @param null|int $amount Amount of refund in pennies
+     * @param null|string $extCustomerId Marketplace external customer ID
+     * @param null|string $extRefundId Marketplace external refund ID
      * @return null|OpenPayU_Result
      * @throws OpenPayU_Exception
      */
-    public static function create($refund)
+    public static function create($orderId, $description, $amount = null, $extCustomerId = null, $extRefundId = null)
     {
-        if (!isset($refund['orderId'])) {
+        if (empty($orderId)) {
             throw new OpenPayU_Exception('Invalid orderId value for refund');
         }
 
-        if (!isset($refund['description'])) {
+        if (empty($description)) {
             throw new OpenPayU_Exception('Invalid description of refund');
         }
-        $data = array(
-            'orderId' => $refund['orderId'],
-            'refund' => array('description' => $refund['description'])
+        $refund = array(
+            'orderId' => $orderId,
+            'refund' => array('description' => $description)
         );
 
-        if (isset($refund['amount'])) {
-            $data['refund']['amount'] = (int)$refund['amount'];
+        if (!empty($amount)) {
+            $refund['refund']['amount'] = (int) $amount;
         }
 
-        if (isset($refund['extCustomerId'])) {
-            $data['refund']['extCustomerId'] = $refund['extCustomerId'];
+        if (!empty($extCustomerId)) {
+            $refund['refund']['extCustomerId'] = $extCustomerId;
         }
 
-        if (isset($refund['extRefundId'])) {
-            $data['refund']['extRefundId'] = $refund['extRefundId'];
+        if (!empty($extRefundId)) {
+            $refund['refund']['extRefundId'] = $extRefundId;
         }
 
         try {
@@ -49,9 +53,9 @@ class OpenPayU_Refund extends OpenPayU
             throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl().'orders/'. $data['orderId'] . '/refund';
+        $pathUrl = OpenPayU_Configuration::getServiceUrl().'orders/'. $refund['orderId'] . '/refund';
 
-        $data = OpenPayU_Util::buildJsonFromArray($data);
+        $data = OpenPayU_Util::buildJsonFromArray($refund);
 
         $result = self::verifyResponse(OpenPayU_Http::doPost($pathUrl, $data, $authType), 'RefundCreateResponse');
 
