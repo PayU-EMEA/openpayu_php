@@ -60,7 +60,7 @@ class OpenPayU_Util
      *
      * @param string $data
      *
-     * @return null|object
+     * @return null|array
      */
     public static function parseSignature($data)
     {
@@ -227,7 +227,7 @@ class OpenPayU_Util
             if (is_array($value)) {
                 $htmlOutput .= self::convertArrayToHtmlForm($value, $key, $outputFields);
             } else {
-                $htmlOutput .= sprintf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", $key, $value);
+                $htmlOutput .= sprintf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", $key, htmlspecialchars($value));
                 $outputFields[$key] = $value;
             }
         }
