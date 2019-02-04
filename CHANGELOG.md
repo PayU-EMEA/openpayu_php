@@ -1,3 +1,8 @@
+## 2.2.11
+* Error when request don't have signature header
+* Fix generate form
+* OpenPayU_Refund::create add extCustomerId and extRefundId required for marketplace
+
 ## 2.2.10
 * SHA256 as default algorithm
 
