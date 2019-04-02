@@ -110,7 +110,7 @@ If you want to change grant type use:
 ```php
     OpenPayU_Configuration::setOauthGrantType('grant_type');
 ```
-grant_type can be one of the following `OauthGrantType::TRUSTED_MERCHANT` or `OauthGrantType::TRUSTED_MERCHANT`
+grant_type can be one of the following `OauthGrantType::CLIENT_CREDENTIAL` or `OauthGrantType::TRUSTED_MERCHANT`
 
 
 Parameters needed for `client_credentials`
