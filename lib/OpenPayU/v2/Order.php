@@ -192,7 +192,7 @@ class OpenPayU_Order extends OpenPayU
     /**
      * Verify response from PayU
      *
-     * @param string $response
+     * @param array $response
      * @param string $messageName
      * @return null|OpenPayU_Result
      * @throws OpenPayU_Exception
