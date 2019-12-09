@@ -118,7 +118,7 @@ class OpenPayU_Util
     /**
      * Function builds OpenPayU Json Document
      *
-     * @param string $data
+     * @param array $data
      * @param string $rootElement
      *
      * @return null|string
