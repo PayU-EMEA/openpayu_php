@@ -1,3 +1,6 @@
+## 2.2.12
+* Add Retrieving shop data
+
 ## 2.2.11
 * Error when request don't have signature header
 * Fix generate form
