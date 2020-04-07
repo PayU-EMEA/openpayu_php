@@ -318,6 +318,18 @@ Remember: All keys in "order array" must be in lowercase.
     );
 ```
 
+### Get Shop
+
+   File with working example: [examples/v2/shops/Get.php](examples/v2/shops/Get.php)
+
+   You can retrieve shop data.
+
+```php
+    $refund = OpenPayU_Shop::get(
+        'PUBLIC_SHOP_ID' // Shop ID from Merchant Panel
+    );
+```
+
 ## Contributing
 
 1. Fork it
