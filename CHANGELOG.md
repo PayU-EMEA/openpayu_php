@@ -1,3 +1,6 @@
+## 2.2.13
+* Fix #115
+
 ## 2.2.12
 * Add Retrieving shop data
 
