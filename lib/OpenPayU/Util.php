@@ -210,7 +210,7 @@ class OpenPayU_Util
      * @param array $outputFields
      * @return string
      */
-    public static function convertArrayToHtmlForm($array, $namespace = "", &$outputFields)
+    public static function convertArrayToHtmlForm($array, $namespace = '', &$outputFields = [])
     {
         $i = 0;
         $htmlOutput = "";
@@ -243,20 +243,6 @@ class OpenPayU_Util
         $arrKeys = array_keys($arr);
         sort($arrKeys, SORT_NUMERIC);
         return $arrKeys !== range(0, count($arr) - 1);
-    }
-
-    /**
-     * @param $namespace
-     * @param $key
-     * @return string
-     */
-    public static function changeFormFieldFormat($namespace, $key)
-    {
-
-        if ($key === $namespace && $key[strlen($key) - 1] == 's') {
-            return substr($key, 0, -1);
-        }
-        return $key;
     }
 
     /**
