@@ -1,6 +1,6 @@
 <?php
 
-class Shop
+class PayuShop
 {
     /** @var string */
     private $shopId;
@@ -11,7 +11,7 @@ class Shop
     /** @var string */
     private $currencyCode;
 
-    /** @var Balance */
+    /** @var PayuShopBalance */
     private $balance;
 
     /**
@@ -24,7 +24,7 @@ class Shop
 
     /**
      * @param string $shopId
-     * @return Shop
+     * @return PayuShop
      */
     public function setShopId($shopId)
     {
@@ -42,7 +42,7 @@ class Shop
 
     /**
      * @param string $name
-     * @return Shop
+     * @return PayuShop
      */
     public function setName($name)
     {
@@ -60,7 +60,7 @@ class Shop
 
     /**
      * @param string $currencyCode
-     * @return Shop
+     * @return PayuShop
      */
     public function setCurrencyCode($currencyCode)
     {
@@ -69,7 +69,7 @@ class Shop
     }
 
     /**
-     * @return Balance
+     * @return PayuShopBalance
      */
     public function getBalance()
     {
@@ -77,8 +77,8 @@ class Shop
     }
 
     /**
-     * @param Balance $balance
-     * @return Shop
+     * @param PayuShopBalance $balance
+     * @return PayuShop
      */
     public function setBalance($balance)
     {
@@ -91,7 +91,7 @@ class Shop
      */
     public function __toString()
     {
-        return 'Shop [currencyCode=' . $this->shopId .
+        return 'PayuShop [shopId=' . $this->shopId .
             ', name=' . $this->name .
             ', currencyCode=' . $this->currencyCode .
             ', balance=' . $this->balance .

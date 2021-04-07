@@ -41,5 +41,5 @@ include_once('OpenPayU/v2/Retrieve.php');
 include_once('OpenPayU/v2/Token.php');
 include_once('OpenPayU/v2/Shop.php');
 
-include_once('OpenPayU/Model/Shop.php');
-include_once('OpenPayU/Model/Shop/Balance.php');
+include_once('OpenPayU/Model/PayuShop.php');
+include_once('OpenPayU/Model/PayuShop/PayuShopBalance.php');

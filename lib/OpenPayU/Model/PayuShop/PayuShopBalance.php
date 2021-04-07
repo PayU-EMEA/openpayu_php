@@ -1,6 +1,6 @@
 <?php
 
-class Balance
+class PayuShopBalance
 {
     /** @var string */
     private $currencyCode;
@@ -21,7 +21,7 @@ class Balance
 
     /**
      * @param string $currencyCode
-     * @return Balance
+     * @return PayuShopBalance
      */
     public function setCurrencyCode($currencyCode)
     {
@@ -39,7 +39,7 @@ class Balance
 
     /**
      * @param int $total
-     * @return Balance
+     * @return PayuShopBalance
      */
     public function setTotal($total)
     {
@@ -57,7 +57,7 @@ class Balance
 
     /**
      * @param int $available
-     * @return Balance
+     * @return PayuShopBalance
      */
     public function setAvailable($available)
     {
@@ -70,7 +70,7 @@ class Balance
      */
     public function __toString()
     {
-        return 'Balance [currencyCode=' . $this->currencyCode .
+        return 'PayuShopBalance [currencyCode=' . $this->currencyCode .
             ', total=' . $this->total .
             ', available=' . $this->available .
             ']';
