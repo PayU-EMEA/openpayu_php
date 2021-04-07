@@ -1,6 +1,6 @@
-# Official OpenPayU PHP Library 2.2
+# Official OpenPayU PHP Library
 
-The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2.1
+**The OpenPayU PHP library provides integration access to the REST API 2.1**
 
 ## Dependencies
 PHP >= 5.3 with extensions [cURL][ext1] and [hash][ext2]
@@ -32,7 +32,7 @@ To install with Composer, simply add the requirement to your composer.json file:
 ```php
 {
   "require" : {
-    "openpayu/openpayu" : "2.2.*"
+    "openpayu/openpayu" : "2.3.*"
   }
 }
 ```
@@ -325,7 +325,7 @@ Remember: All keys in "order array" must be in lowercase.
    You can retrieve shop data.
 
 ```php
-    $refund = OpenPayU_Shop::get(
+    $shop = OpenPayU_Shop::get(
         'PUBLIC_SHOP_ID' // Shop ID from Merchant Panel
     );
 ```

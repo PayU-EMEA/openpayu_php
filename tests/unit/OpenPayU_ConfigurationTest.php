@@ -15,7 +15,7 @@ require realpath(dirname(__FILE__)) . '\..\..\vendor/autoload.php';
 class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 {
 
-    const PHP_SDK_VERSION = 'PHP SDK 2.2.13';
+    const PHP_SDK_VERSION = 'PHP SDK 2.3.0';
     const API_VERSION = '2.1';
     const POS_ID = 'PosId';
     const SIGNATURE_KEY = 'SignatureKey';

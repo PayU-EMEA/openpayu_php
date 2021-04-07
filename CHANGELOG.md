@@ -1,3 +1,6 @@
+## 2.3.0
+* **Possibly breaking changes** - due possible conflict with popular class names "Shop" and "Balance" change to PayuShop and PayuShopBalance
+
 ## 2.2.13
 * Fix #115
 
