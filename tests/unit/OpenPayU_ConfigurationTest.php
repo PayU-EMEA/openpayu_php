@@ -9,8 +9,6 @@
  */
 
 require_once realpath(dirname(__FILE__)) . '/../TestHelper.php';
-require realpath(dirname(__FILE__)) . '\..\..\vendor/autoload.php';
-
 
 class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
 {
