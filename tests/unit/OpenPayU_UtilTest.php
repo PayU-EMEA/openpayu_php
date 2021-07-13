@@ -70,7 +70,7 @@ class OpenPayU_UtilTest extends PHPUnit_Framework_TestCase
             array('TEST', null),
             array(
                 'sender=MerchantPosId;algorithm=SHA-256;signature=e4c8315c9ab2e097ef1221f3fbd1e761405d961760e538fb2e0055d3d90b5e35',
-                (object) array('sender' => 'MerchantPosId', 'algorithm' => 'SHA-256', 'signature' => 'e4c8315c9ab2e097ef1221f3fbd1e761405d961760e538fb2e0055d3d90b5e35')
+                array('sender' => 'MerchantPosId', 'algorithm' => 'SHA-256', 'signature' => 'e4c8315c9ab2e097ef1221f3fbd1e761405d961760e538fb2e0055d3d90b5e35')
             )
         );
     }
