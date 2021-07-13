@@ -36,7 +36,7 @@ class OpenPayU_Refund extends OpenPayU
         );
 
         if (!empty($amount)) {
-            $refund['refund']['amount'] = (int) $amount;
+            $refund['refund']['amount'] = $amount;
         }
 
         if (!empty($extCustomerId)) {
