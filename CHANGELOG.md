@@ -1,3 +1,9 @@
+## 2.3.1
+* Remove cast to int for refund amount
+* Fix #116 - typo fix
+* Fix #117 - Default for CURLOPT_SSL_VERIFYHOST (2) and CURLOPT_SSL_VERIFYPEER (true)
+* Add PHP 7 to TravisCI checks (Vojta Svoboda)
+
 ## 2.3.0
 * **Possibly breaking changes** - due possible conflict with popular class names "Shop" and "Balance" change to PayuShop and PayuShopBalance
 
