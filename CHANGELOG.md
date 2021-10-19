@@ -1,3 +1,6 @@
+## 2.3.2
+* Fix PAYU-26585
+
 ## 2.3.1
 * Remove cast to int for refund amount
 * Fix #116 - typo fix
