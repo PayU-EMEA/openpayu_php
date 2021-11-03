@@ -1,3 +1,7 @@
+## 2.3.3
+* Set Accept header to json
+* Disable escaped json parameters
+
 ## 2.3.2
 * Fix PAYU-26585
 
