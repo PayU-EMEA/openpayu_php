@@ -143,7 +143,7 @@ class OpenPayU_Order extends OpenPayU
      * Updates Order status
      * - Sends to PayU OrderStatusUpdateRequest
      *
-     * @param string $orderStatusUpdate A array containing full OrderStatus
+     * @param array $orderStatusUpdate A array containing full OrderStatus
      * @return OpenPayU_Result $result Response array with OrderStatusUpdateResponse
      * @throws OpenPayU_Exception
      */
@@ -192,7 +192,7 @@ class OpenPayU_Order extends OpenPayU
     /**
      * Verify response from PayU
      *
-     * @param string $response
+     * @param array $response
      * @param string $messageName
      * @return null|OpenPayU_Result
      * @throws OpenPayU_Exception

@@ -150,7 +150,7 @@ class OpenPayU_Http
                 break;
 
             case 500:
-                throw new OpenPayU_Exception_ServerError('PayU system is unavailable. Error: [' . $resultError->getErrorDescription() . ']', $resultError);
+                throw new OpenPayU_Exception_ServerError('PayU system is unavailable. Error: [' . $resultError->getErrorDescription() . ']', $statusCode);
                 break;
 
             case 503:

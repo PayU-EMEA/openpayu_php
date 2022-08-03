@@ -1,3 +1,30 @@
+## 2.3.3
+* Set Accept header to json
+* Disable escaped json parameters
+
+## 2.3.2
+* Fix PAYU-26585
+
+## 2.3.1
+* Remove cast to int for refund amount
+* Fix #116 - typo fix
+* Fix #117 - Default for CURLOPT_SSL_VERIFYHOST (2) and CURLOPT_SSL_VERIFYPEER (true)
+* Add PHP 7 to TravisCI checks (Vojta Svoboda)
+
+## 2.3.0
+* **Possibly breaking changes** - due possible conflict with popular class names "Shop" and "Balance" change to PayuShop and PayuShopBalance
+
+## 2.2.13
+* Fix #115
+
+## 2.2.12
+* Add Retrieving shop data
+
+## 2.2.11
+* Error when request don't have signature header
+* Fix generate form
+* OpenPayU_Refund::create add extCustomerId and extRefundId required for marketplace
+
 ## 2.2.10
 * SHA256 as default algorithm
 

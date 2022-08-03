@@ -2,7 +2,6 @@
 
 class AuthType_Oauth implements AuthType
 {
-
     /**
      * @var OauthResultClientCredentials
      */
@@ -23,17 +22,14 @@ class AuthType_Oauth implements AuthType
         } catch (OpenPayU_Exception $e) {
             throw new OpenPayU_Exception('Oauth error: [code=' . $e->getCode() . '], [message=' . $e->getMessage() . ']');
         }
-
     }
-
 
     public function getHeaders()
     {
         return array(
             'Content-Type: application/json',
-            'Accept: */*',
+            'Accept: application/json',
             'Authorization: Bearer ' . $this->oauthResult->getAccessToken()
         );
     }
-
 }

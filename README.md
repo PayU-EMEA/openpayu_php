@@ -1,6 +1,6 @@
-# Official OpenPayU PHP Library 2.2
+# Official OpenPayU PHP Library
 
-The OpenPayU PHP library provides integration access to the PayU Gateway API ver. 2.1
+**The OpenPayU PHP library provides integration access to the REST API 2.1**
 
 ## Dependencies
 PHP >= 5.3 with extensions [cURL][ext1] and [hash][ext2]
@@ -20,7 +20,7 @@ Payment system, and it's used to invoke remote methods.
 There are two ways to get orderId:
 
 1. It is present inside the received notification message from PayU Payment System as a result of payment.
-2. In the response from method OpenPayU_Order::create. 
+2. In the response from method OpenPayU_Order::create.
 
 In both cases you will find orderId using this statement: `$response->getResponse()->orderId`.
 
@@ -32,7 +32,7 @@ To install with Composer, simply add the requirement to your composer.json file:
 ```php
 {
   "require" : {
-    "openpayu/openpayu" : "2.2.*"
+    "openpayu/openpayu" : "2.3.*"
   }
 }
 ```
@@ -81,7 +81,7 @@ For production environment:
     //set POS ID and Second MD5 Key (from merchant admin panel)
     OpenPayU_Configuration::setMerchantPosId('145227');
     OpenPayU_Configuration::setSignatureKey('13a980d4f851f3d9a1cfc792fb1f5e50');
-    
+
     //set Oauth Client Id and Oauth Client Secret (from merchant admin panel)
     OpenPayU_Configuration::setOauthClientId('145227');
     OpenPayU_Configuration::setOauthClientSecret('12f071174cb7eb79d4aac5bc2f07563f');    
@@ -95,22 +95,22 @@ For sandbox environment:
     //set POS ID and Second MD5 Key (from merchant admin panel)
     OpenPayU_Configuration::setMerchantPosId('300046');
     OpenPayU_Configuration::setSignatureKey('0c017495773278c50c7b35434017b2ca');
-    
+
     //set Oauth Client Id and Oauth Client Secret (from merchant admin panel)
     OpenPayU_Configuration::setOauthClientId('300046');
     OpenPayU_Configuration::setOauthClientSecret('c8d4b7ac61758704f38ed5564d8c0ae0');
-``` 
+```
 If you want to use sandbox environment, register at this link https://secure.snd.payu.com/cp/register?lang=en
 
 ## OAuth configuration
-SDK supports two PayU OAuth grant types: `client_credentials` and `trusted_merchant`. Default is `client_credentials`. 
+SDK supports two PayU OAuth grant types: `client_credentials` and `trusted_merchant`. Default is `client_credentials`.
 
 If you want to change grant type use:
 
 ```php
     OpenPayU_Configuration::setOauthGrantType('grant_type');
 ```
-grant_type can be one of the following `OauthGrantType::TRUSTED_MERCHANT` or `OauthGrantType::TRUSTED_MERCHANT`
+grant_type can be one of the following `OauthGrantType::CLIENT_CREDENTIAL` or `OauthGrantType::TRUSTED_MERCHANT`
 
 
 Parameters needed for `client_credentials`
@@ -150,13 +150,13 @@ OpenPayU library has two classes implemented to manage the Cache:
 * `OauthCacheFile` - data is stored in the file system.
    This is a default and automatic Cache method which stores the data in `lib/Cache` folder.
    **ATTENTION: for security reasons it is recommended to change the Cache folder, so it would not be accessible from the web browser.**
-   
+
     Configuration:
     ```php
     OpenPayU_Configuration::setOauthTokenCache(new OauthCacheFile($directory));
     ```
    `$directory` - absolute path to the data folder; if the parameter is missing, the folder is `lib/Cache`   
-   
+
 * `OauthCacheMemcached` - data is stored in Memcached
    This method requires Memcached (https://memcached.org/) to be installed on the server along with Memcached PHP module (http://php.net/manual/en/book.memcached.php)
 
@@ -168,7 +168,7 @@ OpenPayU library has two classes implemented to manage the Cache:
    `$port` - Memcached server port - `11211` by default
    `$weight` - Memcached server priority - `0` by default
 
-It is possible to implement another method to manage cache. In such a case it needs to implement `OauthCacheInterface` 
+It is possible to implement another method to manage cache. In such a case it needs to implement `OauthCacheInterface`
 
 ## Usage
 
@@ -282,7 +282,9 @@ Remember: All keys in "order array" must be in lowercase.
     $refund = OpenPayU_Refund::create(
         'Z963D5JQR2230925GUEST000P01', //as a value use ORDER_ID
         'Money refund', //Description - required
-        '100' //Amount - If not provided, returns whole transaction, optional
+        '100', //Amount - If not provided, returns whole transaction, optional
+        'ext-customer-id', // External submerchant ID, required only for marketplace
+        'ext-refund-id' // External refund ID, required only for marketplace
     );
 ```
 
@@ -312,7 +314,19 @@ Remember: All keys in "order array" must be in lowercase.
 
 ```php
     $refund = OpenPayU_Token::delete(
-        'TOKC_EXAMPLE_TOKEN' // as a value use user card token 
+        'TOKC_EXAMPLE_TOKEN' // as a value use user card token
+    );
+```
+
+### Get Shop
+
+   File with working example: [examples/v2/shops/Get.php](examples/v2/shops/Get.php)
+
+   You can retrieve shop data.
+
+```php
+    $shop = OpenPayU_Shop::get(
+        'PUBLIC_SHOP_ID' // Shop ID from Merchant Panel
     );
 ```
 
@@ -330,7 +344,7 @@ Remember: All keys in "order array" must be in lowercase.
 [ext2]: http://php.net/manual/en/book.hash.php
 [ext3]: http://developers.payu.com/en/
 [ext4]: http://developers.payu.com/pl/
-[ext5]: https://secure.payu.com/boarding/#/form&pk_campaign=Plugin-Github&pk_kwd=SDK
+[ext5]: https://www.payu.pl/en/commercial-offer
 [ext6]: https://secure.snd.payu.com/boarding/#/form&pk_campaign=Plugin-Github&pk_kwd=SDK
 
 <!--images:-->

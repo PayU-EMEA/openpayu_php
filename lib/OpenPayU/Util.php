@@ -60,7 +60,7 @@ class OpenPayU_Util
      *
      * @param string $data
      *
-     * @return null|object
+     * @return null|array
      */
     public static function parseSignature($data)
     {
@@ -83,7 +83,7 @@ class OpenPayU_Util
             $signatureData[$explode[0]] = $explode[1];
         }
 
-        return (object)$signatureData;
+        return $signatureData;
     }
 
     /**
@@ -118,7 +118,7 @@ class OpenPayU_Util
     /**
      * Function builds OpenPayU Json Document
      *
-     * @param string $data
+     * @param array $data
      * @param string $rootElement
      *
      * @return null|string
@@ -135,7 +135,7 @@ class OpenPayU_Util
 
         $data = self::setSenderProperty($data);
 
-        return json_encode($data);
+        return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     /**
@@ -210,7 +210,7 @@ class OpenPayU_Util
      * @param array $outputFields
      * @return string
      */
-    public static function convertArrayToHtmlForm($array, $namespace = "", &$outputFields)
+    public static function convertArrayToHtmlForm($array, $namespace = '', &$outputFields = [])
     {
         $i = 0;
         $htmlOutput = "";
@@ -227,7 +227,8 @@ class OpenPayU_Util
             if (is_array($value)) {
                 $htmlOutput .= self::convertArrayToHtmlForm($value, $key, $outputFields);
             } else {
-                $htmlOutput .= sprintf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", $key, $value);
+                $htmlOutput .= sprintf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", htmlspecialchars($key)
+                , htmlspecialchars($value));
                 $outputFields[$key] = $value;
             }
         }
@@ -243,20 +244,6 @@ class OpenPayU_Util
         $arrKeys = array_keys($arr);
         sort($arrKeys, SORT_NUMERIC);
         return $arrKeys !== range(0, count($arr) - 1);
-    }
-
-    /**
-     * @param $namespace
-     * @param $key
-     * @return string
-     */
-    public static function changeFormFieldFormat($namespace, $key)
-    {
-
-        if ($key === $namespace && $key[strlen($key) - 1] == 's') {
-            return substr($key, 0, -1);
-        }
-        return $key;
     }
 
     /**
@@ -284,11 +271,11 @@ class OpenPayU_Util
             case 'DATA_NOT_FOUND':
                 $msg = 'Data indicated in the request is not available in the PayU system.';
                 break;
-            case 'WARNING_CONTINUE_3_DS':
-                $msg = '3DS authorization required.Redirect the Buyer to PayU to continue the 3DS process by calling OpenPayU.authorize3DS().';
+            case 'WARNING_CONTINUE_3DS':
+                $msg = '3DS authorization required. Redirect the Buyer to PayU to continue the 3DS process.';
                 break;
             case 'WARNING_CONTINUE_CVV':
-                $msg = 'CVV/CVC authorization required. Call OpenPayU.authorizeCVV() method.';
+                $msg = 'CVV/CVC authorization required.';
                 break;
             case 'ERROR_SYNTAX':
                 $msg = 'BIncorrect request syntax. Supported formats are JSON or XML.';
@@ -300,8 +287,6 @@ class OpenPayU_Util
                 $msg = 'One or more required values are missing.';
                 break;
             case 'BUSINESS_ERROR':
-                $msg = 'PayU system is unavailable. Try again later.';
-                break;
             case 'ERROR_INTERNAL':
                 $msg = 'PayU system is unavailable. Try again later.';
                 break;
