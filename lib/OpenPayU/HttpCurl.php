@@ -43,6 +43,7 @@ class OpenPayU_HttpCurl
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+        curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
 
         if ($proxy = self::getProxy()) {
             curl_setopt($ch, CURLOPT_PROXY, $proxy);
