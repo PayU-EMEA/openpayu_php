@@ -100,16 +100,16 @@ $order['buyer']['delivery']['countryCode'] = 'PL';
         <tbody>
         <tr>
             <td>Order status</td>
-            <td><?= $response->getStatus() ?></td>
+            <td><?php  echo $response->getStatus() ?></td>
         </tr>
         <?php if ($response->getStatus() == 'SUCCESS'): ?>
             <tr>
                 <td>Order id</td>
-                <td><?= $response->getResponse()->orderId ?></td>
+                <td><?php echo $response->getResponse()->orderId ?></td>
             </tr>
             <tr>
                 <td>Redirect Uri</td>
-                <td><a href="<?= $response->getResponse()->redirectUri ?>"><?= $response->getResponse()->redirectUri ?></a>
+                <td><a href="<?php echo $response->getResponse()->redirectUri ?>"><?php echo $response->getResponse()->redirectUri ?></a>
                 </td>
             </tr>
         <?php endif; ?>

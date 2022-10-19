@@ -54,7 +54,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 <label class="control-label" for="order">Order Id</label>
 
                 <div class="controls">
-                    <input class="span3" name="orderId" id="order" type="text" value="<?=@$_POST['orderId']?>"/>
+                    <input class="span3" name="orderId" id="order" type="text" value="<?php echo htmlentities($_POST['orderId']) ?>"/>
                 </div>
             </div>
             <div class="control-group">
