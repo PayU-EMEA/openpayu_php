@@ -1,4 +1,9 @@
-## 2.3.3
+## 2.3.4
+* Remove examples, tests, etc. from release package
+* Sanitize display of POST data in examples
+* Set min TLS version to 1.2
+
+* ## 2.3.3
 * Set Accept header to json
 * Disable escaped json parameters
 
