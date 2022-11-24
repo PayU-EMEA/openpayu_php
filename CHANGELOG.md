@@ -1,3 +1,6 @@
+## 2.3.5
+* Licence changed
+
 ## 2.3.4
 * Remove examples, tests, etc. from release package
 * Sanitize display of POST data in examples
