@@ -3,8 +3,7 @@
 /**
  * OpenPayU Examples
  *
- * @copyright  Copyright (c) PayU
- * @license    http://opensource.org/licenses/LGPL-3.0  Open Software License (LGPL 3.0)
+ * @copyright Copyright (c) PayU
  * http://www.payu.com
  * http://developers.payu.com
  */

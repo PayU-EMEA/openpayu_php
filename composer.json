@@ -1,7 +1,7 @@
 {
   "name": "openpayu/openpayu",
   "type": "library",
-  "license": "LGPL-3.0",
+  "license": "apache-2.0",
   "description": "OpenPayU PHP Library",
   "version": "2.3.4",
   "extra": [
