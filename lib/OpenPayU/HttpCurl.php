@@ -7,6 +7,10 @@
  * http://developers.payu.com
  */
 
+if (!defined('CURL_SSLVERSION_TLSv1_2')) {
+    define('CURL_SSLVERSION_TLSv1_2', 6);
+}
+
 class OpenPayU_HttpCurl
 {
     /**
