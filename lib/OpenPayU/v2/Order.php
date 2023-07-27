@@ -15,6 +15,7 @@ class OpenPayU_Order extends OpenPayU
 {
     const ORDER_SERVICE = 'orders/';
     const ORDER_TRANSACTION_SERVICE = 'transactions';
+    const ORDER_REFUND_SERVICE = 'refunds';
     const SUCCESS = 'SUCCESS';
 
     /**
@@ -106,6 +107,33 @@ class OpenPayU_Order extends OpenPayU
         }
 
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId . '/' . self::ORDER_TRANSACTION_SERVICE;
+
+        $result = self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'TransactionRetrieveResponse');
+
+        return $result;
+    }
+
+    /**
+     * Retrieves information about the order transaction
+     *  - Sends to PayU TransactionRetrieveRequest
+     *
+     * @param string $orderId PayU OrderId sent back in OrderCreateResponse
+     * @return OpenPayU_Result $result Response array with TransactionRetrieveResponse
+     * @throws OpenPayU_Exception
+     */
+    public static function retrieveRefund($orderId)
+    {
+        if (empty($orderId)) {
+            throw new OpenPayU_Exception('Empty value of orderId');
+        }
+
+        try {
+            $authType = self::getAuth();
+        } catch (OpenPayU_Exception $e) {
+            throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
+        }
+
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId . '/' . self::ORDER_REFUND_SERVICE;
 
         $result = self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'TransactionRetrieveResponse');
 
