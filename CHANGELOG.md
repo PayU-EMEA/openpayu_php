@@ -1,3 +1,7 @@
+## 2.3.6
+* define CURL_SSLVERSION_TLSv1_2 missing for rare server configurations
+* Retrieving order refunds #130 (Peter Knut)
+
 ## 2.3.5
 * Licence changed
 
