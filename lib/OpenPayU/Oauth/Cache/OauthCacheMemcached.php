@@ -16,7 +16,7 @@ class OauthCacheMemcached implements OauthCacheInterface
             throw new OpenPayU_Exception_Configuration('PHP Memcached extension not installed.');
         }
 
-        $this->memcached = new Memcached('PayU');
+        $this->memcached = new Memcached();
         $this->memcached->addServer($host, $port, $weight);
         $stats = $this->memcached->getStats();
         if ($stats[$host . ':' . $port]['pid'] == -1) {
