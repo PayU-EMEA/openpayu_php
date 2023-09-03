@@ -132,7 +132,7 @@ class OpenPayU_Util
             $data = array($rootElement => $data);
         }
 
-        $data = self::setSenderProperty($data);
+        $data = static::setSenderProperty($data);
 
         return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
@@ -161,7 +161,7 @@ class OpenPayU_Util
             return $array;
         }
 
-        if (self::isAssocArray($array)) {
+        if (static::isAssocArray($array)) {
             $object = new stdClass();
         } else {
             $object = array();
@@ -172,9 +172,9 @@ class OpenPayU_Util
                 $name = trim($name);
                 if (isset($name)) {
                     if (is_numeric($name)) {
-                        $object[] = self::parseArrayToObject($value);
+                        $object[] = static::parseArrayToObject($value);
                     } else {
-                        $object->$name = self::parseArrayToObject($value);
+                        $object->$name = static::parseArrayToObject($value);
                     }
                 }
             }
@@ -213,7 +213,7 @@ class OpenPayU_Util
     {
         $i = 0;
         $htmlOutput = "";
-        $assoc = self::isAssocArray($array);
+        $assoc = static::isAssocArray($array);
 
         foreach ($array as $key => $value) {
 
@@ -224,7 +224,7 @@ class OpenPayU_Util
             }
 
             if (is_array($value)) {
-                $htmlOutput .= self::convertArrayToHtmlForm($value, $key, $outputFields);
+                $htmlOutput .= static::convertArrayToHtmlForm($value, $key, $outputFields);
             } else {
                 $htmlOutput .= sprintf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", htmlspecialchars($key)
                 , htmlspecialchars($value));

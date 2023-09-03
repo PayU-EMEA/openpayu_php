@@ -48,9 +48,9 @@ class OpenPayU_HttpCurl
         curl_setopt($ch, CURLOPT_TIMEOUT, 60);
         curl_setopt($ch, CURLOPT_SSLVERSION, CURL_SSLVERSION_TLSv1_2);
 
-        if ($proxy = self::getProxy()) {
+        if ($proxy = static::getProxy()) {
             curl_setopt($ch, CURLOPT_PROXY, $proxy);
-            if ($proxyAuth = self::getProxyAuth()) {
+            if ($proxyAuth = static::getProxyAuth()) {
                 curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyAuth);
             }
         }
@@ -90,7 +90,7 @@ class OpenPayU_HttpCurl
     public static function readHeader($ch, $header)
     {
         if( preg_match('/([^:]+): (.+)/m', $header, $match) ) {
-            self::$headers[$match[1]] = trim($match[2]);
+            static::$headers[$match[1]] = trim($match[2]);
         }
 
         return strlen($header);

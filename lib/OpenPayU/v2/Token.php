@@ -23,7 +23,7 @@ class OpenPayU_Token extends OpenPayU
     {
 
         try {
-            $authType = self::getAuth();
+            $authType = static::getAuth();
         } catch (OpenPayU_Exception $e) {
             throw new OpenPayU_Exception($e->getMessage(), $e->getCode());
         }
@@ -36,9 +36,9 @@ class OpenPayU_Token extends OpenPayU
             throw new OpenPayU_Exception_Configuration('Token delete request is available only for trusted_merchant');
         }
 
-        $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::TOKENS_SERVICE . '/' . $token;
+        $pathUrl = OpenPayU_Configuration::getServiceUrl() . static::TOKENS_SERVICE . '/' . $token;
 
-        $response = self::verifyResponse(OpenPayU_Http::doDelete($pathUrl, $authType));
+        $response = static::verifyResponse(OpenPayU_Http::doDelete($pathUrl, $authType));
 
         return $response;
     }
@@ -63,7 +63,7 @@ class OpenPayU_Token extends OpenPayU
             unset($message['status']);
         }
 
-        $result = self::build($data);
+        $result = static::build($data);
 
         if ($httpStatus == 204) {
             return $result;
