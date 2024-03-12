@@ -15,9 +15,14 @@ class OpenPayU_Token extends OpenPayU
     /**
      * Deleting a payment token
      * @param string $token
-     * @return null|OpenPayU_Result
+     * @return OpenPayU_Result|null
      * @throws OpenPayU_Exception
+     * @throws OpenPayU_Exception_Authorization
      * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayU_Exception_Network
+     * @throws OpenPayU_Exception_Request
+     * @throws OpenPayU_Exception_ServerError
+     * @throws OpenPayU_Exception_ServerMaintenance
      */
     public static function delete($token)
     {
@@ -38,18 +43,22 @@ class OpenPayU_Token extends OpenPayU
 
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::TOKENS_SERVICE . '/' . $token;
 
-        $response = self::verifyResponse(OpenPayU_Http::doDelete($pathUrl, $authType));
-
-        return $response;
+        return self::verifyResponse(OpenPayU_Http::doDelete($pathUrl, $authType));
     }
 
     /**
-     * @param string $response
-     * @return null|OpenPayU_Result
+     * @param array $response
+     * @return OpenPayU_Result|void
+     * @throws OpenPayU_Exception
+     * @throws OpenPayU_Exception_Authorization
+     * @throws OpenPayU_Exception_Network
+     * @throws OpenPayU_Exception_Request
+     * @throws OpenPayU_Exception_ServerError
+     * @throws OpenPayU_Exception_ServerMaintenance
      */
     public static function verifyResponse($response)
     {
-        $data = array();
+        $data = [];
         $httpStatus = $response['code'];
 
         $message = OpenPayU_Util::convertJsonToArray($response['response'], true);
@@ -67,8 +76,8 @@ class OpenPayU_Token extends OpenPayU
 
         if ($httpStatus == 204) {
             return $result;
-        } else {
-            OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
         }
+
+        OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
     }
 }
