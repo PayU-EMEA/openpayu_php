@@ -49,9 +49,7 @@ class OpenPayU_Util
 
         $signature = hash($hashAlgorithm, $contentForSign . $signatureKey);
 
-        $signData = 'sender=' . $merchantPosId . ';algorithm=' . $algorithm . ';signature=' . $signature;
-
-        return $signData;
+        return 'sender=' . $merchantPosId . ';algorithm=' . $algorithm . ';signature=' . $signature;
     }
 
     /**

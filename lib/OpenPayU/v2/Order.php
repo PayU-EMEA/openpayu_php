@@ -54,9 +54,7 @@ class OpenPayU_Order extends OpenPayU
 
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE;
 
-        $result = self::verifyResponse(OpenPayU_Http::doPost($pathUrl, $data, $authType), 'OrderCreateResponse');
-
-        return $result;
+        return self::verifyResponse(OpenPayU_Http::doPost($pathUrl, $data, $authType), 'OrderCreateResponse');
     }
 
     /**
@@ -81,9 +79,7 @@ class OpenPayU_Order extends OpenPayU
 
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId;
 
-        $result = self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'OrderRetrieveResponse');
-
-        return $result;
+        return self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'OrderRetrieveResponse');
     }
 
     /**
@@ -108,9 +104,7 @@ class OpenPayU_Order extends OpenPayU
 
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId . '/' . self::ORDER_TRANSACTION_SERVICE;
 
-        $result = self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'TransactionRetrieveResponse');
-
-        return $result;
+        return self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'TransactionRetrieveResponse');
     }
 
     /**
@@ -135,9 +129,7 @@ class OpenPayU_Order extends OpenPayU
 
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId . '/' . self::ORDER_REFUND_SERVICE;
 
-        $result = self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'TransactionRetrieveResponse');
-
-        return $result;
+        return self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType), 'TransactionRetrieveResponse');
     }
 
     /**
@@ -162,8 +154,7 @@ class OpenPayU_Order extends OpenPayU
 
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderId;
 
-        $result = self::verifyResponse(OpenPayU_Http::doDelete($pathUrl, $authType), 'OrderCancelResponse');
-        return $result;
+        return self::verifyResponse(OpenPayU_Http::doDelete($pathUrl, $authType), 'OrderCancelResponse');
     }
 
     /**
@@ -189,9 +180,7 @@ class OpenPayU_Order extends OpenPayU
         $data = OpenPayU_Util::buildJsonFromArray($orderStatusUpdate);
         $pathUrl = OpenPayU_Configuration::getServiceUrl() . self::ORDER_SERVICE . $orderStatusUpdate['orderId'] . '/status';
 
-        $result = self::verifyResponse(OpenPayU_Http::doPut($pathUrl, $data, $authType), 'OrderStatusUpdateResponse');
-
-        return $result;
+        return self::verifyResponse(OpenPayU_Http::doPut($pathUrl, $data, $authType), 'OrderStatusUpdateResponse');
     }
 
     /**
