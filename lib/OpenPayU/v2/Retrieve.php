@@ -15,9 +15,14 @@ class OpenPayU_Retrieve extends OpenPayU
     /**
      * Get Pay Methods from POS
      * @param string $lang
-     * @return null|OpenPayU_Result
+     * @return OpenPayU_Result|null
      * @throws OpenPayU_Exception
+     * @throws OpenPayU_Exception_Authorization
      * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayU_Exception_Network
+     * @throws OpenPayU_Exception_Request
+     * @throws OpenPayU_Exception_ServerError
+     * @throws OpenPayU_Exception_ServerMaintenance
      */
     public static function payMethods($lang = null)
     {
@@ -37,14 +42,18 @@ class OpenPayU_Retrieve extends OpenPayU
             $pathUrl .= '?lang=' . $lang;
         }
 
-        $response = self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType));
-
-        return $response;
+        return self::verifyResponse(OpenPayU_Http::doGet($pathUrl, $authType));
     }
 
     /**
-     * @param string $response
-     * @return null|OpenPayU_Result
+     * @param array $response
+     * @return OpenPayU_Result|void
+     * @throws OpenPayU_Exception
+     * @throws OpenPayU_Exception_Authorization
+     * @throws OpenPayU_Exception_Network
+     * @throws OpenPayU_Exception_Request
+     * @throws OpenPayU_Exception_ServerError
+     * @throws OpenPayU_Exception_ServerMaintenance
      */
     public static function verifyResponse($response)
     {
@@ -66,9 +75,7 @@ class OpenPayU_Retrieve extends OpenPayU
 
         if ($httpStatus == 200 || $httpStatus == 201 || $httpStatus == 422 || $httpStatus == 302 || $httpStatus == 400 || $httpStatus == 404) {
             return $result;
-        } else {
-            OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
         }
-
+        OpenPayU_Http::throwHttpStatusException($httpStatus, $result);
     }
 }
