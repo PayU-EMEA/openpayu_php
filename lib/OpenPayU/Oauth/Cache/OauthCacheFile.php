@@ -11,7 +11,17 @@ class OauthCacheFile implements OauthCacheInterface
     public function __construct($directory = null)
     {
         if ($directory === null) {
-            $directory = dirname(__FILE__).'/../../../Cache';
+            $directory = dirname(__FILE__) . '/../../../Cache';
+        }
+
+        if (file_exists($directory) === false) {
+            try {
+                if (!mkdir($directory, 0775, true)) {
+                    throw new \OpenPayU_Exception_Configuration('Failed to create missing cache directory [' . $directory . '].');
+                }
+            } catch (\Exception $e) {
+                throw new \OpenPayU_Exception_Configuration('Failed to create missing cache directory [' . $directory . '] ' . $e->getMessage());
+            }
         }
 
         if (!is_dir($directory) || !is_writable($directory)) {
