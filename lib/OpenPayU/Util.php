@@ -9,42 +9,43 @@
  */
 class OpenPayU_Util
 {
+    private const ALGORITHMS_TO_HASH = [
+        'SHA' => 'SHA256',
+        'SHA-1' => 'SHA1',
+        'SHA-256' => 'SHA256',
+        'SHA-384' => 'SHA384',
+        'SHA-512' => 'SHA512',
+    ];
+
     /**
      * Function generate sign data
-     *
-     * @param array $data
-     * @param string $algorithm
-     * @param string $merchantPosId
-     * @param string $signatureKey
-     *
-     * @return string
-     *
      * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayU_Exception
      */
-    public static function generateSignData(array $data, $algorithm = 'SHA-256', $merchantPosId = '', $signatureKey = '')
+    public static function generateSignData(array $data,
+        string $algorithm = 'SHA-256',
+        string $merchantPosId = '',
+        string $signatureKey = ''): string
     {
-        if (empty($signatureKey))
+        if (empty($signatureKey)) {
             throw new OpenPayU_Exception_Configuration('Merchant Signature Key should not be null or empty.');
+        }
 
-        if (empty($merchantPosId))
+        if (empty($merchantPosId)) {
             throw new OpenPayU_Exception_Configuration('MerchantPosId should not be null or empty.');
+        }
+
+        $hashAlgorithm = strtoupper(self::toHashAlgorithm($algorithm));
+
+        if ( !in_array($hashAlgorithm, ['SHA256', 'SHA384', 'SHA512'], true)) {
+            throw new OpenPayU_Exception('Unknown algorithm.');
+        }
 
         $contentForSign = '';
         ksort($data);
 
         foreach ($data as $key => $value) {
             $contentForSign .= $key . '=' . urlencode($value) . '&';
-        }
-
-        if (in_array($algorithm, array('SHA-256', 'SHA'))) {
-            $hashAlgorithm = 'sha256';
-            $algorithm = 'SHA-256';
-        } else if ($algorithm == 'SHA-384') {
-            $hashAlgorithm = 'sha384';
-            $algorithm = 'SHA-384';
-        } else if ($algorithm == 'SHA-512') {
-            $hashAlgorithm = 'sha512';
-            $algorithm = 'SHA-512';
         }
 
         $signature = hash($hashAlgorithm, $contentForSign . $signatureKey);
@@ -86,30 +87,29 @@ class OpenPayU_Util
     /**
      * Function returns signature validate
      *
-     * @param string $message
-     * @param string $signature
-     * @param string $signatureKey
-     * @param string $algorithm
-     *
-     * @return bool
+     * @throws OpenPayU_Exception_Configuration
+     * @throws OpenPayU_Exception
      */
-    public static function verifySignature($message, $signature, $signatureKey, $algorithm = 'MD5')
+    public static function verifySignature(
+        string $message,
+        string $signature,
+        string $signatureKey,
+        string $algorithm = 'MD5'): bool
     {
-        if (isset($signature)) {
-            if ($algorithm === 'MD5') {
-                $hash = md5($message . $signatureKey);
-            } else if (in_array($algorithm, array('SHA', 'SHA1', 'SHA-1'))) {
-                $hash = sha1($message . $signatureKey);
-            } else {
-                $hash = hash('sha256', $message . $signatureKey);
-            }
-
-            if (strcmp($signature, $hash) == 0) {
-                return true;
-            }
+        if (empty($signatureKey)) {
+            throw new OpenPayU_Exception_Configuration('Merchant Signature Key should not be null or empty.');
         }
 
-        return false;
+        $hashAlgorithm = strtoupper(self::toHashAlgorithm($algorithm));
+        if (!in_array($hashAlgorithm, [
+            'MD5', 'SHA1', 'SHA256', 'SHA384', 'SHA512',
+        ], true)) {
+            throw new OpenPayU_Exception('Unknown algorithm.');
+        }
+
+        $hash = hash($hashAlgorithm, $message . $signatureKey);
+
+        return hash_equals($hash, $signature);
     }
 
     /**
@@ -295,4 +295,8 @@ class OpenPayU_Util
         return $msg;
     }
 
+    private static function toHashAlgorithm(string $algorithm): string
+    {
+        return self::ALGORITHMS_TO_HASH[$algorithm] ?? $algorithm;
+    }
 }

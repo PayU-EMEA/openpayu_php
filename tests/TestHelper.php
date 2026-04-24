@@ -7,4 +7,4 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../lib/openpayu.php';
+require_once realpath(__DIR__) . '/../lib/openpayu.php';

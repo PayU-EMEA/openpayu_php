@@ -7,9 +7,11 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../TestHelper.php';
+use PHPUnit\Framework\TestCase;
 
-class AuthType_BasicTest extends PHPUnit_Framework_TestCase
+require_once realpath(__DIR__) . '/../../TestHelper.php';
+
+class AuthType_BasicTest extends TestCase
 {
     const POS_ID = 'PosId';
     const SIGNATURE_KEY = 'SignatureKey';
@@ -18,22 +20,22 @@ class AuthType_BasicTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage PosId is empty
      */
     public function shouldExceptionWhenEmptyPosId()
     {
+        $this->expectExceptionMessage("PosId is empty");
+        $this->expectException(OpenPayU_Exception_Configuration::class);
         //when
         new AuthType_Basic(null, null);
     }
 
     /**
      * @test
-     * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage SignatureKey is empty
      */
     public function shouldExceptionWhenEmptySignatureId()
     {
+        $this->expectExceptionMessage("SignatureKey is empty");
+        $this->expectException(OpenPayU_Exception_Configuration::class);
         //when
         new AuthType_Basic(self::POS_ID, null);
     }

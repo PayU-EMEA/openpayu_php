@@ -7,14 +7,16 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../TestHelper.php';
+use PHPUnit\Framework\TestCase;
 
-class OpenPayUTest extends PHPUnit_Framework_TestCase
+require_once realpath(__DIR__) . '/../TestHelper.php';
+
+class OpenPayUTest extends TestCase
 {
 
     const INCOMING_SIGNATURE = 'sender=145227;algorithm=SHA-256;signature=846b2de129d2200443bd72abe691ce174fcec064f89dc529d6a5d98a046cbb4d';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         OpenPayU_Configuration::setEnvironment('secure');
         OpenPayU_Configuration::setMerchantPosId('145227');
@@ -23,11 +25,13 @@ class OpenPayUTest extends PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException OpenPayU_Exception_Authorization
-     * @expectedExceptionMessage Invalid signature - 846b2de129d2200443bd72abe691ce174fcec064f89dc529d6a5d98a046cbb4d
      */
     public function shouldNotVerifySignature()
     {
+        $this->expectExceptionMessage(
+            "Invalid signature - 846b2de129d2200443bd72abe691ce174fcec064f89dc529d6a5d98a046cbb4d"
+        );
+        $this->expectException(OpenPayU_Exception_Authorization::class);
         //when
         OpenPayU::verifyDocumentSignature('TEST_FAIL', self::INCOMING_SIGNATURE);
 
@@ -46,13 +50,15 @@ class OpenPayUTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      * @dataProvider badSignatureDataProvider
-     * @expectedException OpenPayU_Exception_Authorization
-     * @expectedExceptionMessage Signature not found
      * @param string $signature
+     *
      * @throws OpenPayU_Exception_Authorization
      */
     public function shouldEmptySignature($signature)
     {
+        $this->expectExceptionMessage("Signature not found");
+        $this->expectException(OpenPayU_Exception_Authorization::class);
+
         //when
         OpenPayU::verifyDocumentSignature('ANY DATA', $signature);
 
@@ -63,6 +69,9 @@ class OpenPayUTest extends PHPUnit_Framework_TestCase
      */
     public function shouldVerifySignature()
     {
+        //then
+        $this->expectNotToPerformAssertions();
+
         //when
         OpenPayU::verifyDocumentSignature('TEST_OK', self::INCOMING_SIGNATURE);
     }
