@@ -3,7 +3,7 @@
 **The OpenPayU PHP library provides integration access to the REST API 2.1**
 
 ## Dependencies
-PHP >= 5.3 with extensions [cURL][ext1] and [hash][ext2]
+PHP >= 7.4 with extensions [cURL](http://php.net/manual/en/book.curl.php),[hash](http://php.net/manual/en/book.hash.php) and [json](http://php.net/manual/en/book.json.php) enabled.
 
 ## Documentation
 
@@ -32,7 +32,7 @@ To install with Composer, simply add the requirement to your composer.json file:
 ```php
 {
   "require" : {
-    "openpayu/openpayu" : "2.3.*"
+    "openpayu/openpayu" : "2.4.*"
   }
 }
 ```
@@ -340,12 +340,10 @@ Remember: All keys in "order array" must be in lowercase.
 
 
 <!--external links:-->
-[ext1]: http://php.net/manual/en/book.curl.php
-[ext2]: http://php.net/manual/en/book.hash.php
-[ext3]: http://developers.payu.com/en/
-[ext4]: http://developers.payu.com/pl/
-[ext5]: https://www.payu.pl/en/commercial-offer
-[ext6]: https://secure.snd.payu.com/boarding/#/form&pk_campaign=Plugin-Github&pk_kwd=SDK
+[ext3]: https://developers.payu.com/europe/
+[ext4]: https://developers.payu.com/europe/pl/
+[ext5]: https://poland.payu.com/commercial-offer/
+[ext6]: https://secure.snd.payu.com/boarding/#/registerSandbox/
 
 <!--images:-->
 [img0]: readme_images/pos_configuration.png
