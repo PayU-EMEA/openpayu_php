@@ -14,7 +14,7 @@ require_once realpath(__DIR__) . '/../TestHelper.php';
 class OpenPayU_ConfigurationTest extends TestCase
 {
 
-    const PHP_SDK_VERSION = 'PHP SDK 2.3.6';
+    const PHP_SDK_VERSION = 'PHP SDK 2.4.0';
     const API_VERSION = '2.1';
     const POS_ID = 'PosId';
     const SIGNATURE_KEY = 'SignatureKey';

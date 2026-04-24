@@ -1,3 +1,13 @@
+## 2.4.0
+* Changing min PHP version to 7.4
+* Changing comparison function in verifySignature
+* Removing persistentId ("PayU") from OauthCacheMemcached (@webdudi)
+* Fixing #135 - remove suppress the errors by `@`
+
+**BREAKING CHANGES**
+
+Due to the addition of type for arguments and return values in the [OauthCacheInterface.php](lib/OpenPayU/Oauth/Cache/OauthCacheInterface.php) interface, all own implementations of this interface must be updated.
+
 ## 2.3.6
 * define CURL_SSLVERSION_TLSv1_2 missing for rare server configurations
 * Retrieving order refunds #130 (Peter Knut)
