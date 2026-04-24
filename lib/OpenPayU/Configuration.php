@@ -10,7 +10,7 @@
 class OpenPayU_Configuration
 {
     private static $_availableEnvironment = array('custom', 'secure', 'sandbox');
-    private static $_availableHashAlgorithm = array('SHA', 'SHA-256', 'SHA-384', 'SHA-512');
+    private static $_availableHashAlgorithm = array('SHA-256', 'SHA-384', 'SHA-512');
 
     private static $env = 'secure';
 

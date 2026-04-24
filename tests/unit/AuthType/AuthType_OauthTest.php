@@ -8,31 +8,33 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../TestHelper.php';
+use PHPUnit\Framework\TestCase;
 
-class AuthType_OauthTest extends PHPUnit_Framework_TestCase
+require_once realpath(__DIR__) . '/../../TestHelper.php';
+
+class AuthType_OauthTest extends TestCase
 {
 
     const CLIENT_ID = 'ClientId';
 
     /**
      * @test
-     * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage ClientId is empty
      */
     public function shouldExceptionWhenEmptyClientId()
     {
+        $this->expectExceptionMessage("ClientId is empty");
+        $this->expectException(OpenPayU_Exception_Configuration::class);
         //when
         new AuthType_Oauth(null, null);
     }
 
     /**
      * @test
-     * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage ClientSecret is empty
      */
     public function shouldExceptionWhenEmptyClientSecret()
     {
+        $this->expectExceptionMessage("ClientSecret is empty");
+        $this->expectException(OpenPayU_Exception_Configuration::class);
         //when
         new AuthType_Oauth(self::CLIENT_ID, null);
     }

@@ -7,9 +7,11 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../TestHelper.php';
+use PHPUnit\Framework\TestCase;
 
-class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
+require_once realpath(__DIR__) . '/../TestHelper.php';
+
+class OpenPayU_ConfigurationTest extends TestCase
 {
 
     const PHP_SDK_VERSION = 'PHP SDK 2.3.6';
@@ -47,12 +49,10 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($environment, OpenPayU_Configuration::getEnvironment());
     }
 
-    /**
-     * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage environment - is not valid environment
-     */
     public function testSetInvalidEnvironment()
     {
+        $this->expectExceptionMessage("environment - is not valid environment");
+        $this->expectException(OpenPayU_Exception_Configuration::class);
         //when
         OpenPayU_Configuration::setEnvironment('environment');
     }
@@ -115,18 +115,16 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
     public function testSetValidHashAlgorithm()
     {
         //when
-        OpenPayU_Configuration::setHashAlgorithm('SHA');
+        OpenPayU_Configuration::setHashAlgorithm('SHA-256');
 
         //then
-        $this->assertEquals('SHA', OpenPayU_Configuration::getHashAlgorithm());
+        $this->assertEquals('SHA-256', OpenPayU_Configuration::getHashAlgorithm());
     }
 
-    /**
-     * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage Hash algorithm "MD5"" is not available
-     */
     public function testSetInvalidHashAlgorithm()
     {
+        $this->expectExceptionMessage("Hash algorithm \"MD5\"\" is not available");
+        $this->expectException(OpenPayU_Exception_Configuration::class);
         //when
         OpenPayU_Configuration::setHashAlgorithm('MD5');
     }
@@ -167,12 +165,10 @@ class OpenPayU_ConfigurationTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(self::OAUTH_CLIENT_SECRET, OpenPayU_Configuration::getOauthClientSecret());
     }
 
-    /**
-     * @expectedException OpenPayU_Exception_Configuration
-     * @expectedExceptionMessage Oauth token cache class is not instance of OauthCacheInterface
-     */
     public function testNotOautchCacheInterfaceOfOauthTokenCache()
     {
+        $this->expectExceptionMessage("Oauth token cache class is not instance of OauthCacheInterface");
+        $this->expectException(OpenPayU_Exception_Configuration::class);
         //when
         OpenPayU_Configuration::setOauthTokenCache(new stdClass());
     }

@@ -7,13 +7,15 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../TestHelper.php';
+use PHPUnit\Framework\TestCase;
 
-class OpenPayU_OrderTest extends PHPUnit_Framework_TestCase {
+require_once realpath(__DIR__) . '/../../TestHelper.php';
+
+class OpenPayU_OrderTest extends TestCase {
 
     private $_order = array();
 
-    protected function setUp()
+    protected function setUp(): void
     {
         OpenPayU_Configuration::setEnvironment('secure');
         OpenPayU_Configuration::setMerchantPosId('145227');
@@ -53,8 +55,8 @@ class OpenPayU_OrderTest extends PHPUnit_Framework_TestCase {
     public function testHostedOrderForm()
     {
         //given
-        $expectedForm = file_get_contents(realpath(dirname(__FILE__)) . '/../../resources/hostedOrderForm.txt');
-        OpenPayU_Configuration::setHashAlgorithm('SHA');
+        $expectedForm = file_get_contents(realpath(__DIR__) . '/../../resources/hostedOrderForm.txt');
+        OpenPayU_Configuration::setHashAlgorithm('SHA-256');
 
         //when
         $form = OpenPayU_Order::hostedOrderForm($this->_order);
