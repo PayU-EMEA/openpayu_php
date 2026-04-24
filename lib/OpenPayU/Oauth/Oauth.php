@@ -27,7 +27,7 @@ class OpenPayU_Oauth
 
         $tokenCache = self::$oauthTokenCache->get($cacheKey);
 
-        if ($tokenCache instanceof OauthResultClientCredentials && !$tokenCache->hasExpire()) {
+        if (isset($tokenCache) && !$tokenCache->hasExpire()) {
             return $tokenCache;
         }
 
