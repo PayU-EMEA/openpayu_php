@@ -1,26 +1,11 @@
 <?php
 
-
 interface OauthCacheInterface
 {
 
-    /**
-     * @param string $key
-     * @return null | object
-     */
-    public function get($key);
+    public function get(string $key): ?OauthResultClientCredentials;
 
-    /**
-     * @param string $key
-     * @param object $value
-     * @return bool
-     */
-    public function set($key, $value);
+    public function set(string $key, OauthResultClientCredentials $value): bool;
 
-    /**
-     * @param string $key
-     * @return bool
-     */
-    public function invalidate($key);
-
+    public function invalidate(string  $key): bool;
 }

@@ -2,39 +2,54 @@
 
 class OauthCacheFile implements OauthCacheInterface
 {
-    private $directory;
+    private ?string $directory;
 
     /**
-     * @param string $directory
      * @throws OpenPayU_Exception_Configuration
      */
-    public function __construct($directory = null)
+    public function __construct(string $directory = null)
     {
         if ($directory === null) {
-            $directory = dirname(__FILE__).'/../../../Cache';
+            $directory = __DIR__ . '/../../../Cache';
         }
 
-        if (!is_dir($directory) || !is_writable($directory)) {
-            throw new OpenPayU_Exception_Configuration('Cache directory [' . $directory . '] not exist or not writable.');
+        if ( ! is_dir($directory) || ! is_writable($directory)) {
+            throw new OpenPayU_Exception_Configuration(
+                'Cache directory [' . $directory . '] not exist or not writable.'
+            );
         }
 
-        $this->directory = $directory . (substr($directory, -1) != '/' ? '/' : '');
+        $this->directory = $directory . (substr($directory, -1) !== '/' ? '/' : '');
     }
 
-    public function get($key)
+    public function get(string $key): ?OauthResultClientCredentials
     {
-        $cache = @file_get_contents($this->directory . md5($key));
-        return $cache === false ? null : unserialize($cache);
+        $cacheFile = $this->getFilePath($key);
+
+        try {
+            return file_exists($cacheFile) ? unserialize(
+                file_get_contents($cacheFile),
+                ['allowed_classes' => [OauthResultClientCredentials::class]]
+            ) : null;
+        } catch (\Throwable $e) {
+            return null;
+        }
     }
 
-    public function set($key, $value)
+    public function set(string $key, OauthResultClientCredentials $value): bool
     {
-        return @file_put_contents($this->directory . md5($key), serialize($value));
+        return file_put_contents($this->directory . md5($key), serialize($value)) !== false;
     }
 
-    public function invalidate($key)
+    public function invalidate(string $key): bool
     {
-        return @unlink($this->directory . md5($key));
+        $cacheFile = $this->getFilePath($key);
+
+        return !file_exists($cacheFile) || unlink($cacheFile);
     }
 
+    private function getFilePath(string $key): string
+    {
+        return $this->directory . md5($key);
+    }
 }
