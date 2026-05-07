@@ -29,7 +29,7 @@ class OauthCacheFile implements OauthCacheInterface
         try {
             return file_exists($cacheFile) ? unserialize(
                 file_get_contents($cacheFile),
-                ['allowed_classes' => [OauthResultClientCredentials::class]]
+                ['allowed_classes' => [OauthResultClientCredentials::class, \DateTime::class]]
             ) : null;
         } catch (\Throwable $e) {
             return null;
