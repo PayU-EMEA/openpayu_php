@@ -113,22 +113,27 @@ class OauthCacheFileTest extends TestCase
     public function shouldIsolateDifferentKeys(): void
     {
         $cache = new OauthCacheFile($this->tempDir);
-        $cache->set('key-a', $this->buildCredentials('token-a'));
-        $cache->set('key-b', $this->buildCredentials('token-b'));
+        $credentialsA = $this->buildCredentials('token-a');
+        $credentialsB = $this->buildCredentials('token-b');
 
-        $this->assertSame('token-a', $cache->get('key-a')->getAccessToken());
-        $this->assertSame('token-b', $cache->get('key-b')->getAccessToken());
+        $cache->set('key-a', $credentialsA);
+        $cache->set('key-b', $credentialsB);
+
+        $this->assertEquals($credentialsA, $cache->get('key-a'));
+        $this->assertEquals($credentialsB, $cache->get('key-b'));
     }
 
     /** @test */
     public function shouldOverwriteExistingCacheEntry(): void
     {
         $cache = new OauthCacheFile($this->tempDir);
-        $cache->set('key', $this->buildCredentials('old-token'));
-        $cache->set('key', $this->buildCredentials('new-token'));
+        $credentialsOld = $this->buildCredentials('old-token');
+        $credentialsNew = $this->buildCredentials('new-token');
 
-        $result = $cache->get('key');
-        $this->assertSame('new-token', $result->getAccessToken());
+        $cache->set('key', $credentialsOld);
+        $cache->set('key', $credentialsNew);
+
+        $this->assertEquals($credentialsNew, $cache->get('key'));
     }
 
     /** @test */

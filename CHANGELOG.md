@@ -1,3 +1,6 @@
+## 2.4.1
+* Fixing #141 - missing DateTime in allowed_classes when unserializing
+
 ## 2.4.0
 * Changing min PHP version to 7.4
 * Changing comparison function in verifySignature
