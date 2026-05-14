@@ -1,3 +1,6 @@
+## 2.4.2
+* Minor fixes
+
 ## 2.4.1
 * Fixing #141 - missing DateTime in allowed_classes when unserializing
 
