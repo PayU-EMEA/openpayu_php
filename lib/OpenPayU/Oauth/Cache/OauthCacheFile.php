@@ -7,7 +7,7 @@ class OauthCacheFile implements OauthCacheInterface
     /**
      * @throws OpenPayU_Exception_Configuration
      */
-    public function __construct(string $directory = null)
+    public function __construct(?string $directory = null)
     {
         if ($directory === null) {
             $directory = __DIR__ . '/../../../Cache';
