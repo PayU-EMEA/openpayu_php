@@ -14,7 +14,7 @@ if (!defined('CURL_SSLVERSION_TLSv1_2')) {
 class OpenPayU_HttpCurl
 {
     /**
-     * @var
+     * @var array
      */
     static $headers;
 
