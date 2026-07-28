@@ -8,8 +8,8 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-require_once realpath(dirname(__FILE__)) . '/../../config.php';
+require_once realpath(__DIR__) . '/../../../lib/openpayu.php';
+require_once realpath(__DIR__) . '/../../config.php';
 
 if (isset($_POST['token'])) {
     $token = trim($_POST['token']);
@@ -22,7 +22,6 @@ if (isset($_POST['token'])) {
         <title>Token</title>
         <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
         <link rel="stylesheet" href="../../layout/css/style.css">
-        <script type="text/javascript" src="../../layout/js/jquery.min.js"></script>
     </head>
 
     <body>

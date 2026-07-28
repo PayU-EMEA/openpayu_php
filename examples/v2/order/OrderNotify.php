@@ -8,10 +8,10 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-require_once realpath(dirname(__FILE__)) . '/../../config.php';
+require_once realpath(__DIR__) . '/../../../lib/openpayu.php';
+require_once realpath(__DIR__) . '/../../config.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $body = file_get_contents('php://input');
     $data = trim($body);
 
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             /* Check if OrderId exists in Merchant Service, update Order data by OrderRetrieveRequest */
             $order = OpenPayU_Order::retrieve($result->getResponse()->order->orderId);
-            if($order->getStatus() == 'SUCCESS'){
+            if($order->getStatus() === 'SUCCESS'){
                 //the response should be status 200
                 header("HTTP/1.1 200 OK");
             }

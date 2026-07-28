@@ -8,12 +8,12 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-require_once realpath(dirname(__FILE__)) . '/../../config.php';
+require_once realpath(__DIR__) . '/../../../lib/openpayu.php';
+require_once realpath(__DIR__) . '/../../config.php';
 
-if (isset($_POST['publicShopId'])) {
-    $publicShopId = trim($_POST['publicShopId']);
-}
+
+$publicShopId = trim($_POST['publicShopId'] ?? '');
+
 ?>
 <!doctype html>
 <html lang="en-US">
@@ -22,7 +22,6 @@ if (isset($_POST['publicShopId'])) {
     <title>Retrieving shop data</title>
     <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../layout/css/style.css">
-    <script type="text/javascript" src="../../layout/js/jquery.min.js"></script>
 </head>
 
 <body>
