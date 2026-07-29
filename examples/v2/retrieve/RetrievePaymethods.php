@@ -8,8 +8,8 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-require_once realpath(dirname(__FILE__)) . '/../../config.php';
+require_once realpath(__DIR__) . '/../../../lib/openpayu.php';
+require_once realpath(__DIR__) . '/../../config.php';
 
 ?>
 <!doctype html>
@@ -31,7 +31,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
     try {
         $response = OpenPayU_Retrieve::payMethods();
         $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
-        if ($response->getStatus() == 'SUCCESS') {
+        if ($response->getStatus() === 'SUCCESS') {
             echo '<div class="alert alert-success">SUCCESS: ' . $status_desc;
             echo '</div>';
         } else {
@@ -45,7 +45,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
     }
     ?>
 
-    <?php if ($response && $response->getStatus() == 'SUCCESS'): ?>
+    <?php if ($response && $response->getStatus() === 'SUCCESS'): ?>
         <h1>Pay Methods</h1>
 
         <?php

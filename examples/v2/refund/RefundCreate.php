@@ -8,11 +8,10 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-require_once realpath(dirname(__FILE__)) . '/../../config.php';
+require_once realpath(__DIR__) . '/../../../lib/openpayu.php';
+require_once realpath(__DIR__) . '/../../config.php';
 
-if (isset($_POST['orderId']))
-    $orderId = trim($_POST['orderId']);
+$orderId = trim($_POST['orderId'] ?? '');
 
 ?>
 <!doctype html>
@@ -22,22 +21,8 @@ if (isset($_POST['orderId']))
     <title>Order Refund</title>
     <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../layout/css/style.css">
-    <script type="text/javascript" src="../../layout/js/jquery.min.js"></script>
 </head>
 <body>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('#amount').blur(function(){
-            if($('#amount').val()!= 0 && $('#amount').val()<200){
-                $('#msg').html('<div class="alert alert-danger">Kwota zwrotu częściowego nie może być mniejsza niż 200 ' +
-                    'groszy!</div>')
-            }else{
-                $('#msg').html('')
-            }
-        })
-    })
-
-</script>
 <div class="container">
     <div class="page-header">
         <h1>Refund</h1>

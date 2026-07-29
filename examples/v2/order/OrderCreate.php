@@ -9,8 +9,8 @@
  */
 
 
-require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-require_once realpath(dirname(__FILE__)) . '/../../config.php';
+require_once realpath(__DIR__) . '/../../../lib/openpayu.php';
+require_once realpath(__DIR__) . '/../../config.php';
 
 $order = array();
 
@@ -70,7 +70,7 @@ $order['buyer']['delivery']['countryCode'] = 'PL';
     <?php try {
         $response = OpenPayU_Order::create($order);
         $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
-        if ($response->getStatus() == 'SUCCESS') {
+        if ($response->getStatus() === 'SUCCESS') {
             echo '<div class="alert alert-success">SUCCESS: ' . $status_desc;
             echo '</div>';
         } else {
@@ -101,7 +101,7 @@ $order['buyer']['delivery']['countryCode'] = 'PL';
             <td>Order status</td>
             <td><?php  echo $response->getStatus() ?></td>
         </tr>
-        <?php if ($response->getStatus() == 'SUCCESS'): ?>
+        <?php if ($response->getStatus() === 'SUCCESS'): ?>
             <tr>
                 <td>Order id</td>
                 <td><?php echo $response->getResponse()->orderId ?></td>

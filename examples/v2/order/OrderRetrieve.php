@@ -8,8 +8,8 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-require_once realpath(dirname(__FILE__)) . '/../../config.php';
+require_once realpath(__DIR__) . '/../../../lib/openpayu.php';
+require_once realpath(__DIR__) . '/../../config.php';
 
 ?>
 <!doctype html>
@@ -33,7 +33,7 @@ require_once realpath(dirname(__FILE__)) . '/../../config.php';
                 $response = OpenPayU_Order::retrieve(stripslashes($_POST['orderId']));
 
                 $status_desc = OpenPayU_Util::statusDesc($response->getStatus());
-                if($response->getStatus() == 'SUCCESS'){
+                if($response->getStatus() === 'SUCCESS'){
                     echo '<div class="alert alert-success">SUCCESS: '.$status_desc;
                     echo '</div>';
                     $order = $response->getResponse()->orders[0];

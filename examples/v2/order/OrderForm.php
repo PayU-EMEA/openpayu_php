@@ -8,8 +8,8 @@
  * http://developers.payu.com
  */
 
-require_once realpath(dirname(__FILE__)) . '/../../../lib/openpayu.php';
-require_once realpath(dirname(__FILE__)) . '/../../config.php';
+require_once realpath(__DIR__) . '/../../../lib/openpayu.php';
+require_once realpath(__DIR__) . '/../../config.php';
 
 $order = array();
 
@@ -37,7 +37,7 @@ $order['buyer']['firstName'] = 'Jan';
 $order['buyer']['lastName'] = 'Kowalski';
 $order['buyer']['language'] = 'en';
 
-$rsp = OpenPayU_Order::hostedOrderForm($order);
+$rsp = OpenPayU_Order::hostedOrderForm($order, ['submitClass' => 'btn btn-success', 'submitContent' => 'Create order']);
 ?>
 <!doctype html>
 <html lang="en-US">
@@ -46,15 +46,6 @@ $rsp = OpenPayU_Order::hostedOrderForm($order);
     <title>Generated Order Form - OpenPayU v2</title>
     <link rel="stylesheet" href="../../layout/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../layout/css/style.css">
-    <style type="text/css">
-        #payu-payment-form button[type=submit]{
-            border: 0px;
-            height: 50px;
-            width: 290px;
-            background: url('http://static.payu.com/pl/standard/partners/buttons/payu_account_button_long_03.png') no-repeat;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>
