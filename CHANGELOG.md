@@ -1,3 +1,6 @@
+## 2.4.4
+* Added support for create Apple Pay session
+
 ## 2.4.3
 * Don't call curl_close on PHP 8.0 or higher (@hostep)
 
