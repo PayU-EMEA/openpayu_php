@@ -330,6 +330,19 @@ Remember: All keys in "order array" must be in lowercase.
     );
 ```
 
+### Create Apple Pay Session
+[Documentation](https://developers.payu.com/europe/docs/payment-solutions/cards/digital-wallets/apple-pay/)
+
+File with working example: [examples/v2/applepay/CreateSession.php](examples/v2/applepay/CreateSession.php)
+
+You can create Apple Pay Session
+
+```php
+    $sessions = OpenPayU_ApplePay::createSession(
+        'example-domain.com', // Domain name registered in Merchant Panel
+        'Pay in Best Shop' // Apple Pay display name. A string of 64 or fewer UTF-8 characters containing the canonical name for your store, suitable for display. 
+    );
+```
 ## Contributing
 
 1. Fork it
